@@ -6,23 +6,23 @@
 
 #IncludeRegexTransform: 
 
-F:/BabelLibrary/babLib/algorithm.hpp
-must_have.hpp
-F:/BabelLibrary/babLib/must_have.hpp
+F:/BabelLibrary/babellib/babLib/algorithm.hpp
+math.hpp
+F:/BabelLibrary/babellib/babLib/math.hpp
 
-F:/BabelLibrary/babLib/any.hpp
+F:/BabelLibrary/babellib/babLib/any.hpp
 must_have.hpp
-F:/BabelLibrary/babLib/must_have.hpp
+F:/BabelLibrary/babellib/babLib/must_have.hpp
 
-F:/BabelLibrary/babLib/char.hpp
+F:/BabelLibrary/babellib/babLib/char.hpp
 must_have.hpp
-F:/BabelLibrary/babLib/must_have.hpp
+F:/BabelLibrary/babellib/babLib/must_have.hpp
 
-F:/BabelLibrary/babLib/concepts/concepts.hpp
+F:/BabelLibrary/babellib/babLib/concepts/concepts.hpp
 type_traits
 -
 
-F:/BabelLibrary/babLib/container/dynamic_array.hpp
+F:/BabelLibrary/babellib/babLib/container/dynamic_array.hpp
 type_traits
 -
 string
@@ -30,7 +30,7 @@ string
 initializer_list
 -
 
-F:/BabelLibrary/babLib/container/list.hpp
+F:/BabelLibrary/babellib/babLib/container/list.hpp
 string
 -
 type_traits
@@ -42,23 +42,23 @@ functional
 sstream
 -
 
-F:/BabelLibrary/babLib/file_system.hpp
+F:/BabelLibrary/babellib/babLib/file_system.hpp
 must_have.hpp
-F:/BabelLibrary/babLib/must_have.hpp
+F:/BabelLibrary/babellib/babLib/must_have.hpp
 
-F:/BabelLibrary/babLib/math.hpp
+F:/BabelLibrary/babellib/babLib/math.hpp
 variadic.hpp
-F:/BabelLibrary/babLib/variadic.hpp
+F:/BabelLibrary/babellib/babLib/variadic.hpp
 
-F:/BabelLibrary/babLib/matrix/matrix.hpp
+F:/BabelLibrary/babellib/babLib/matrix/matrix.hpp
 operator_on_matrix.hpp
-F:/BabelLibrary/babLib/matrix/operator_on_matrix.hpp
+F:/BabelLibrary/babellib/babLib/matrix/operator_on_matrix.hpp
 
-F:/BabelLibrary/babLib/matrix/operator_on_matrix.hpp
+F:/BabelLibrary/babellib/babLib/matrix/operator_on_matrix.hpp
 ../must_have.hpp
-F:/BabelLibrary/babLib/must_have.hpp
+F:/BabelLibrary/babellib/babLib/must_have.hpp
 
-F:/BabelLibrary/babLib/must_have.hpp
+F:/BabelLibrary/babellib/babLib/must_have.hpp
 cmath
 -
 chrono
@@ -78,69 +78,71 @@ Windows.h
 variant
 -
 container/list.hpp
-F:/BabelLibrary/babLib/container/list.hpp
+F:/BabelLibrary/babellib/babLib/container/list.hpp
 container/dynamic_array.hpp
-F:/BabelLibrary/babLib/container/dynamic_array.hpp
+F:/BabelLibrary/babellib/babLib/container/dynamic_array.hpp
 concepts/concepts.hpp
-F:/BabelLibrary/babLib/concepts/concepts.hpp
+F:/BabelLibrary/babellib/babLib/concepts/concepts.hpp
 cassert
 -
 queue
 -
+numeric
+-
 
-F:/BabelLibrary/babLib/optional.hpp
+F:/BabelLibrary/babellib/babLib/optional.hpp
 must_have.hpp
-F:/BabelLibrary/babLib/must_have.hpp
+F:/BabelLibrary/babellib/babLib/must_have.hpp
 
-F:/BabelLibrary/babLib/request/request.hpp
+F:/BabelLibrary/babellib/babLib/request/request.hpp
 ../must_have.hpp
-F:/BabelLibrary/babLib/must_have.hpp
+F:/BabelLibrary/babellib/babLib/must_have.hpp
 
-F:/BabelLibrary/babLib/time.hpp
+F:/BabelLibrary/babellib/babLib/time.hpp
 must_have.hpp
-F:/BabelLibrary/babLib/must_have.hpp
+F:/BabelLibrary/babellib/babLib/must_have.hpp
 
-F:/BabelLibrary/babLib/variadic.hpp
+F:/BabelLibrary/babellib/babLib/variadic.hpp
 must_have.hpp
-F:/BabelLibrary/babLib/must_have.hpp
+F:/BabelLibrary/babellib/babLib/must_have.hpp
 
-F:/BabelLibrary/babLib/windows/windowsConv.hpp
+F:/BabelLibrary/babellib/babLib/windows/windowsConv.hpp
 ../must_have.hpp
-F:/BabelLibrary/babLib/must_have.hpp
+F:/BabelLibrary/babellib/babLib/must_have.hpp
 
-F:/BabelLibrary/babLib/wraper.hpp
+F:/BabelLibrary/babellib/babLib/wraper.hpp
 must_have.hpp
-F:/BabelLibrary/babLib/must_have.hpp
+F:/BabelLibrary/babellib/babLib/must_have.hpp
 
-F:/BabelLibrary/babel.hpp
+F:/BabelLibrary/babellib/babel.hpp
 babLib/algorithm.hpp
-F:/BabelLibrary/babLib/algorithm.hpp
+F:/BabelLibrary/babellib/babLib/algorithm.hpp
 babLib/any.hpp
-F:/BabelLibrary/babLib/any.hpp
+F:/BabelLibrary/babellib/babLib/any.hpp
 babLib/char.hpp
-F:/BabelLibrary/babLib/char.hpp
+F:/BabelLibrary/babellib/babLib/char.hpp
 babLib/file_system.hpp
-F:/BabelLibrary/babLib/file_system.hpp
+F:/BabelLibrary/babellib/babLib/file_system.hpp
 babLib/math.hpp
-F:/BabelLibrary/babLib/math.hpp
+F:/BabelLibrary/babellib/babLib/math.hpp
 babLib/optional.hpp
-F:/BabelLibrary/babLib/optional.hpp
+F:/BabelLibrary/babellib/babLib/optional.hpp
 babLib/time.hpp
-F:/BabelLibrary/babLib/time.hpp
+F:/BabelLibrary/babellib/babLib/time.hpp
 babLib/windows/windowsConv.hpp
-F:/BabelLibrary/babLib/windows/windowsConv.hpp
+F:/BabelLibrary/babellib/babLib/windows/windowsConv.hpp
 babLib/wraper.hpp
-F:/BabelLibrary/babLib/wraper.hpp
+F:/BabelLibrary/babellib/babLib/wraper.hpp
 babLib/matrix/matrix.hpp
-F:/BabelLibrary/babLib/matrix/matrix.hpp
+F:/BabelLibrary/babellib/babLib/matrix/matrix.hpp
 babLib/request/request.hpp
-F:/BabelLibrary/babLib/request/request.hpp
+F:/BabelLibrary/babellib/babLib/request/request.hpp
 
-F:/BabelLibrary/main.cpp
+F:/BabelLibrary/babellib/main.cpp
 iostream
 -
 babel.hpp
-F:/BabelLibrary/babel.hpp
+F:/BabelLibrary/babellib/babel.hpp
 windows.h
 -
 

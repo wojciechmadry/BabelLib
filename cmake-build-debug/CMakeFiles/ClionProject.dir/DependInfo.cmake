@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "F:/BabelLibrary/main.cpp" "F:/BabelLibrary/cmake-build-debug/CMakeFiles/ClionProject.dir/main.cpp.obj"
+  "F:/BabelLibrary/babellib/main.cpp" "F:/BabelLibrary/babellib/cmake-build-debug/CMakeFiles/ClionProject.dir/main.cpp.obj"
   )
 set(CMAKE_CXX_COMPILER_ID "Clang")
 

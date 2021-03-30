@@ -60,7 +60,7 @@ namespace babel::CONCEPTS {
             {
                 std::begin(cont);
                 std::end(cont);
-                cont[0];
+                //cont[0];
                 cont.size();
             };
     namespace MEMBER
@@ -102,5 +102,12 @@ namespace babel::CONCEPTS {
     };
 
 
+    //Return type in container T -> can be list/vector etc.
+    template<typename Vec>
+    requires babel::CONCEPTS::IS_CONTAINER<Vec>
+    struct type_in{
+        typedef std::decay_t<decltype(*Vec{}.begin())> type;
+    };
+    //END
 }
 #endif

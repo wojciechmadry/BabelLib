@@ -15,6 +15,8 @@
 #include "concepts/concepts.hpp"
 #include <cassert>
 #include <queue>
+#include <numeric>
+
 namespace _BABEL_PRIVATE_DO_NOT_USE //NOLINT
 {
 

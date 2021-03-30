@@ -2,23 +2,13 @@
 #include "babel.hpp"
 #include <windows.h>
 
-struct A{
-    int a;
-};
-struct B : virtual A{
-    int b;
-};
-struct C : virtual A{
-    int c;
-};
-struct D: public B, public C{
-    int d;
-};
+
+
+
 int main()
 {
-    D d;
-    d.B::a = 12;
-    d.C::a = 222;
-    std::cout << d.B::a << '\n' << d.C::a;
+
+   std::vector<double> p = {5,3,4,-2,15,2,-5,8,3,20 ,2 ,2 ,2};
+  std::cout << babel::ALGO::sum(p);
     return 0;
 }
