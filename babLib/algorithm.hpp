@@ -117,15 +117,36 @@ namespace babel::ALGO {
         if (container.size() == 0)
             return {};
         auto begin = std::begin(container);
+        auto end = std::end(container);
         std::pair<U, U> minimaxi = {*begin, *begin};
         ++begin;
-        for(; begin != container.end() ; ++begin)
+        for(; begin != end ; ++begin)
             if (*begin > minimaxi.second)
                 minimaxi.second = *begin;
             else if (*begin < minimaxi.first)
                 minimaxi.first = *begin;
         return std::move(minimaxi);
     }
+
+
+    template<typename T, typename U = typename babel::CONCEPTS::type_in<T>::type>
+    requires babel::CONCEPTS::IS_CONTAINER<T>
+    constexpr std::pair<U*, U*> find_min_max_ptr(T& container) noexcept
+    {
+        if (container.size() == 0)
+            return {nullptr, nullptr};
+        auto begin = std::begin(container);
+        auto end = std::end(container);
+        std::pair<U*, U*> minimaxi = {&(*begin), &(*begin)};
+        ++begin;
+        for(; begin != end ; ++begin)
+            if (*begin > *minimaxi.second)
+                minimaxi.second = &(*begin);
+            else if (*begin < *minimaxi.first)
+                minimaxi.first = &(*begin);
+        return std::move(minimaxi);
+    }
+
 
     template< typename T, typename U = typename babel::CONCEPTS::type_in<T>::type>
     requires babel::CONCEPTS::IS_CONTAINER<T>
