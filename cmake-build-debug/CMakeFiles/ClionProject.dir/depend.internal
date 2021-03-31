@@ -9,6 +9,10 @@ CMakeFiles/ClionProject.dir/main.cpp.obj
  F:/BabelLibrary/babellib/babLib/container/dynamic_array.hpp
  F:/BabelLibrary/babellib/babLib/container/list.hpp
  F:/BabelLibrary/babellib/babLib/file_system.hpp
+ F:/BabelLibrary/babellib/babLib/graphics/cmyk.hpp
+ F:/BabelLibrary/babellib/babLib/graphics/convert.hpp
+ F:/BabelLibrary/babellib/babLib/graphics/graphics.hpp
+ F:/BabelLibrary/babellib/babLib/graphics/rgb.hpp
  F:/BabelLibrary/babellib/babLib/math.hpp
  F:/BabelLibrary/babellib/babLib/matrix/matrix.hpp
  F:/BabelLibrary/babellib/babLib/matrix/operator_on_matrix.hpp

@@ -8,6 +8,10 @@ CMakeFiles/ClionProject.dir/main.cpp.obj: ../babLib/concepts/concepts.hpp
 CMakeFiles/ClionProject.dir/main.cpp.obj: ../babLib/container/dynamic_array.hpp
 CMakeFiles/ClionProject.dir/main.cpp.obj: ../babLib/container/list.hpp
 CMakeFiles/ClionProject.dir/main.cpp.obj: ../babLib/file_system.hpp
+CMakeFiles/ClionProject.dir/main.cpp.obj: ../babLib/graphics/cmyk.hpp
+CMakeFiles/ClionProject.dir/main.cpp.obj: ../babLib/graphics/convert.hpp
+CMakeFiles/ClionProject.dir/main.cpp.obj: ../babLib/graphics/graphics.hpp
+CMakeFiles/ClionProject.dir/main.cpp.obj: ../babLib/graphics/rgb.hpp
 CMakeFiles/ClionProject.dir/main.cpp.obj: ../babLib/math.hpp
 CMakeFiles/ClionProject.dir/main.cpp.obj: ../babLib/matrix/matrix.hpp
 CMakeFiles/ClionProject.dir/main.cpp.obj: ../babLib/matrix/operator_on_matrix.hpp

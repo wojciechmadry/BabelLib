@@ -1,17 +1,14 @@
 #include <iostream>
 #include "babel.hpp"
-#include <windows.h>
-
-
 
 
 int main()
 {
-
-   std::list<double> p = {5,3,4,-2,15,2,-5,8,3,20 ,2 ,2 ,2};
-   auto mm = babel::ALGO::FFT(p);
-  // for (auto& d : mm)
-    //   std::cout << d << ", ";
-    std::cout << babel::TIME::CONVERT::NS::to_mili(1);
+    babel::GRAPHICS::rgb r(0, 0, 255);
+    auto c = babel::GRAPHICS::RGB_TO_CMYK(r);
+    std::cout << (int) c[0] << '\n';
+    std::cout << (int) c[1] << '\n';
+    std::cout << (int) c[2] << '\n';
+    std::cout << (int) c[3] << '\n';
     return 0;
 }

@@ -46,6 +46,24 @@ F:/BabelLibrary/babellib/babLib/file_system.hpp
 must_have.hpp
 F:/BabelLibrary/babellib/babLib/must_have.hpp
 
+F:/BabelLibrary/babellib/babLib/graphics/cmyk.hpp
+../algorithm.hpp
+F:/BabelLibrary/babellib/babLib/algorithm.hpp
+
+F:/BabelLibrary/babellib/babLib/graphics/convert.hpp
+rgb.hpp
+F:/BabelLibrary/babellib/babLib/graphics/rgb.hpp
+cmyk.hpp
+F:/BabelLibrary/babellib/babLib/graphics/cmyk.hpp
+
+F:/BabelLibrary/babellib/babLib/graphics/graphics.hpp
+convert.hpp
+F:/BabelLibrary/babellib/babLib/graphics/convert.hpp
+
+F:/BabelLibrary/babellib/babLib/graphics/rgb.hpp
+../algorithm.hpp
+F:/BabelLibrary/babellib/babLib/algorithm.hpp
+
 F:/BabelLibrary/babellib/babLib/math.hpp
 variadic.hpp
 F:/BabelLibrary/babellib/babLib/variadic.hpp
@@ -143,12 +161,12 @@ babLib/matrix/matrix.hpp
 F:/BabelLibrary/babellib/babLib/matrix/matrix.hpp
 babLib/request/request.hpp
 F:/BabelLibrary/babellib/babLib/request/request.hpp
+babLib/graphics/graphics.hpp
+F:/BabelLibrary/babellib/babLib/graphics/graphics.hpp
 
 F:/BabelLibrary/babellib/main.cpp
 iostream
 -
 babel.hpp
 F:/BabelLibrary/babellib/babel.hpp
-windows.h
--
 

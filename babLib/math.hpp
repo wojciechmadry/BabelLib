@@ -131,7 +131,8 @@ namespace babel::MATH{
     *  @return Return greater number
     */
     template< typename T, typename T2 >
-    requires babel::CONCEPTS::IS_SAME_CONVERTIBLE<T, T2>
+    requires ( babel::CONCEPTS::IS_SAME_CONVERTIBLE<T, T2> && !babel::CONCEPTS::IS_CONTAINER<T> &&
+               !babel::CONCEPTS::IS_CONTAINER<T2> )
     constexpr inline auto max(const T value1, const T2 value2) noexcept
     {
         return value1 > value2 ? value1 : value2;
@@ -145,6 +146,7 @@ namespace babel::MATH{
 *  @return Return the largest number
 */
     template< typename T, typename ... Args >
+    requires ( !babel::CONCEPTS::IS_CONTAINER<T> )
     constexpr T max(T value1, T value2, Args... arg) noexcept
     {
         if ( value1 < value2 )
@@ -180,7 +182,7 @@ namespace babel::MATH{
 *  @return Return the lowest number
 */
     template< typename T, typename ... Args >
-    constexpr T min(T value1,T value2, Args... arg) noexcept
+    constexpr T min(T value1, T value2, Args... arg) noexcept
     {
         if ( value1 > value2 )
             value1 = value2;
@@ -462,7 +464,8 @@ namespace babel::MATH{
      */
     template< typename Type = double >
     requires babel::CONCEPTS::IS_FLOATING_POINT<Type>
-    inline constexpr Type map(const Type value, const Type fromLow, const Type fromHigh, const Type toLow, const Type toHigh)
+    inline constexpr Type
+    map(const Type value, const Type fromLow, const Type fromHigh, const Type toLow, const Type toHigh)
     {
         return ( ( ( value - fromLow ) * ( toHigh - toLow ) ) / ( fromHigh - fromLow ) ) + toLow;
     }

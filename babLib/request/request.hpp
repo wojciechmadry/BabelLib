@@ -63,7 +63,7 @@ namespace babel::REQ{
             );
         }
 
-        void call_n(const size_t n)
+        void call_n(size_t n)
         {
             if ( _que.size() < n )
                 throw std::out_of_range("Size of que is less than n");
