@@ -12,7 +12,6 @@ int main()
    auto mm = babel::ALGO::FFT(p);
   // for (auto& d : mm)
     //   std::cout << d << ", ";
-    std::cout << babel::MATH::binomial_coefficient(5, 3);
-    std::cout << babel::MATH::binomial_coefficient<5, 3>();
+    std::cout << babel::TIME::CONVERT::NS::to_mili(1);
     return 0;
 }

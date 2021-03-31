@@ -3,31 +3,32 @@
 
 #include "must_have.hpp"
 
-namespace babel::VARIADIC {
-    template<typename Type>
+namespace babel::VARIADIC{
+    template< typename Type >
     requires(babel::CONCEPTS::IS_NOT_ANY_VOID<Type>)
     class holder
     {
         CONTAINER::dynamic_array<Type> _hold;
 
-        template<typename U = Type>
+        template< typename U = Type >
         constexpr void _put(U &&_a1) noexcept
         {
             _hold.push_back(std::forward<U>(_a1));
         }
 
-        template<typename U = Type, typename ... Args>
+        template< typename U = Type, typename ... Args >
         constexpr void _put(U &&_a1, Args &&...args) noexcept
         {
             _put(std::forward<U>(_a1));
             _put(std::forward<Args>(args)...);
         }
-        template<typename U>
+
+        template< typename U >
         using decay = typename std::decay_t<U>;
     public:
         constexpr holder() = default;
 
-        template<typename ... Hold>
+        template< typename ... Hold >
         constexpr explicit holder(Hold &&... args) noexcept
         {
             _put(std::forward<Hold>(args)...);
