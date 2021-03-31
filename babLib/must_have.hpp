@@ -16,6 +16,9 @@
 #include <cassert>
 #include <queue>
 #include <numeric>
+#include <complex>
+#include <numbers>
+#include <list>
 
 namespace _BABEL_PRIVATE_DO_NOT_USE //NOLINT
 {

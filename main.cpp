@@ -8,11 +8,11 @@
 int main()
 {
 
-   std::vector<double> p = {5,3,4,-2,15,2,-5,8,3,20 ,2 ,2 ,2};
-   auto mm = babel::ALGO::find_min_max_ptr(p);
-   *mm.first = 200;
-   for(auto el : p)
-       std::cout << el << ' ';
-
+   std::list<double> p = {5,3,4,-2,15,2,-5,8,3,20 ,2 ,2 ,2};
+   auto mm = babel::ALGO::FFT(p);
+  // for (auto& d : mm)
+    //   std::cout << d << ", ";
+    std::cout << babel::MATH::binomial_coefficient(5, 3);
+    std::cout << babel::MATH::binomial_coefficient<5, 3>();
     return 0;
 }

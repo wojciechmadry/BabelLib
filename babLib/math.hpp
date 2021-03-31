@@ -105,7 +105,7 @@ namespace babel::MATH {
     */
     template<typename T>
     requires babel::CONCEPTS::IS_SIGNED<T>
-    constexpr inline T abs(const T v)
+    constexpr inline T abs(const T v) noexcept
     {
         return (v >= 0) ? v : -v;
     }
@@ -119,7 +119,7 @@ namespace babel::MATH {
     */
     template<typename T, typename T2>
     requires babel::CONCEPTS::IS_SAME_CONVERTIBLE<T, T2>
-    constexpr inline auto max(T value1, T2 value2)
+    constexpr inline auto max(T value1, T2 value2) noexcept
     {
         return value1 > value2 ? value1 : value2;
     }
@@ -132,17 +132,17 @@ namespace babel::MATH {
 *  @return Return the largest number
 */
     template<typename T, typename ... Args>
-    constexpr T max(T value1, T value2, Args... arg)
+    constexpr T max(T value1, T value2, Args... arg) noexcept
     {
         if (value1 < value2)
             value1 = value2;
         babel::VARIADIC::holder<T> _hold(arg...);
         const auto &vec = _hold.get();
-        for (size_t i = 0; i < vec.size(); ++i)
-        {
-            if (vec[i] > value1)
-                value1 = vec[i];
-        }
+        auto begin = std::begin(vec);
+        auto end = std::end(vec);
+        for (;begin!=end;++begin)
+            if (*begin > value1)
+                value1 = *begin;
         return value1;
     }
 
@@ -154,7 +154,7 @@ namespace babel::MATH {
     */
     template<typename T, typename T2>
     requires babel::CONCEPTS::IS_SAME_CONVERTIBLE<T, T2>
-    constexpr inline auto min(T value1, T2 value2)
+    constexpr inline auto min(T value1, T2 value2) noexcept
     {
         return value1 < value2 ? value1 : value2;
     }
@@ -167,16 +167,17 @@ namespace babel::MATH {
 *  @return Return the lowest number
 */
     template<typename T, typename ... Args>
-    constexpr T min(T value1, T value2, Args... arg)
+    constexpr T min(T value1, T value2, Args... arg) noexcept
     {
         if (value1 > value2)
             value1 = value2;
         babel::VARIADIC::holder<T> _hold(arg...);
-        for (size_t i = 0; i < _hold.get().size(); ++i)
-        {
-            if (_hold.get()[i] < value1)
-                value1 = _hold.get()[i];
-        }
+        const auto& vec = _hold.get();
+        auto begin = std::begin(vec);
+        auto end = std::end(vec);
+        for (;begin!=end;++begin)
+            if (*begin < value1)
+                value1 = *begin;
         return value1;
     }
 
@@ -185,12 +186,18 @@ namespace babel::MATH {
     *  @param   init_list Initializer list of numbers
     *  @return Return the largest number
     */
-    template<typename T>
-    constexpr T max(const std::initializer_list<T> &init_list)
+    template<typename T, typename U = typename babel::CONCEPTS::type_in<T>::type>
+    requires babel::CONCEPTS::IS_CONTAINER<T>
+    constexpr U max(const T& Container) noexcept
     {
-        auto _it = init_list.begin();
-        T MAX = *_it++;
-        for (; _it != init_list.end(); ++_it)
+        if (Container.size() == 0)
+            return {};
+
+        auto _it = std::begin(Container);
+        auto end = std::end(Container);
+        U MAX = *_it;
+        ++_it;
+        for (; _it != end; ++_it)
             MAX = max(MAX, *_it);
         return MAX;
     }
@@ -200,12 +207,17 @@ namespace babel::MATH {
    *  @param   init_list Initializer list of numbers
    *  @return Return the smallest number
    */
-    template<typename T>
-    constexpr T min(const std::initializer_list<T> &init_list)
+    template<typename T, typename U = typename babel::CONCEPTS::type_in<T>::type>
+    requires babel::CONCEPTS::IS_CONTAINER<T>
+    constexpr U min(const T& Container) noexcept
     {
-        auto _it = init_list.begin();
-        T MIN = *_it++;
-        for (; _it != init_list.end(); ++_it)
+        if (Container.size() == 0)
+            return {};
+        auto _it = std::begin(Container);
+        auto end = std::end(Container);
+        U MIN = *_it;
+        ++_it;
+        for (; _it != end; ++_it)
             MIN = min(MIN, *_it);
         return MIN;
 
@@ -218,7 +230,7 @@ namespace babel::MATH {
    */
     template<typename T>
     requires babel::CONCEPTS::IS_SIGNED<T>
-    constexpr inline bool is_neg(T val)
+    constexpr inline bool is_neg(T val) noexcept
     {
         return val < 0 ? 1 : 0;
     }
@@ -230,7 +242,7 @@ namespace babel::MATH {
     */
     template<typename T>
     requires babel::CONCEPTS::IS_UNSIGNED<T>
-    constexpr inline bool is_neg(T val)
+    constexpr inline bool is_neg(T val) noexcept
     {
         return false;
     }
@@ -240,8 +252,8 @@ namespace babel::MATH {
     *  @param   n Factorial of n
     *  @return Factorial N
     */
-    template<size_t N>
-    constexpr uint64_t factorial() noexcept
+    template<uint64_t N>
+    consteval uint64_t factorial() noexcept
     {
         uint64_t res = 1;
         for(size_t i = 2 ; i <= N ; ++i)
@@ -274,11 +286,19 @@ namespace babel::MATH {
         return static_cast<double>(factorial(N))/static_cast<double>(factorial(K) * factorial(N - K));
     }
 
+    template<uint64_t  N, uint64_t K>
+    consteval double binomial_coefficient() noexcept
+    {
+        if (K > N)
+            throw std::out_of_range("K > N.");
+        return static_cast<double>(factorial<N>())/static_cast<double>(factorial<K>() * factorial<N-K>());
+    }
+
     /**
    *  @param   n Fibonacci number
    *  @return Fibonacci N
    */
-    constexpr uint64_t fib(unsigned n)
+    constexpr uint64_t fib(unsigned n) noexcept
     {
         uint64_t F[2][2] = {{1, 1},
                             {1, 0}};
@@ -296,7 +316,7 @@ namespace babel::MATH {
    *  @return b^2 - 4 * a * c
    */
     template<typename Type>
-    inline constexpr Type delta(const Type a, const Type b, const Type c)
+    inline constexpr Type delta(const Type a, const Type b, const Type c) noexcept
     {
         return (b * b) - (a * 4) * c;
     }
@@ -305,7 +325,7 @@ namespace babel::MATH {
    *  @return a * a 
    */
     template<typename Type>
-    inline constexpr Type square_area(Type a)
+    inline constexpr Type square_area(Type a) noexcept
     {
         return a * a;
     }
@@ -314,7 +334,7 @@ namespace babel::MATH {
    *  @return 4 * a
    */
     template<typename Type>
-    inline constexpr Type square_circumference(Type a)
+    inline constexpr Type square_circumference(Type a) noexcept
     {
         return a * 4;
     }
@@ -323,7 +343,7 @@ namespace babel::MATH {
    *  @return a * a * a 
    */
     template<typename Type>
-    inline constexpr Type cube_volume(Type a)
+    inline constexpr Type cube_volume(Type a) noexcept
     {
         return a * a * a;
     }
@@ -332,7 +352,7 @@ namespace babel::MATH {
    *  @return a * b
    */
     template<typename Type>
-    inline constexpr Type rectangle_area(Type a, Type b)
+    inline constexpr Type rectangle_area(Type a, Type b) noexcept
     {
         return a * b;
     }
@@ -341,7 +361,7 @@ namespace babel::MATH {
    *  @return a * 2 + b * 2
    */
     template<typename Type>
-    inline constexpr Type rectangle_circumference(Type a, Type b)
+    inline constexpr Type rectangle_circumference(Type a, Type b) noexcept
     {
         return (a * 2) + (b * 2);
     }
@@ -350,7 +370,7 @@ namespace babel::MATH {
    *  @return a * b * c
    */
     template<typename Type>
-    inline constexpr Type cuboid_volume(Type a, Type b, Type c)
+    inline constexpr Type cuboid_volume(Type a, Type b, Type c) noexcept
     {
         return a * b * c;
     }
@@ -359,7 +379,7 @@ namespace babel::MATH {
    *  @return PI * r * r
    */
     template<typename Type>
-    inline constexpr Type circle_area(Type r)
+    inline constexpr Type circle_area(Type r) noexcept
     {
         return static_cast<Type>(CONSTANT::PI<long double> * r * r);
     }
@@ -368,7 +388,7 @@ namespace babel::MATH {
    *  @return 2 * PI * r
    */
     template<typename Type>
-    inline constexpr Type circle_circumference(Type r)
+    inline constexpr Type circle_circumference(Type r) noexcept
     {
         return static_cast<Type>(CONSTANT::PI<long double> * (r * 2));
     }
@@ -377,7 +397,7 @@ namespace babel::MATH {
    *  @return 4/3 * PI * R^3
    */
     template<typename Type>
-    inline constexpr Type sphere_volume(Type R)
+    inline constexpr Type sphere_volume(Type R) noexcept
     {
         return static_cast<Type>(CONSTANT::PI<long double> * (4.0 / 3.0) * R * R * R);
     }
@@ -386,7 +406,7 @@ namespace babel::MATH {
    *  @return circle_area(r) * H
    */
     template<typename Type>
-    inline constexpr Type cylinder_volume(Type r, Type H)
+    inline constexpr Type cylinder_volume(Type r, Type H) noexcept
     {
         return static_cast<Type>(circle_area<long double>(r) * H);
     }
@@ -395,7 +415,7 @@ namespace babel::MATH {
    *  @return cylinder_volume(r, h) * 1/3
    */
     template<typename Type>
-    inline constexpr Type cone_volume(Type r, Type h)
+    inline constexpr Type cone_volume(Type r, Type h) noexcept
     {
         return static_cast<Type>(cylinder_volume<long double>(r, h) * (1.0 / 3.0));
     }
@@ -404,7 +424,7 @@ namespace babel::MATH {
    *  @brief Convert kW to HP
    */
     template<typename Type>
-    inline constexpr Type kW_to_HP(Type kW)
+    inline constexpr Type kW_to_HP(Type kW) noexcept
     {
         return static_cast<Type>(1.341022 * kW);
     }
@@ -413,7 +433,7 @@ namespace babel::MATH {
    *  @brief Convert HP to kw
    */
     template<typename Type>
-    inline constexpr Type HP_to_kW(Type HP)
+    inline constexpr Type HP_to_kW(Type HP) noexcept
     {
         return static_cast<Type>(0.745699872 * HP);
     }

@@ -54,6 +54,7 @@ namespace babel::CONCEPTS {
         obj * obj;
         obj / obj;
     };
+
     template<typename T>
     concept IS_CONTAINER =
             requires(T cont)
@@ -63,6 +64,16 @@ namespace babel::CONCEPTS {
                 //cont[0];
                 cont.size();
             };
+
+    template<typename T>
+    concept IS_LIKE_VECTOR =
+    requires(T cont)
+    {
+        std::begin(cont);
+        std::end(cont);
+        cont[0];
+        cont.size();
+    };
     namespace MEMBER
     {
         template<typename T>
