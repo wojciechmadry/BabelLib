@@ -244,23 +244,11 @@ namespace babel::MATH{
    *  @return If val is negative return 1 otherwise return 0
    */
     template< typename T >
-    requires babel::CONCEPTS::IS_SIGNED<T>
     constexpr inline bool is_neg(const T val) noexcept
     {
         return val < 0 ? 1 : 0;
     }
 
-    /**
-*  @brief  Check if number is negative
-*  @param   val A number
-*  @return If val is negative return 1 otherwise return 0
-*/
-    template< typename T >
-    requires babel::CONCEPTS::IS_UNSIGNED<T>
-    constexpr inline bool is_neg(const T val) noexcept
-    {
-        return false;
-    }
 
     /**
     *  @brief  ex.: n = 3, return : 1 * 2 * 3
