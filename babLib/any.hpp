@@ -4,8 +4,8 @@
 #include "must_have.hpp"
 
 namespace babel::ANY{
-    namespace VoidAny{ class any; };
-    namespace PolAny{ class any; };
+    namespace VoidAny{ class any; }; //NOLINT
+    namespace PolAny{ class any; }; //NOLINT
 
     template< typename T, typename Any >
     requires babel::CONCEPTS::IS_SAME<Any, VoidAny::any> ||
@@ -29,6 +29,7 @@ namespace babel::ANY{
 
         class any
         {
+
             template< typename T, typename Any >
             requires babel::CONCEPTS::IS_SAME<Any, VoidAny::any> ||
                      babel::CONCEPTS::IS_SAME<Any, PolAny::any>
@@ -50,6 +51,7 @@ namespace babel::ANY{
 
 
         public:
+
             any() noexcept: data(nullptr)
             { }
 
@@ -60,7 +62,7 @@ namespace babel::ANY{
 
             any(const any &other) = delete;
 
-            any(any &&other) noexcept: data {other.data}
+            any(any &&other) noexcept : data(other.data)
             {
                 other.data = nullptr;
             }
@@ -76,7 +78,7 @@ namespace babel::ANY{
 
 #endif
 
-            [[nodiscard]] bool has_value() const noexcept
+            [[nodiscard]] constexpr  bool has_value() const noexcept
             {
                 return data != nullptr;
             }

@@ -186,11 +186,34 @@ namespace babel::ALGO{
         return std::accumulate(begin, end, first);
     }
 
-    template<typename Container, typename T = typename babel::CONCEPTS::type_in<Container>::type>
-    requires (babel::CONCEPTS::IS_FLOATING_POINT<T> && babel::CONCEPTS::IS_CONTAINER<Container>)
+    template< typename T, typename U = typename babel::CONCEPTS::type_in<T>::type >
+    requires babel::CONCEPTS::IS_CONTAINER<T>
+    constexpr U closest_to_mean(const T &container)
+    {
+        if (container.size() == 0)
+            return {};
+        auto _mean = mean(container);
+        auto begin = std::begin(container);
+        auto end = std::end(container);
+        U closest = *begin;
+        U diff = babel::MATH::abs(_mean - *begin);
+        ++begin;
+        for(;begin!=end;++begin){
+            U temp = babel::MATH::abs(_mean - *begin);
+            if (temp < diff)
+            {
+                diff = temp;
+                closest = *begin;
+            }
+        }
+        return closest;
+    }
+
+    template< typename Container, typename T = typename babel::CONCEPTS::type_in<Container>::type >
+    requires ( babel::CONCEPTS::IS_FLOATING_POINT<T> && babel::CONCEPTS::IS_CONTAINER<Container> )
     std::vector<std::complex<T>> FFT(const Container &fn) noexcept
     {
-        std::function<void(std::vector<std::complex<T>>&)> ditfft2;
+        std::function<void(std::vector<std::complex<T>> &)> ditfft2;
         ditfft2 = [&ditfft2](std::vector<std::complex<T>> &fn) -> void {
             const size_t N = fn.size();
             if ( N < 2 ) return;
@@ -214,6 +237,23 @@ namespace babel::ALGO{
         std::vector<std::complex<T>> res(std::begin(fn), std::end(fn));
         ditfft2(res);
         return res;
+    }
+
+    template< typename T >
+    void swap(T &lhs, T &rhs) noexcept
+    {
+        T temp = std::move(lhs);
+        lhs = std::move(rhs);
+        rhs = std::move(temp);
+    }
+
+    template<typename T>
+    requires (std::is_signed_v<T> || std::is_unsigned_v<T>)
+    constexpr auto signed_unsigned_conv(const T data) noexcept
+    {
+        constexpr size_t size = sizeof(data);
+        constexpr bool b = std::is_signed_v<T>;
+        return static_cast< babel::CONCEPTS::type_of_number<8, true>::type >(data);
     }
 
 }

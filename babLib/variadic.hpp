@@ -23,8 +23,6 @@ namespace babel::VARIADIC{
             _put(std::forward<Args>(args)...);
         }
 
-        template< typename U >
-        using decay = typename std::decay_t<U>;
     public:
         constexpr holder() = default;
 

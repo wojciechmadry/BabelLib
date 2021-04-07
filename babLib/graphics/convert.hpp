@@ -21,6 +21,17 @@ namespace babel::GRAPHICS{
         return cmyk(static_cast<byte>(c), static_cast<byte>(m), static_cast<byte>(y), static_cast<byte>(k));
     }
 
+    constexpr rgb CMYK_TO_RGB(const cmyk &_cmyk) noexcept
+    {
+        auto c = static_cast<double>(_cmyk.C())/100.0;
+        auto m = static_cast<double>(_cmyk.M())/100.0;
+        auto y = static_cast<double>(_cmyk.Y())/100.0;
+        auto k = static_cast<double>(_cmyk.K())/100.0;
+        byte r = 255 *(1.0-c) * (1.0-k);
+        byte g = 255 * (1.0-m) * (1.0-k);
+        byte b = 255 * (1.0-y) * (1.0-k);
+        return rgb(r, g, b);
+    }
 
 }
 #endif

@@ -40,7 +40,7 @@ namespace babel::GRAPHICS{
         }
 
     public:
-        constexpr explicit cmyk(const byte C = 0, const byte M = 0, const byte Y = 0,
+        constexpr explicit cmyk(const byte C = 0, const byte M = 0, const byte Y = 0, //NOLINT
                                 const byte K = 0) noexcept //NOLINT
         {
             _set(C, M, Y, K);

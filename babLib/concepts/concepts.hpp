@@ -2,6 +2,7 @@
 #define babel_CONCEPTS
 
 #include <type_traits>
+#include "../must_have.hpp"
 
 namespace babel::CONCEPTS {
     namespace TYPE_TRAITS {
@@ -120,5 +121,57 @@ namespace babel::CONCEPTS {
         typedef std::decay_t<decltype(*Vec{}.begin())> type;
     };
     //END
+
+    template<size_t bytes, bool IsSigned = true>
+    class type_of_number{
+        constexpr static auto babel_type_of() noexcept
+        {
+            if constexpr ( IsSigned )
+            {
+                if constexpr ( bytes == 1 )
+                {
+                    return static_cast<int8_t>(0);
+                }
+                if constexpr ( bytes == 2 )
+                {
+                    return static_cast<int16_t>(0);
+                }
+
+                if constexpr ( bytes == 4 )
+                {
+                    return static_cast<int32_t>(0);
+                }
+
+                if constexpr ( bytes == 8 )
+                {
+                    return static_cast<int64_t>(0);
+                }
+            }
+
+            if constexpr ( !IsSigned )
+            {
+                if constexpr ( bytes == 1 )
+                {
+                    return static_cast<uint8_t>(0);
+                }
+                if constexpr ( bytes == 2 )
+                {
+                    return static_cast<uint16_t>(0);
+                }
+
+                if constexpr ( bytes == 4 )
+                {
+                    return static_cast<uint32_t>(0);
+                }
+
+                if constexpr ( bytes == 8 )
+                {
+                    return static_cast<uint64_t>(0);
+                }
+            }
+        }
+    public:
+        typedef decltype(babel_type_of()) type;
+    };
 }
 #endif

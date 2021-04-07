@@ -39,6 +39,7 @@ namespace _BABEL_PRIVATE_DO_NOT_USE //NOLINT
         }
 
     public:
+
         static constexpr void babel_pow(uint64_t F[2][2], unsigned n) noexcept
         {
             if ( n < 2 )
