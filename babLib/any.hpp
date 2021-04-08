@@ -39,8 +39,6 @@ namespace babel::ANY{
                      babel::CONCEPTS::IS_SAME<Any, PolAny::any>
             friend const T &babel::ANY::cast_any(const Any &any);//NOLINT
 
-            template< size_t ID, typename T, typename U >
-            friend auto babel::ANY::make_any(T &&object) noexcept; //NOLINT
             void *data;
 
             template< typename T >
@@ -88,6 +86,22 @@ namespace babel::ANY{
                 void *temp = data;
                 data = other.data;
                 other.data = temp;
+            }
+
+            template <typename T>
+            T& cast()
+            {
+                if (data)
+                    return *static_cast<T*>(data);
+                throw std::invalid_argument("Data is nullptr");
+            }
+
+            template <typename T>
+            const T& cast() const
+            {
+                if (data)
+                    return *static_cast<T*>(data);
+                throw std::invalid_argument("Data is nullptr");
             }
 
             template< typename T, typename U = typename std::decay_t<T>>
@@ -139,8 +153,8 @@ namespace babel::ANY{
     namespace PolAny{
         class any;
 
-        template< typename T, typename U = typename std::decay<T>::type, typename ... Args >
-        any make_any(Args &&... args) noexcept;
+        template< typename T >
+        any make_any(T&& data) noexcept;
 
         class any
         {
@@ -152,9 +166,6 @@ namespace babel::ANY{
             requires babel::CONCEPTS::IS_SAME<Any, VoidAny::any> ||
                      babel::CONCEPTS::IS_SAME<Any, PolAny::any>
             friend T &babel::ANY::cast_any(Any &any); //NOLINT
-
-            template< size_t ID, typename T, typename U >
-            friend auto babel::ANY::make_any(T &&object) noexcept; //NOLINT
 
             struct __base__any //NOLINT
             {
@@ -327,7 +338,11 @@ namespace babel::ANY{
             }
         };
 
-
+        template< typename T >
+        any make_any(T&& data) noexcept
+        {
+            return any(std::forward<T>(data));
+        }
     }
 
     template< typename T, typename Any >
@@ -373,17 +388,6 @@ namespace babel::ANY{
             VoidAny::destroy_any<T>(any);
         if constexpr ( babel::CONCEPTS::IS_SAME<Any, PolAny::any> )
             any.reset();
-    }
-
-    template< size_t ID, typename T, typename U >
-    auto make_any(T &&object) noexcept
-    {
-        static_assert(ID < 2, "ID : 0 - VoidAny, 1 - PolAny");
-        if constexpr( ID == 0 )
-            return VoidAny::any(std::forward<T>(object));
-        if constexpr( ID == 1 )
-            return PolAny::any {.storage = new PolAny::any::_data<U> {std::forward<T>(object)}};
-
     }
 }
 

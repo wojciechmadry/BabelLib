@@ -132,12 +132,12 @@ namespace TESTING{
         assert(babel::MATH::abs(-5) == 5 && babel::MATH::abs(5) == 5);
 
         assert(babel::MATH::max(15, 5) == 15 && babel::MATH::max(5, 15) == 15);
-        assert(babel::MATH::max(0,13,2,5,2,20) == 20);
+        assert(babel::MATH::max(0, 13, 2, 5, 2, 20) == 20);
 
         assert(babel::MATH::min(15, 5) == 5 && babel::MATH::min(5, 15) == 5);
-        assert(babel::MATH::min(0,13,2,5,2,20,-1) == -1);
+        assert(babel::MATH::min(0, 13, 2, 5, 2, 20, -1) == -1);
 
-        std::vector<int> cont = {3,5,2,-1,5,8};
+        std::vector<int> cont = {3, 5, 2, -1, 5, 8};
 
         assert(babel::MATH::max(cont) == 8 && babel::MATH::min(cont) == -1);
 
@@ -146,27 +146,113 @@ namespace TESTING{
         assert(babel::MATH::factorial(5) == babel::MATH::factorial<5>() && babel::MATH::factorial(5) == 120);
 
         double d = babel::MATH::binomial_coefficient<5, 3>();
-        assert( babel::MATH::binomial_coefficient(5, 3) == d );
+        assert(babel::MATH::binomial_coefficient(5, 3) == d);
 
         assert(babel::MATH::fib(4) == 3);
         assert(babel::MATH::fib(6) == 8);
-        assert(compare(babel::MATH::delta(2,4,3),-8));
+        assert(compare(babel::MATH::delta(2, 4, 3), -8));
         assert(babel::MATH::square_area(3) == 9);
         assert(babel::MATH::square_circumference(3) == 12);
         assert(babel::MATH::cube_volume(4) == 64);
         assert(babel::MATH::rectangle_area(3, 2) == 6);
         assert(babel::MATH::rectangle_circumference(3, 2) == 10);
-        assert(babel::MATH::cuboid_volume(2,3,4) == 24);
+        assert(babel::MATH::cuboid_volume(2, 3, 4) == 24);
         assert(compare(babel::MATH::circle_area<double>(3), 28.26));
         assert(compare(babel::MATH::circle_area<int>(3), 28));
-        assert(compare(babel::MATH::circle_circumference<double>(3), 18.84 ));
-        assert(compare(babel::MATH::circle_circumference<int>(3), 18 ));
+        assert(compare(babel::MATH::circle_circumference<double>(3), 18.84));
+        assert(compare(babel::MATH::circle_circumference<int>(3), 18));
         assert(compare(babel::MATH::sphere_volume<double>(4), 267.94, 0.5));
         assert(compare(babel::MATH::sphere_volume<int>(4), 268));
-        assert(compare(babel::MATH::cylinder_volume<double>(3, 8), babel::MATH::circle_area<double>(3)*8.0 ) );
-        assert(compare(babel::MATH::cone_volume<double>(3, 2), babel::MATH::cylinder_volume<double>(3,2) * 1.0/3.0 ));
-        assert(compare(babel::MATH::kW_to_HP<double>(babel::MATH::HP_to_kW<double>(30)), babel::MATH::kW_to_HP<double>(babel::MATH::HP_to_kW<double>(30))));
-        assert(babel::MATH::map<double>(305,5,905,0,1) >= 0.0 && babel::MATH::map<double>(305,5,905,0,1) <= 1.0);
+        assert(compare(babel::MATH::cylinder_volume<double>(3, 8), babel::MATH::circle_area<double>(3) * 8.0));
+        assert(compare(babel::MATH::cone_volume<double>(3, 2), babel::MATH::cylinder_volume<double>(3, 2) * 1.0 / 3.0));
+        assert(compare(babel::MATH::kW_to_HP<double>(babel::MATH::HP_to_kW<double>(30)),
+                       babel::MATH::kW_to_HP<double>(babel::MATH::HP_to_kW<double>(30))));
+        assert(babel::MATH::map<double>(305, 5, 905, 0, 1) >= 0.0 &&
+               babel::MATH::map<double>(305, 5, 905, 0, 1) <= 1.0);
+
+    }
+
+    void FILE_SYSTEM_HPP() //DONE
+    {
+        std::ifstream f1("../main.cpp");
+        std::ifstream f2("../babel.hpp");
+        assert(f1.is_open() && f2.is_open());
+        babel::FILE_SYS::close_file(f1, f2);
+        assert(!f1.is_open() && !f2.is_open());
+        auto files = babel::FILE_SYS::scan_folder("../babLib");
+        assert(babel::FILE_SYS::file_extension(files[0]) == "hpp");
+        assert(babel::FILE_SYS::file_without_extension(files[0]).find("hpp") == std::string::npos);
+        assert(babel::FILE_SYS::filename_contain(files[0], "hpp"));
+    }
+
+    void CHAR_HPP()
+    {
+        using CHAR = babel::CHAR::ASCII_CHAR;
+        CHAR c;
+        c = 'A';
+        assert(c.get() == 'A');
+        c.get_by_ref() = 'B';
+        assert(c.get() == 'B');
+        c.set('D');
+        assert(c.get() == 'D');
+        assert(!c.is_number() && c.is_alphabetical() && !c.is_lower() && !c.is_space() && c.is_upper());
+        c.set('a');
+        assert(!c.is_number() && c.is_alphabetical() && c.is_lower() && !c.is_space() && !c.is_upper());
+        c.set('5');
+        assert(c.is_number() && !c.is_alphabetical() && !c.is_lower() && !c.is_space() && !c.is_upper());
+        c.set(' ');
+        assert(!c.is_number() && !c.is_alphabetical() && !c.is_lower() && c.is_space() && !c.is_upper());
+        c.set('d');
+        assert(c.to_upper() == 'D');
+        c.set('D');
+        assert(c.to_lower() == 'd');
+        c.set('5');
+        assert(c.to_int_number() == 5);
+        c.set_number(6);
+        assert(c.get() == '6');
+    }
+
+
+    void ANY_HPP_VOID_ANY() // DONE
+    {
+        using vid = babel::ANY::VoidAny::any;
+        vid d1(15);
+        vid d2(std::make_unique<int>(25));
+        vid d3 = babel::ANY::VoidAny::make_any(std::make_unique<int>(33));
+        vid d4;
+        assert(!d4.has_value() && d3.has_value() && d2.has_value() && d1.has_value());
+        d2.swap(d3);
+        assert(babel::ANY::cast_any<int>(d1) == 15);
+        assert(*babel::ANY::cast_any<std::unique_ptr<int>>(d2) == 33);
+        assert(*babel::ANY::cast_any<std::unique_ptr<int>>(d3) == 25);
+        babel::ANY::VoidAny::destroy_any<int>(d1);
+        babel::ANY::VoidAny::destroy_any<std::unique_ptr<int>>(d2);
+        babel::ANY::VoidAny::destroy_any<std::unique_ptr<int>>(d3);
+        d4 = std::string("pies");
+        babel::ANY::destroy_any<std::string>(d4);
+        assert(!d4.has_value() && !d2.has_value());
+        std::string t = "pies";
+        auto d5 = babel::ANY::VoidAny::make_any(std::move(t));
+        assert(d5.cast<std::string>() == "pies" && t == "");
+        babel::ANY::destroy_any<std::string>(d5);
+    }
+
+    void ANY_HPP_POLY_ANY() // DONE
+    {
+        using vid = babel::ANY::PolAny::any;
+        vid d1(31);
+        vid d2(babel::ANY::PolAny::make_any(33));
+        assert(d1.has_value() && d1.cast<int>() == 31);
+        assert(d2.has_value() && d2.cast<int>() == 33);
+        std::string test = "pies";
+        vid d3(babel::ANY::PolAny::make_any(test));
+        assert(d3.cast<std::string>() == "pies" && test == "pies");
+        vid d4(babel::ANY::PolAny::make_any(std::move(test)));
+        assert(d4.cast<std::string>() == "pies" && test == "");
+    }
+
+    void ALGORITHM_HPP()
+    {
 
     }
 
@@ -179,6 +265,11 @@ namespace TESTING{
             OPTIONAL_HPP();
             MUST_HAVE_HPP();
             MATH_HPP();
+            FILE_SYSTEM_HPP();
+            CHAR_HPP();
+            ANY_HPP_VOID_ANY();
+            ANY_HPP_POLY_ANY();
+            ALGORITHM_HPP();
         };
         if ( times <= 0 )
         {
