@@ -171,4 +171,12 @@ iostream
 -
 babel.hpp
 F:/BabelLibrary/babellib/babel.hpp
+tester.hpp
+F:/BabelLibrary/babellib/tester.hpp
+
+F:/BabelLibrary/babellib/tester.hpp
+babel.hpp
+F:/BabelLibrary/babellib/babel.hpp
+cassert
+F:/BabelLibrary/babellib/cassert
 

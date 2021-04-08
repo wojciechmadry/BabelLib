@@ -24,4 +24,5 @@ CMakeFiles/ClionProject.dir/main.cpp.obj: ../babLib/windows/windowsConv.hpp
 CMakeFiles/ClionProject.dir/main.cpp.obj: ../babLib/wraper.hpp
 CMakeFiles/ClionProject.dir/main.cpp.obj: ../babel.hpp
 CMakeFiles/ClionProject.dir/main.cpp.obj: ../main.cpp
+CMakeFiles/ClionProject.dir/main.cpp.obj: ../tester.hpp
 

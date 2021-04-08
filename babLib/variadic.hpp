@@ -11,12 +11,14 @@ namespace babel::VARIADIC{
         std::vector<Type> _hold;
 
         template< typename U = Type >
+        requires (std::is_same_v<std::decay_t<U>, std::decay_t<Type>>)
         constexpr void _put(U &&_a1) noexcept
         {
             _hold.push_back(std::forward<U>(_a1));
         }
 
         template< typename U = Type, typename ... Args >
+        requires (std::is_same_v<std::decay_t<U>, std::decay_t<Type>>)
         constexpr void _put(U &&_a1, Args &&...args) noexcept
         {
             _put(std::forward<U>(_a1));
@@ -26,22 +28,35 @@ namespace babel::VARIADIC{
     public:
         constexpr holder() = default;
 
-        template< typename ... Hold >
-        constexpr explicit holder(Hold &&... args) noexcept
-        {
-            _put(std::forward<Hold>(args)...);
-        }
-
 
         constexpr holder(const holder &other) noexcept
         {
             _hold = other._hold;
         }
 
+
         constexpr holder(holder &&other) noexcept
         {
             _hold = std::move(other._hold);
         }
+
+        template< typename T = Type>
+        requires(!std::is_same_v<std::decay_t<T>, std::decay_t<holder>>)
+        constexpr explicit holder(T&& arg) noexcept //NOLINT
+        {
+            _put(std::forward<T>(arg));
+        }
+
+        template< typename T = Type, typename ... Hold>
+        requires(!std::is_same_v<std::decay_t<T>, std::decay_t<holder>>)
+        constexpr explicit holder(T&& arg, Hold &&... args) noexcept
+        {
+            _put(std::forward<T>(arg));
+            _put(std::forward<Hold>(args)...);
+        }
+
+
+
 
         constexpr holder &operator=(const holder &other) noexcept
         {
