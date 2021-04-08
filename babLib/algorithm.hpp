@@ -190,17 +190,18 @@ namespace babel::ALGO{
     requires babel::CONCEPTS::IS_CONTAINER<T>
     constexpr U closest_to_mean(const T &container)
     {
-        if (container.size() == 0)
-            return {};
+        if ( container.size() == 0 )
+            return { };
         auto _mean = mean(container);
         auto begin = std::begin(container);
         auto end = std::end(container);
         U closest = *begin;
         U diff = babel::MATH::abs(_mean - *begin);
         ++begin;
-        for(;begin!=end;++begin){
+        for ( ; begin != end ; ++begin )
+        {
             U temp = babel::MATH::abs(_mean - *begin);
-            if (temp < diff)
+            if ( temp < diff )
             {
                 diff = temp;
                 closest = *begin;
@@ -247,13 +248,11 @@ namespace babel::ALGO{
         rhs = std::move(temp);
     }
 
-    template<typename T>
-    requires (std::is_signed_v<T> || std::is_unsigned_v<T>)
+    template< typename T >
+    requires ( std::is_signed_v<T> || std::is_unsigned_v<T> )
     constexpr auto signed_unsigned_conv(const T data) noexcept
     {
-        constexpr size_t size = sizeof(data);
-        constexpr bool b = std::is_signed_v<T>;
-        return static_cast< babel::CONCEPTS::type_of_number<8, true>::type >(data);
+        return static_cast< typename babel::CONCEPTS::type_of_number<sizeof(data), !std::is_signed_v<T>>::type >(data);
     }
 
 }
