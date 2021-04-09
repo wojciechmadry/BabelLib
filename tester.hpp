@@ -251,9 +251,68 @@ namespace TESTING{
         assert(d4.cast<std::string>() == "pies" && test == "");
     }
 
-    void ALGORITHM_HPP()
+    void ALGORITHM_HPP() // DONE
     {
+        std::string INT = "-32";
+        std::string UINT = "33";
+        std::string DOUBLE = "33.03";
+        auto i = babel::ALGO::string_to<int>(INT);
+        auto ui = babel::ALGO::string_to<unsigned int>(UINT);
+        auto d = babel::ALGO::string_to<double>(DOUBLE);
+        assert(i == -32 && ui == 33 && d > 33.029 && d < 33.031);
+        assert(babel::ALGO::abs(-5) == 5);
+        std::vector<int> p = {-3, 2, 1, -5, 3};
+        babel::ALGO::abs(p);
+        for(auto el : p)
+            assert (el >= 0);
+        assert(babel::ALGO::count(p, 3) == 2);
+        assert(babel::ALGO::count_if(p, [](int g){return g<=2;}) == 2);
+        auto mm = babel::ALGO::find_min_max(p);
+        assert(mm.first == 1 && mm.second == 5);
+        assert(babel::ALGO::mean(p) == 2);
+        std::vector<double> pd = {3, 2, 1, 5, 3};
+        babel::ALGO::normalize(pd);
+        for(auto data : pd)
+            assert(data>=0.0 && data <= 1.0);
+        assert(babel::ALGO::sum(p) == 14);
+        assert(babel::ALGO::closest_to_mean(p) == 2);
+        babel::ALGO::FFT(pd);
+        int temp = -3;
+        auto temp2 = babel::ALGO::signed_unsigned_conv(temp);
+        assert (temp2 >= 0);
+    }
 
+    void WINDOWSCONV_HPP() //DONE
+    {
+        std::string str = "testowy napis";
+        auto lpc = babel::WINDOWS::CONVERSION::str_to_lpcwstr(str);
+        auto p = lpc.get_LPCWSTR();
+        auto& ws = lpc.get_wstring();
+    }
+
+    void REQUEST_HPP() //DONE
+    {
+        babel::REQ::request req;
+        assert(!req.has_request() && req.is_empty() && req.request_size() == 0);
+        req.clear();
+        int p = 0;
+        req.send_req([](){return 33;},&p);
+        req.send_req([](){return 37;},&p);
+        assert(req.has_request() && !req.is_empty() && req.request_size() == 2);
+        req.pop();
+        assert(req.has_request() && !req.is_empty() && req.request_size() == 1);
+        req.call();
+        assert(!req.has_request() && req.is_empty() && req.request_size() == 0);
+        assert(p == 37);
+        req.call_all();
+        req.pop_n_if_possible(100);
+        std::unique_ptr<int> pq;
+        req.send_req([](){return std::make_unique<int>(13);},&pq);
+        req.call_if_possible();
+        assert(*pq == 13);
+        req.send_req([](const std::unique_ptr<int>& uq){return std::make_unique<int>((*uq)*2);},&pq, pq);
+        req.call_n(1);
+        assert(*pq == 26);
     }
 
     void START_ALL_TEST(const int times = 1)
@@ -270,6 +329,8 @@ namespace TESTING{
             ANY_HPP_VOID_ANY();
             ANY_HPP_POLY_ANY();
             ALGORITHM_HPP();
+            WINDOWSCONV_HPP();
+            REQUEST_HPP();
         };
         if ( times <= 0 )
         {
