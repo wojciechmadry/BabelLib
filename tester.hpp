@@ -263,23 +263,132 @@ namespace TESTING{
         assert(babel::ALGO::abs(-5) == 5);
         std::vector<int> p = {-3, 2, 1, -5, 3};
         babel::ALGO::abs(p);
-        for(auto el : p)
+        for ( auto el : p )
             assert (el >= 0);
         assert(babel::ALGO::count(p, 3) == 2);
-        assert(babel::ALGO::count_if(p, [](int g){return g<=2;}) == 2);
+        assert(babel::ALGO::count_if(p, [](int g) { return g <= 2; }) == 2);
         auto mm = babel::ALGO::find_min_max(p);
         assert(mm.first == 1 && mm.second == 5);
         assert(babel::ALGO::mean(p) == 2);
         std::vector<double> pd = {3, 2, 1, 5, 3};
         babel::ALGO::normalize(pd);
-        for(auto data : pd)
-            assert(data>=0.0 && data <= 1.0);
+        for ( auto data : pd )
+            assert(data >= 0.0 && data <= 1.0);
         assert(babel::ALGO::sum(p) == 14);
         assert(babel::ALGO::closest_to_mean(p) == 2);
         babel::ALGO::FFT(pd);
         int temp = -3;
         auto temp2 = babel::ALGO::signed_unsigned_conv(temp);
         assert (temp2 >= 0);
+        std::vector<int> v = {0, 1, 2, 3, 4, 5, 6, 7};
+        auto v1 = babel::ALGO::drop(v, 3);
+        for ( size_t j = 0 ; j < v1.size() ; ++j )
+            assert(v1[j] == j + 3);
+        v1 = babel::ALGO::drop(v, 300);
+        assert(v1.empty());
+        v1 = babel::ALGO::take(v, 3);
+        for ( size_t j = 0 ; j < v1.size() ; ++j )
+            assert(v1[j] == j);
+        v1 = babel::ALGO::take(v, 300);
+        for ( size_t j = 0 ; j < v1.size() ; ++j )
+            assert(v1[j] == j);
+        assert(v1.size() == v.size() && v1 == v);
+
+        v1 = babel::ALGO::repeat(v, 3);
+        for ( int j = 0 ; j < 3 ; ++j )
+            assert(std::vector<int>(v1.begin() + j * 8, v1.begin() + 8 * ( j + 1 )) == v);
+        v1 = babel::ALGO::stride(v, 3);
+        assert(v1.size() == 3 && v1[0] == 0 && v1[1] == 3 && v1[2] == 6);
+        v.push_back(8);
+        v1 = babel::ALGO::stride(v, 3);
+        assert(v1.size() == 3 && v1[0] == 0 && v1[1] == 3 && v1[2] == 6);
+        v.push_back(9);
+        v1 = babel::ALGO::stride(v, 3);
+        assert(v1.size() == 4 && v1[0] == 0 && v1[1] == 3 && v1[2] == 6 && v1[3] == 9);
+        v = {0, 1, 2, 3, 4, 5, 6, 7};
+        v = {0, 1, 2, 3, 4, 5, 6};
+        v1 = babel::ALGO::stride(v, 3);
+        assert(v1.size() == 3 && v1[0] == 0 && v1[1] == 3 && v1[2] == 6);
+        v = {0, 1, 2, 3, 4, 5};
+        v1 = babel::ALGO::stride(v, 3);
+        assert(v1.size() == 2 && v1[0] == 0 && v1[1] == 3);
+        v = {0, 1, 2, 3, 4, 5, 6, 7};
+        v1 = babel::ALGO::stride(v, 1);
+        for ( size_t j = 0 ; j < v1.size() ; ++j )
+            assert(v[j] == v1[j]);
+        v1 = babel::ALGO::stride(v, 2);
+        assert(v1.size() == 4 && v1[0] == 0 && v1[3] == 6);
+        v.push_back(8);
+        v1 = babel::ALGO::stride(v, 2);
+        assert(v1.size() == 5 && v1[0] == 0 && v1[4] == 8);
+        v.pop_back();
+        v.pop_back();
+        v1 = babel::ALGO::stride(v, 2);
+        assert(v1.size() == 4 && v1[0] == 0 && v1[3] == 6);
+        v.pop_back();
+        v1 = babel::ALGO::stride(v, 2);
+        assert(v1.size() == 3 && v1[0] == 0 && v1[2] == 4);
+        v = {0, 1, 2, 3, 4, 5, 6, 7};
+        v1 = babel::ALGO::stride(v, 5);
+        assert(v1.size() == 2 && v1[1] == 5);
+        v1 = babel::ALGO::stride(v, 10);
+        assert(v1.size() == 1 && v1[0] == 0);
+        v1 = babel::ALGO::stride(v, 4);
+        assert(v1.size() == 2 && v1[1] == 4);
+
+        v.clear();
+        size_t s = rand() % 1000 + 5;
+        size_t step = rand() % 100 + 1;
+        for ( size_t j = 0 ; j < s ; ++j )
+            v.emplace_back(rand() % 100);
+        v1 = babel::ALGO::stride(v, step);
+        v = {0, 1, 2, 3, 4, 5, 6, 7};
+        v1 = babel::ALGO::drop_idx(v, 2);
+        for ( size_t j = 0 ; j < 2 ; ++j )
+            assert(v1[j] == j);
+        for ( size_t j = 2 ; j < v1.size() ; ++j )
+            assert(v1[j] == j + 1);
+        assert(v1.size() + 1 == v.size());
+        v = { };
+        v1 = babel::ALGO::drop_idx(v, 2);
+        assert(v1.empty());
+        v = {5};
+        v1 = babel::ALGO::drop_idx(v, 2);
+        assert(v1.size() == 1 && v1[0] == 5);
+        v1 = babel::ALGO::drop_idx(v, 0);
+        assert(v1.empty());
+        v = {0, 1, 2, 3, 4, 5, 6, 7};
+        v1 = babel::ALGO::drop_last(v, 3);
+        assert(v1.size() == 5);
+        for ( size_t j = 0 ; j < v1.size() ; ++j )
+            assert(v1[j] == j);
+        v = {1};
+        v1 = babel::ALGO::drop_last(v, 0);
+        assert(v1.size() == 1 && v1[0] == 1);
+        v1 = babel::ALGO::drop_last(v, 1);
+        assert(v1.empty());
+        v1 = babel::ALGO::drop_last(v, 1);
+        assert(v1.empty());
+        v = {0, 1, 2, 3, 4, 5, 6, 7};
+        v1 = babel::ALGO::take_last(v, 3);
+        assert(v1.size() == 3 && v1[0] == 5 && v1[1] == 6 && v1[2] == 7);
+        v = {0, 1};
+        v1 = babel::ALGO::take_cyclic(v, 4);
+        assert(v1.size() == 4 && v1[0] == 0 && v1[1] == 1 && v1[2] == 0 && v1[3] == 1);
+        v1 = babel::ALGO::take_cyclic(v, 5);
+        assert(v1.size() == 5 && v1[0] == 0 && v1[1] == 1 && v1[2] == 0 && v1[3] == 1 && v1[4] == 0);
+        v = {1, 2};
+        v1 = babel::ALGO::replicate_elems(v, 3);
+        v = {1,1,1,2,2,2};
+        assert(v1.size() == 6 && v == v1);
+        v = {1, 2};
+        v1 = babel::ALGO::replicate_elems(v, 4);
+        v = {1,1,1,1,2,2,2,2};
+        assert(v1.size() == 8 && v == v1);
+
+
+
+
     }
 
     void WINDOWSCONV_HPP() //DONE
@@ -287,7 +396,7 @@ namespace TESTING{
         std::string str = "testowy napis";
         auto lpc = babel::WINDOWS::CONVERSION::str_to_lpcwstr(str);
         auto p = lpc.get_LPCWSTR();
-        auto& ws = lpc.get_wstring();
+        auto &ws = lpc.get_wstring();
     }
 
     void REQUEST_HPP() //DONE
@@ -296,8 +405,8 @@ namespace TESTING{
         assert(!req.has_request() && req.is_empty() && req.request_size() == 0);
         req.clear();
         int p = 0;
-        req.send_req([](){return 33;},&p);
-        req.send_req([](){return 37;},&p);
+        req.send_req([]() { return 33; }, &p);
+        req.send_req([]() { return 37; }, &p);
         assert(req.has_request() && !req.is_empty() && req.request_size() == 2);
         req.pop();
         assert(req.has_request() && !req.is_empty() && req.request_size() == 1);
@@ -307,10 +416,10 @@ namespace TESTING{
         req.call_all();
         req.pop_n_if_possible(100);
         std::unique_ptr<int> pq;
-        req.send_req([](){return std::make_unique<int>(13);},&pq);
+        req.send_req([]() { return std::make_unique<int>(13); }, &pq);
         req.call_if_possible();
         assert(*pq == 13);
-        req.send_req([](const std::unique_ptr<int>& uq){return std::make_unique<int>((*uq)*2);},&pq, pq);
+        req.send_req([](const std::unique_ptr<int> &uq) { return std::make_unique<int>(( *uq ) * 2); }, &pq, pq);
         req.call_n(1);
         assert(*pq == 26);
     }

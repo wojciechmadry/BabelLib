@@ -255,6 +255,136 @@ namespace babel::ALGO{
         return static_cast< typename babel::CONCEPTS::type_of_number<sizeof(data), !std::is_signed_v<T>>::type >(data);
     }
 
+    template<typename Container>
+    requires babel::CONCEPTS::IS_CONTAINER<Container>
+    [[nodiscard]] Container drop(const Container& cont, const size_t n) noexcept
+    {
+        if (n > cont.size())
+            return {};
+        return {std::begin(cont) + n, std::end(cont)};
+    }
+
+    template<typename Container>
+    requires babel::CONCEPTS::IS_CONTAINER<Container>
+    [[nodiscard]] Container take(const Container& cont, const size_t n) noexcept
+    {
+        if (n >= cont.size())
+            return cont;
+        return {std::begin(cont), std::begin(cont)+n};
+    }
+
+    template<typename Container>
+    requires babel::CONCEPTS::IS_LIKE_VECTOR<Container>
+    [[nodiscard]] Container repeat(const Container& cont, const size_t n) noexcept
+    {
+        if ( n <= 1)
+            return cont;
+
+        Container RET(n * cont.size());
+
+        auto rbegin = std::begin(RET);
+        auto cbegin = std::begin(cont);
+
+        auto rend = std::end(RET);
+        auto cend = std::end(cont);
+
+        while (rbegin != rend)
+        {
+            *rbegin = *cbegin;
+            ++rbegin;
+            ++cbegin;
+            if (cbegin == cend)
+                cbegin = std::begin(cont);
+        }
+
+        return RET;
+    }
+
+    template<typename Container>
+    requires babel::CONCEPTS::IS_LIKE_VECTOR<Container>
+    [[nodiscard]] Container stride(const Container& cont, const size_t n) noexcept
+    {
+        if (n <= 1)
+            return cont;
+        size_t k = 0;
+        size_t index = 0;
+        Container res (static_cast<size_t>(std::ceil(static_cast<double>(cont.size()) / static_cast<double>(n))));
+        while(k < res.size())
+        {
+            res[k] = cont[index];
+            ++k;
+            index += n;
+        }
+        return res;
+    }
+
+    template<typename Container>
+    requires babel::CONCEPTS::IS_LIKE_VECTOR<Container>
+    [[nodiscard]] Container drop_idx(const Container& cont, const size_t index) noexcept
+    {
+        if (cont.empty() || index >= cont.size() )
+            return cont;
+        Container res(cont.size() - 1);
+        for(size_t i = 0 ; i < index ; ++i)
+            res[i] = cont[i];
+        for(size_t i = index + 1 ; i < cont.size() ; ++i)
+            res[i - 1] = cont[i];
+        return res;
+    }
+
+    template<typename Container>
+    requires babel::CONCEPTS::IS_CONTAINER<Container>
+    [[nodiscard]] Container drop_last(const Container& cont, const size_t n) noexcept
+    {
+        if (n > cont.size())
+            return {};
+        return {std::begin(cont), std::end(cont) - n};
+    }
+
+
+    template<typename Container>
+    requires babel::CONCEPTS::IS_CONTAINER<Container>
+    [[nodiscard]] Container take_last(const Container& cont, const size_t n) noexcept
+    {
+        if (n >= cont.size())
+            return cont;
+        return {std::end(cont) - n, std::end(cont)};
+    }
+
+    template<typename Container>
+    requires babel::CONCEPTS::IS_CONTAINER<Container>
+    [[nodiscard]] Container take_cyclic(const Container& cont, const size_t n) noexcept
+    {
+        if (n == cont.size() || cont.size() == 0)
+            return cont;
+        Container res(n);
+        auto N = cont.size();
+        for(size_t i = 0 ; i < res.size() ; ++i)
+            res[i] = cont[i%N];
+        return res;
+    }
+
+    template<typename Container>
+    requires babel::CONCEPTS::IS_CONTAINER<Container>
+    [[nodiscard]] Container replicate_elems(const Container& cont, const size_t n) noexcept
+    {
+        if (n == 0)
+            return {};
+        else if (n == 1)
+            return cont;
+
+        Container res(n * cont.size());
+        auto N = cont.size();
+        size_t index = 0;
+        for(size_t i = 0 ; i < N ; ++i)
+           for(size_t j = 0 ; j < n ; ++j, ++index)
+           {
+               res[index] = cont[i];
+           }
+        return res;
+    }
+
+
 }
 
 

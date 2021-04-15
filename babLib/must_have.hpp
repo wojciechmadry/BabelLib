@@ -19,6 +19,7 @@
 #include <complex>
 #include <numbers>
 #include <list>
+#include <random>
 
 namespace _BABEL_PRIVATE_DO_NOT_USE //NOLINT
 {
