@@ -83,9 +83,25 @@ namespace babel::FILE_SYS{
 *  @param  contain text we want to find in filename.
 *  @return If filename contains contain return 1 otherwise return 0
 */
-    bool filename_contain(const std::string_view &filename, const std::string_view &contain) noexcept
+    bool filename_contain(const std::string_view filename, const std::string_view contain) noexcept
     {
         return filename.find(contain) != std::string::npos;
+    }
+
+    std::string load_txt(const std::string& filename) noexcept
+    {
+        std::string out, line;
+        std::ifstream file(filename, std::ios::in | std::ios::binary);
+        if (!(file.good() && file.is_open()))
+            return out;
+        while(std::getline(file, line))
+        {
+            out += line;
+            if (line[line.size() - 1] != '\n')
+                out += '\n';
+        }
+        close_file(file);
+        return out;
     }
 }
 

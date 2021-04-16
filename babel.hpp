@@ -8,6 +8,7 @@
 #include "babLib/math.hpp"
 #include "babLib/optional.hpp"
 #include "babLib/time.hpp"
+#include "babLib/text.hpp"
 #include "babLib/windows/windowsConv.hpp"
 #include "babLib/wraper.hpp"
 #include "babLib/matrix/matrix.hpp"

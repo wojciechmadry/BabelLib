@@ -183,6 +183,7 @@ namespace TESTING{
         assert(babel::FILE_SYS::file_extension(files[0]) == "hpp");
         assert(babel::FILE_SYS::file_without_extension(files[0]).find("hpp") == std::string::npos);
         assert(babel::FILE_SYS::filename_contain(files[0], "hpp"));
+        //auto li = babel::FILE_SYS::load_txt("../loremipsum.txt");
     }
 
     void CHAR_HPP()
@@ -436,9 +437,15 @@ namespace TESTING{
         assert(*pq == 26);
     }
 
+    void TEXT_HPP()
+    {
+
+    }
+
     void START_ALL_TEST(const int times = 1)
     {
         auto start_test = []() {
+            TEXT_HPP();
             WRAPER_HPP();
             VARIADIC_HPP();
             TIME_HPP();
