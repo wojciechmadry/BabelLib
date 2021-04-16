@@ -255,29 +255,29 @@ namespace babel::ALGO{
         return static_cast< typename babel::CONCEPTS::type_of_number<sizeof(data), !std::is_signed_v<T>>::type >(data);
     }
 
-    template<typename Container>
+    template< typename Container >
     requires babel::CONCEPTS::IS_CONTAINER<Container>
-    [[nodiscard]] Container drop(const Container& cont, const size_t n) noexcept
+    [[nodiscard]] Container drop(const Container &cont, const size_t n) noexcept
     {
-        if (n > cont.size())
-            return {};
+        if ( n > cont.size() )
+            return { };
         return {std::begin(cont) + n, std::end(cont)};
     }
 
-    template<typename Container>
+    template< typename Container >
     requires babel::CONCEPTS::IS_CONTAINER<Container>
-    [[nodiscard]] Container take(const Container& cont, const size_t n) noexcept
+    [[nodiscard]] Container take(const Container &cont, const size_t n) noexcept
     {
-        if (n >= cont.size())
+        if ( n >= cont.size() )
             return cont;
-        return {std::begin(cont), std::begin(cont)+n};
+        return {std::begin(cont), std::begin(cont) + n};
     }
 
-    template<typename Container>
+    template< typename Container >
     requires babel::CONCEPTS::IS_LIKE_VECTOR<Container>
-    [[nodiscard]] Container repeat(const Container& cont, const size_t n) noexcept
+    [[nodiscard]] Container repeat(const Container &cont, const size_t n) noexcept
     {
-        if ( n <= 1)
+        if ( n <= 1 )
             return cont;
 
         Container RET(n * cont.size());
@@ -288,28 +288,28 @@ namespace babel::ALGO{
         auto rend = std::end(RET);
         auto cend = std::end(cont);
 
-        while (rbegin != rend)
+        while ( rbegin != rend )
         {
             *rbegin = *cbegin;
             ++rbegin;
             ++cbegin;
-            if (cbegin == cend)
+            if ( cbegin == cend )
                 cbegin = std::begin(cont);
         }
 
         return RET;
     }
 
-    template<typename Container>
+    template< typename Container >
     requires babel::CONCEPTS::IS_LIKE_VECTOR<Container>
-    [[nodiscard]] Container stride(const Container& cont, const size_t n) noexcept
+    [[nodiscard]] Container stride(const Container &cont, const size_t n) noexcept
     {
-        if (n <= 1)
+        if ( n <= 1 )
             return cont;
         size_t k = 0;
         size_t index = 0;
-        Container res (static_cast<size_t>(std::ceil(static_cast<double>(cont.size()) / static_cast<double>(n))));
-        while(k < res.size())
+        Container res(static_cast<size_t>(std::ceil(static_cast<double>(cont.size()) / static_cast<double>(n))));
+        while ( k < res.size() )
         {
             res[k] = cont[index];
             ++k;
@@ -318,72 +318,103 @@ namespace babel::ALGO{
         return res;
     }
 
-    template<typename Container>
+    template< typename Container >
     requires babel::CONCEPTS::IS_LIKE_VECTOR<Container>
-    [[nodiscard]] Container drop_idx(const Container& cont, const size_t index) noexcept
+    [[nodiscard]] Container drop_idx(const Container &cont, const size_t index) noexcept
     {
-        if (cont.empty() || index >= cont.size() )
+        if ( cont.empty() || index >= cont.size() )
             return cont;
         Container res(cont.size() - 1);
-        for(size_t i = 0 ; i < index ; ++i)
+        for ( size_t i = 0 ; i < index ; ++i )
             res[i] = cont[i];
-        for(size_t i = index + 1 ; i < cont.size() ; ++i)
+        for ( size_t i = index + 1 ; i < cont.size() ; ++i )
             res[i - 1] = cont[i];
         return res;
     }
 
-    template<typename Container>
+    template< typename Container >
     requires babel::CONCEPTS::IS_CONTAINER<Container>
-    [[nodiscard]] Container drop_last(const Container& cont, const size_t n) noexcept
+    [[nodiscard]] Container drop_last(const Container &cont, const size_t n) noexcept
     {
-        if (n > cont.size())
-            return {};
+        if ( n > cont.size() )
+            return { };
         return {std::begin(cont), std::end(cont) - n};
     }
 
 
-    template<typename Container>
+    template< typename Container >
     requires babel::CONCEPTS::IS_CONTAINER<Container>
-    [[nodiscard]] Container take_last(const Container& cont, const size_t n) noexcept
+    [[nodiscard]] Container take_last(const Container &cont, const size_t n) noexcept
     {
-        if (n >= cont.size())
+        if ( n >= cont.size() )
             return cont;
         return {std::end(cont) - n, std::end(cont)};
     }
 
-    template<typename Container>
+    template< typename Container >
     requires babel::CONCEPTS::IS_CONTAINER<Container>
-    [[nodiscard]] Container take_cyclic(const Container& cont, const size_t n) noexcept
+    [[nodiscard]] Container take_cyclic(const Container &cont, const size_t n) noexcept
     {
-        if (n == cont.size() || cont.size() == 0)
+        if ( n == cont.size() || cont.size() == 0 )
             return cont;
         Container res(n);
         auto N = cont.size();
-        for(size_t i = 0 ; i < res.size() ; ++i)
-            res[i] = cont[i%N];
+        for ( size_t i = 0 ; i < res.size() ; ++i )
+            res[i] = cont[i % N];
         return res;
     }
 
-    template<typename Container>
+    template< typename Container >
     requires babel::CONCEPTS::IS_CONTAINER<Container>
-    [[nodiscard]] Container replicate_elems(const Container& cont, const size_t n) noexcept
+    [[nodiscard]] Container replicate_elems(const Container &cont, const size_t n) noexcept
     {
-        if (n == 0)
-            return {};
-        else if (n == 1)
+        if ( n == 0 )
+            return { };
+        else if ( n == 1 )
             return cont;
 
         Container res(n * cont.size());
         auto N = cont.size();
         size_t index = 0;
-        for(size_t i = 0 ; i < N ; ++i)
-           for(size_t j = 0 ; j < n ; ++j, ++index)
-           {
-               res[index] = cont[i];
-           }
+        for ( size_t i = 0 ; i < N ; ++i )
+            for ( size_t j = 0 ; j < n ; ++j, ++index )
+            {
+                res[index] = cont[i];
+            }
         return res;
     }
 
+    template< typename Container, typename T = typename babel::CONCEPTS::type_in<Container>::type >
+    requires babel::CONCEPTS::IS_LIKE_VECTOR<Container>
+    [[nodiscard]] std::vector<std::pair<size_t, T>> enumerate(const Container &cont) noexcept
+    {
+        std::vector<std::pair<size_t, T>> res;
+        for ( size_t i = 0 ; i < cont.size() ; ++i )
+            res.emplace_back(i, cont[i]);
+        return res;
+    }
+
+    template< typename Container, typename T = typename babel::CONCEPTS::type_in<Container>::type >
+    requires babel::CONCEPTS::IS_LIKE_VECTOR<Container>
+    [[nodiscard]] std::vector<std::pair<size_t, T>> run_length_encode(const Container &cont) noexcept
+    {
+        std::vector<std::pair<size_t, T>> res;
+        if ( cont.size() == 1 )
+            return {{1, cont[0]}};
+        else if (cont.size() == 0)
+            return {};
+        size_t counter = 1;
+        for ( size_t i = 1 ; i < cont.size() ; ++i )
+            if ( cont[i] == cont[i - 1ull] )
+                ++counter;
+            else
+            {
+                res.emplace_back(counter, cont[i - 1ull]);
+                counter = 1;
+            }
+        res.emplace_back(counter, cont[cont.size() - 1ull]);
+        return res;
+    }
 
 }
 

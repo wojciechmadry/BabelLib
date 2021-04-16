@@ -385,10 +385,22 @@ namespace TESTING{
         v1 = babel::ALGO::replicate_elems(v, 4);
         v = {1,1,1,1,2,2,2,2};
         assert(v1.size() == 8 && v == v1);
-
-
-
-
+        auto v2 = babel::ALGO::enumerate(v);
+        assert(v2.size() == v.size());
+        for(size_t j = 0 ; j < v.size() ; ++j)
+            assert(v2[j].first == j && v2[j].second == v[j]);
+        v2 = babel::ALGO::run_length_encode(v);
+        assert(v2.size() == 2);
+        assert(v2[0].first == 4 && v2[0].second == 1 && v2[1].first == 4 && v2[1].second == 2);
+        v = {1,1,1,1,2,2,2,2, 3};
+        v2 = babel::ALGO::run_length_encode(v);
+        assert(v2.size() == 3);
+        assert(v2[0].first == 4 && v2[0].second == 1 && v2[1].first == 4 && v2[1].second == 2 && v2[2].first == 1 && v2[2].second == 3);
+        v = {};
+        v2 = babel::ALGO::run_length_encode(v);
+        assert(v2.empty());
+        v2 = babel::ALGO::enumerate(v);
+        assert(v2.empty());
     }
 
     void WINDOWSCONV_HPP() //DONE
