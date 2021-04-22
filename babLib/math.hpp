@@ -249,7 +249,6 @@ namespace babel::MATH{
         return val < 0 ? 1 : 0;
     }
 
-
     /**
     *  @brief  ex.: n = 3, return : 1 * 2 * 3
     *  @param   n Factorial of n
@@ -457,6 +456,75 @@ namespace babel::MATH{
     {
         return ( ( ( value - fromLow ) * ( toHigh - toLow ) ) / ( fromHigh - fromLow ) ) + toLow;
     }
+
+    template<typename T>
+    requires std::is_integral_v<T>
+    std::vector<T> prime_factors(T number) noexcept
+    {
+        if (number <= 2)
+            return {number};
+        std::vector<T> _res;
+        for(size_t i = 2; i <= number ; ++i)
+            while(number%i == 0)
+            {
+                _res.emplace_back(i);
+                number /= i;
+            }
+        return _res;
+    }
+
+    template<typename T>
+    requires std::is_integral_v<T>
+    constexpr T nwd(T x, T y) noexcept
+    {
+        while (x%y !=0)
+        {
+            T temp = x;
+            x = y;
+            y = temp%y;
+        }
+        return y;
+    }
+
+    template<typename T>
+    requires std::is_integral_v<T>
+    constexpr inline T nww(T x, T y) noexcept
+    {
+        return (x*y) / nwd(x, y);
+    }
+
+    template<typename T>
+    requires std::is_floating_point_v<T>
+    std::vector<T> find_x(const T a, const T b, const T c) noexcept
+    {
+        std::vector<T> zeros;
+        auto _delta = delta(a, b, c);
+        if (_delta > 0)
+        {
+            auto sq_delta = std::sqrt(_delta);
+            auto two_a = 2.0 * a;
+            zeros.emplace_back(( sq_delta - b) / two_a);
+            zeros.emplace_back(( -sq_delta - b) / two_a);
+        }
+        else if (_delta == 0)
+            zeros.emplace_back((-b)/(2.0 * a));
+        return zeros;
+    }
+
+    template<typename T>
+    requires std::is_floating_point_v<T>
+    constexpr inline T distance(const T Ax, const T Ay) noexcept
+    {
+        return babel::MATH::abs(Ax - Ay);
+    }
+
+    template<typename T>
+    requires std::is_floating_point_v<T>
+    constexpr inline T distance(const T Ax, const T Ay, const T Bx , const T By) noexcept
+    {
+        return std::sqrt(std::pow(Bx- Ax, 2.0) + std::pow(By - Ay, 2.0));
+    }
+
 }
 
 

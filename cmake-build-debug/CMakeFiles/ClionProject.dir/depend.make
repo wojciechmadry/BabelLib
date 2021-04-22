@@ -18,6 +18,7 @@ CMakeFiles/ClionProject.dir/main.cpp.obj: ../babLib/matrix/operator_on_matrix.hp
 CMakeFiles/ClionProject.dir/main.cpp.obj: ../babLib/must_have.hpp
 CMakeFiles/ClionProject.dir/main.cpp.obj: ../babLib/optional.hpp
 CMakeFiles/ClionProject.dir/main.cpp.obj: ../babLib/request/request.hpp
+CMakeFiles/ClionProject.dir/main.cpp.obj: ../babLib/text.hpp
 CMakeFiles/ClionProject.dir/main.cpp.obj: ../babLib/time.hpp
 CMakeFiles/ClionProject.dir/main.cpp.obj: ../babLib/variadic.hpp
 CMakeFiles/ClionProject.dir/main.cpp.obj: ../babLib/windows/windowsConv.hpp

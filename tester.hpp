@@ -170,6 +170,31 @@ namespace TESTING{
         assert(babel::MATH::map<double>(305, 5, 905, 0, 1) >= 0.0 &&
                babel::MATH::map<double>(305, 5, 905, 0, 1) <= 1.0);
 
+        auto r = babel::MATH::prime_factors(64);
+        assert(r.size() == 6);
+        for(auto num : r)
+            assert(num == 2);
+        r = babel::MATH::prime_factors(210);
+        assert(r.size() == 4);
+        assert(r[0] == 2 && r[1] == 3 && r[2] == 5 && r[3] == 7);
+        r = babel::MATH::prime_factors(1155);
+        assert(r.size() == 4);
+        assert(r[0] == 3 && r[1] == 5 && r[2] == 7 && r[3] == 11);
+        assert(babel::MATH::nwd(24, 36) == 12);
+        assert(babel::MATH::nww(24, 36) == 72);
+
+        assert(babel::MATH::nwd(256, 24) == 8);
+        assert(babel::MATH::nww(256, 24) == 768);
+
+        auto fx = babel::MATH::find_x(-1.0, -11.0, 12.0);
+        assert(fx.size() == 2 && fx[0] == -12 && fx[1] == 1);
+        fx = babel::MATH::find_x(2.0, -4.0, 2.0);
+        assert(fx.size() == 1 && fx[0] == 1);
+        fx = babel::MATH::find_x(2.0, 6.0, 12.0);
+        assert(fx.empty());
+
+
+
     }
 
     void FILE_SYSTEM_HPP() //DONE

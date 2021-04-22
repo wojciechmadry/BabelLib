@@ -126,6 +126,10 @@ F:/BabelLibrary/babellib/babLib/request/request.hpp
 ../must_have.hpp
 F:/BabelLibrary/babellib/babLib/must_have.hpp
 
+F:/BabelLibrary/babellib/babLib/text.hpp
+file_system.hpp
+F:/BabelLibrary/babellib/babLib/file_system.hpp
+
 F:/BabelLibrary/babellib/babLib/time.hpp
 must_have.hpp
 F:/BabelLibrary/babellib/babLib/must_have.hpp
@@ -157,6 +161,8 @@ babLib/optional.hpp
 F:/BabelLibrary/babellib/babLib/optional.hpp
 babLib/time.hpp
 F:/BabelLibrary/babellib/babLib/time.hpp
+babLib/text.hpp
+F:/BabelLibrary/babellib/babLib/text.hpp
 babLib/windows/windowsConv.hpp
 F:/BabelLibrary/babellib/babLib/windows/windowsConv.hpp
 babLib/wraper.hpp
