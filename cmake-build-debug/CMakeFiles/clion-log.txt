@@ -1,4 +1,4 @@
-"F:\CLion\CLion 2020.2.4\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - MinGW Makefiles" F:\BabelLibrary\babellib
+"F:\CLion\CLion 2020.2.4\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=C:/msys64/mingw64/bin/clang++.exe -G "CodeBlocks - MinGW Makefiles" F:\BabelLibrary\babellib
 -- The C compiler identification is Clang 11.0.0
 -- The CXX compiler identification is Clang 11.0.0
 -- Check for working C compiler: C:/msys64/mingw64/bin/clang.exe
