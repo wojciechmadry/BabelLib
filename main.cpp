@@ -6,18 +6,27 @@
 
 int main()
 {
-
-    babel::TEXT::text tekst("Wojtek krolo zloty");
     srand(time(nullptr));
     babel::TIME::timer t;
     t.start();
     TESTING::START_ALL_TEST(1);
     auto T = t.get_time();
     std::cout << "Done\nTime : " << T << " ms.\n";
+    auto s = babel::FILE_SYS::load_txt("../loremipsum.txt");
+    babel::TEXT::text tx(s);
+    t.start();
+    //0.0015011
+    auto p = tx.find("OSTATNIE ZDANIE COS TAM");
+  // auto p = s.find("OSTATNIE ZDANIE COS TAM");
+    T = t.get_time();
 
-    std::atomic<int> d;
-    babel::CONCEPTS::type_in_atomic<decltype(d)>::type TT;
-    TT = 12;
-    std::cout << std::is_same_v<decltype(d), int> << '\n';
+    if(p == nullptr)
+        std::cout <<"NULL";
+    for(int i = 0 ; i < 3 ;++i)
+    {
+        std::cout << *p;
+        ++p;
+    }
+    std::cout << T << '\n';
     return 0;
 }

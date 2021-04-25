@@ -464,7 +464,12 @@ namespace TESTING{
 
     void TEXT_HPP()
     {
-
+        babel::TEXT::text tekst("Wojtek krolo zloty");
+        tekst.set_text("testowy Tekst to");
+        assert(tekst.count('t') == 4 && tekst.count('T') == 1 && tekst.count('p') == 0);
+        assert(tekst.find("Tekstt") == nullptr);
+        assert(tekst.find("owy") != nullptr);
+        assert(tekst.find("t to") != nullptr);
     }
 
     void START_ALL_TEST(const int times = 1)
