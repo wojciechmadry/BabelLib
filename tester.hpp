@@ -208,6 +208,7 @@ namespace TESTING{
         assert(babel::FILE_SYS::file_extension(files[0]) == "hpp");
         assert(babel::FILE_SYS::file_without_extension(files[0]).find("hpp") == std::string::npos);
         assert(babel::FILE_SYS::filename_contain(files[0], "hpp"));
+        //assert(babel::FILE_SYS::load_txt_to_vector("../loremipsum.txt").size() == 21600);
         //auto li = babel::FILE_SYS::load_txt("../loremipsum.txt");
     }
 

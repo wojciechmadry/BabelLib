@@ -66,6 +66,7 @@ namespace babel::TEXT{
         {
             return _lett[Char].size();
         }
+
         void clear() noexcept
         {
             _clear_vector();
@@ -80,18 +81,16 @@ namespace babel::TEXT{
             for(size_t i = 0 ; i < _lett[to_find[0]].size() ; ++i)
             {
                 size_t j;
-                char* ptr = _lett[to_find[0]][0];
+                char* ptr = _lett[to_find[0]][i];
                 bool same = true;
                 for(j = 0 ; j < to_find.size() && *ptr != '\0'; ++j, ++ptr)
-                {
                     if (to_find[j] != *ptr)
                     {
                         same = false;
                         break;
                     }
-                }
                 if (same && j == to_find.size())
-                    return _lett[to_find[0]][0];
+                    return _lett[to_find[0]][i];
 
             }
 
