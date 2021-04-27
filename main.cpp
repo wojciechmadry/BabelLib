@@ -6,15 +6,14 @@
 
 int main()
 {
+    std::cout << "BABEL VERSION : " << babel::VERSION << '\n';
     srand(time(nullptr));
     babel::TIME::timer t;
     t.start();
     TESTING::START_ALL_TEST(1);
     auto T = t.get_time();
     std::cout << "Done\nTime : " << T << " ms.\n";
-    auto s = babel::FILE_SYS::load_txt("../loremipsum.txt");
-    babel::TEXT::text tx(s);
-    t.start();
+    std::vector<int> p = {-3,3,2,4,5,12};
 
 
     return 0;

@@ -172,7 +172,7 @@ namespace TESTING{
 
         auto r = babel::MATH::prime_factors(64);
         assert(r.size() == 6);
-        for(auto num : r)
+        for ( auto num : r )
             assert(num == 2);
         r = babel::MATH::prime_factors(210);
         assert(r.size() == 4);
@@ -192,7 +192,6 @@ namespace TESTING{
         assert(fx.size() == 1 && fx[0] == 1);
         fx = babel::MATH::find_x(2.0, 6.0, 12.0);
         assert(fx.empty());
-
 
 
     }
@@ -406,28 +405,44 @@ namespace TESTING{
         assert(v1.size() == 5 && v1[0] == 0 && v1[1] == 1 && v1[2] == 0 && v1[3] == 1 && v1[4] == 0);
         v = {1, 2};
         v1 = babel::ALGO::replicate_elems(v, 3);
-        v = {1,1,1,2,2,2};
+        v = {1, 1, 1, 2, 2, 2};
         assert(v1.size() == 6 && v == v1);
         v = {1, 2};
         v1 = babel::ALGO::replicate_elems(v, 4);
-        v = {1,1,1,1,2,2,2,2};
+        v = {1, 1, 1, 1, 2, 2, 2, 2};
         assert(v1.size() == 8 && v == v1);
         auto v2 = babel::ALGO::enumerate(v);
         assert(v2.size() == v.size());
-        for(size_t j = 0 ; j < v.size() ; ++j)
+        for ( size_t j = 0 ; j < v.size() ; ++j )
             assert(v2[j].first == j && v2[j].second == v[j]);
         v2 = babel::ALGO::run_length_encode(v);
         assert(v2.size() == 2);
         assert(v2[0].first == 4 && v2[0].second == 1 && v2[1].first == 4 && v2[1].second == 2);
-        v = {1,1,1,1,2,2,2,2, 3};
+        v = {1, 1, 1, 1, 2, 2, 2, 2, 3};
         v2 = babel::ALGO::run_length_encode(v);
         assert(v2.size() == 3);
-        assert(v2[0].first == 4 && v2[0].second == 1 && v2[1].first == 4 && v2[1].second == 2 && v2[2].first == 1 && v2[2].second == 3);
-        v = {};
+        assert(v2[0].first == 4 && v2[0].second == 1 && v2[1].first == 4 && v2[1].second == 2 && v2[2].first == 1 &&
+               v2[2].second == 3);
+        v = { };
         v2 = babel::ALGO::run_length_encode(v);
         assert(v2.empty());
         v2 = babel::ALGO::enumerate(v);
         assert(v2.empty());
+
+        auto vr = babel::ALGO::range(3);
+        assert(vr.size() == 3 && vr[0] == 0 && vr[2] == 2);
+        vr = babel::ALGO::range(-3);
+        assert(vr.size() == 3 && vr[0] == 0 && vr[2] == -2);
+        vr = babel::ALGO::range(0, 3);
+        assert(vr.size() == 3 && vr[0] == 0 && vr[2] == 2);
+        vr = babel::ALGO::range(0, -3);
+        assert(vr.size() == 3 && vr[0] == 0 && vr[2] == -2);
+        vr = babel::ALGO::range(6, -3);
+        assert(vr[0] == 6 && vr[vr.size()-1]==-2);
+        vr = babel::ALGO::range(6, -3, 0);
+        assert(vr.size() == 1 && vr[0] == 6);
+        vr = babel::ALGO::range(6, -3, 2);
+        assert(vr.empty());
     }
 
     void WINDOWSCONV_HPP() //DONE

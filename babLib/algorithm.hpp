@@ -401,8 +401,8 @@ namespace babel::ALGO{
         std::vector<std::pair<size_t, T>> res;
         if ( cont.size() == 1 )
             return {{1, cont[0]}};
-        else if (cont.size() == 0)
-            return {};
+        else if ( cont.size() == 0 )
+            return { };
         size_t counter = 1;
         for ( size_t i = 1 ; i < cont.size() ; ++i )
             if ( cont[i] == cont[i - 1ull] )
@@ -416,6 +416,34 @@ namespace babel::ALGO{
         return res;
     }
 
+    std::vector<int64_t> range(int64_t start, int64_t end, int64_t step = 1) noexcept
+    {
+        if ( start > end && step == 1 )
+            step = -1;
+        if ( start == end || step == 0 )
+            return {start};
+        if ( start > end && step > 0 || start < end && step < 0 )
+            return { };
+        std::vector<int64_t> _res;
+        size_t i = 0;
+        if ( start < end )
+            for ( ; start < end ; start += step )
+            {
+                _res.emplace_back(start);
+            }
+        else if ( start > end )
+            for ( ; start > end ; start += step )
+            {
+                _res.emplace_back(start);
+            }
+        return _res;
+
+    }
+
+    std::vector<int64_t> range(int64_t end) noexcept
+    {
+        return range(0, end, end > 0 ? 1 : -1);
+    }
 }
 
 
