@@ -425,7 +425,6 @@ namespace babel::ALGO{
         if ( start > end && step > 0 || start < end && step < 0 )
             return { };
         std::vector<int64_t> _res;
-        size_t i = 0;
         if ( start < end )
             for ( ; start < end ; start += step )
             {
@@ -442,7 +441,7 @@ namespace babel::ALGO{
 
     std::vector<int64_t> range(int64_t end) noexcept
     {
-        return range(0, end, end > 0 ? 1 : -1);
+        return range(0, end);
     }
 }
 
