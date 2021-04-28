@@ -416,7 +416,7 @@ namespace babel::ALGO{
         return res;
     }
 
-    std::vector<int64_t> range(int64_t start, int64_t end, int64_t step = 1) noexcept
+    [[nodiscard]] std::vector<int64_t> range(int64_t start, int64_t end, int64_t step = 1) noexcept
     {
         if ( start > end && step == 1 )
             step = -1;
@@ -430,7 +430,7 @@ namespace babel::ALGO{
             {
                 _res.emplace_back(start);
             }
-        else if ( start > end )
+        else
             for ( ; start > end ; start += step )
             {
                 _res.emplace_back(start);
@@ -439,10 +439,46 @@ namespace babel::ALGO{
 
     }
 
-    std::vector<int64_t> range(int64_t end) noexcept
+    [[nodiscard]] std::vector<int64_t> range(int64_t end) noexcept
     {
         return range(0, end);
     }
+
+    [[nodiscard]] std::vector<std::vector<int64_t>> zeros(const size_t rows, const size_t columns) noexcept
+    {
+        return std::vector<std::vector<int64_t>>(rows, std::vector<int64_t>(columns, 0));
+    }
+
+    [[nodiscard]] std::vector<int64_t> zeros(const size_t columns) noexcept
+    {
+        return std::vector<int64_t>(columns, 0);
+    }
+
+    [[nodiscard]] std::vector<std::vector<int64_t>> ones(const size_t rows, const size_t columns) noexcept
+    {
+        return std::vector<std::vector<int64_t>>(rows, std::vector<int64_t>(columns, 1));
+    }
+
+    [[nodiscard]] std::vector<int64_t> ones(const size_t columns) noexcept
+    {
+        return std::vector<int64_t>(columns, 1);
+    }
+
+    template< typename T, typename U, typename DECAY_T = typename std::decay_t<T>, typename DECAY_U = typename std::decay_t<U>>
+    requires ( std::is_convertible_v<T, U>
+               || std::is_same_v<std::string, DECAY_T> && std::is_arithmetic_v<U>
+               || std::is_same_v<std::string, DECAY_U> && std::is_arithmetic_v<T> )
+    [[nodiscard]] constexpr T asType(const U &data) noexcept
+    {
+        if constexpr (std::is_same_v<std::string, DECAY_T> && std::is_arithmetic_v<U> )
+            return std::to_string(data);
+        else if constexpr (std::is_arithmetic_v<T> && std::is_same_v<std::string, DECAY_U>)
+            return babel::ALGO::string_to<T>(data);
+        else
+            return static_cast<T>(data);
+    }
+
+
 }
 
 

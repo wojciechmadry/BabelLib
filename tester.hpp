@@ -443,6 +443,23 @@ namespace TESTING{
         assert(vr.size() == 1 && vr[0] == 6);
         vr = babel::ALGO::range(6, -3, 2);
         assert(vr.empty());
+        auto zeros = babel::ALGO::zeros(3, 2);
+        assert(zeros.size() == 3 && zeros[0].size() == 2 && zeros[0][0] == 0);
+        auto zeros1 = babel::ALGO::zeros(4);
+        assert(zeros1.size() == 4 && zeros1[3] == 0);
+        auto ones = babel::ALGO::ones(3, 2);
+        assert(ones.size() == 3 && ones[0].size() == 2 && ones[0][0] == 1);
+        auto ones1 = babel::ALGO::ones(4);
+        assert(ones1.size() == 4 && ones1[3] == 1);
+        const float f = 3.14f;
+        auto astype = babel::ALGO::asType<int>(f);
+        assert(astype==3);
+        astype = 213;
+        auto astypestr = babel::ALGO::asType<std::string>(astype);
+        assert(astypestr == "213");
+        auto astypeint = babel::ALGO::asType<int32_t>(astypestr);
+        assert(astypeint == 213);
+
     }
 
     void WINDOWSCONV_HPP() //DONE

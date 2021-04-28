@@ -16,6 +16,6 @@
 #include "babLib/graphics/graphics.hpp"
 
 namespace babel{
-    static constexpr const double VERSION = 1.02;
+    static constexpr const double VERSION = 1.03;
 }
 #endif
