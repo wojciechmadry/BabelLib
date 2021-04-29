@@ -275,6 +275,12 @@ namespace TESTING{
         assert(d3.cast<std::string>() == "pies" && test == "pies");
         vid d4(babel::ANY::PolAny::make_any(std::move(test)));
         assert(d4.cast<std::string>() == "pies" && test == "");
+        d4.emplace<std::string>("testowy napis");
+        assert(d4.cast<std::string>() == "testowy napis");
+        d3.emplace<std::string>("t2");
+        assert(d4 == d3 && !d4.cmp<std::string>(d3));
+        d3.reset();
+        assert(d4!=d3  && !d4.cmp<std::string>(d3));
     }
 
     void ALGORITHM_HPP() // DONE

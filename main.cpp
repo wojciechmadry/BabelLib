@@ -8,7 +8,10 @@ int main()
 {
     std::cout << "BABEL VERSION : " << babel::VERSION << '\n';
     srand(time(nullptr));
-    auto T = babel::TIME::measure_time(100, TESTING::START_ALL_TEST, 1);
+    auto T = babel::TIME::measure_time(1000, TESTING::START_ALL_TEST, 1);
     std::cout << "Done\nTime : " << T << " seconds\n";
+    //auto p = babel::MATH::distance<float>(-3, 2, 4, 7);
+   // std::cout << p;
+
     return 0;
 }
