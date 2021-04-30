@@ -472,6 +472,7 @@ namespace TESTING{
 
     }
 
+#ifdef _WIN32
     void WINDOWSCONV_HPP() //DONE
     {
         std::string str = "testowy napis";
@@ -481,6 +482,7 @@ namespace TESTING{
         auto &ws = lpc.get_wstring();
         assert(!ws.empty());
     }
+#endif
 
     void REQUEST_HPP() //DONE
     {
@@ -532,7 +534,9 @@ namespace TESTING{
             ANY_HPP_VOID_ANY();
             ANY_HPP_POLY_ANY();
             ALGORITHM_HPP();
+#ifdef _WIN32
             WINDOWSCONV_HPP();
+#endif
             REQUEST_HPP();
         };
         if ( times <= 0 )

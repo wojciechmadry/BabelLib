@@ -15,9 +15,10 @@
 #include "babLib/request/request.hpp"
 #include "babLib/graphics/graphics.hpp"
 
+#ifdef _WIN32
+#include "babLib/windows/windowsConv.hpp"
+#endif
 namespace babel{
-    static constexpr const double VERSION = 1.07;
-
-   // auto p = babel::ANY::make_any<5>(12);
+    static constexpr const double VERSION = 1.08;
 }
 #endif

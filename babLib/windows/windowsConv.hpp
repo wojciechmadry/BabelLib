@@ -1,4 +1,4 @@
-#ifndef BABEL_WIN_CONV
+#if !defined(BABEL_WIN_CONV) & defined(_WIN32)
 #define BABEL_WIN_CONV
 
 #include "../must_have.hpp"
