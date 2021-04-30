@@ -162,11 +162,11 @@ namespace TESTING{
         assert(babel::MATH::rectangle_circumference(3, 2) == 10);
         assert(babel::MATH::cuboid_volume(2, 3, 4) == 24);
         assert(compare(babel::MATH::circle_area<double>(3), 28.26));
-        assert(compare(babel::MATH::circle_area<int>(3), 28));
+        assert(compare(babel::MATH::circle_area<int>(3), 27));
         assert(compare(babel::MATH::circle_circumference<double>(3), 18.84));
         assert(compare(babel::MATH::circle_circumference<int>(3), 18));
         assert(compare(babel::MATH::sphere_volume<double>(4), 267.94, 0.5));
-        assert(compare(babel::MATH::sphere_volume<int>(4), 268));
+        assert(compare(babel::MATH::sphere_volume<int>(4), 256));
         assert(compare(babel::MATH::cylinder_volume<double>(3, 8), babel::MATH::circle_area<double>(3) * 8.0));
         assert(compare(babel::MATH::cone_volume<double>(3, 2), babel::MATH::cylinder_volume<double>(3, 2) * 1.0 / 3.0));
         assert(compare(babel::MATH::kW_to_HP<double>(babel::MATH::HP_to_kW<double>(30)),

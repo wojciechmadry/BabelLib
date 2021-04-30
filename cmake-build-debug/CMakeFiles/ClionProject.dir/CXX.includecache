@@ -93,8 +93,6 @@ utility
 -
 stdexcept
 -
-Windows.h
--
 variant
 -
 container/list.hpp
@@ -116,6 +114,8 @@ numbers
 list
 -
 random
+-
+Windows.h
 -
 
 F:/BabelLibrary/babellib/babLib/optional.hpp
@@ -173,6 +173,8 @@ babLib/request/request.hpp
 F:/BabelLibrary/babellib/babLib/request/request.hpp
 babLib/graphics/graphics.hpp
 F:/BabelLibrary/babellib/babLib/graphics/graphics.hpp
+babLib/windows/windowsConv.hpp
+F:/BabelLibrary/babellib/babLib/windows/windowsConv.hpp
 
 F:/BabelLibrary/babellib/main.cpp
 iostream
