@@ -16,7 +16,7 @@
 #include "babLib/graphics/graphics.hpp"
 
 namespace babel{
-    static constexpr const double VERSION = 1.06;
+    static constexpr const double VERSION = 1.07;
 
    // auto p = babel::ANY::make_any<5>(12);
 }

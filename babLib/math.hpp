@@ -459,7 +459,7 @@ namespace babel::MATH{
     template< typename Type >
     inline constexpr Type circle_area(const Type r) noexcept
     {
-        return static_cast<Type>(CONSTANT::PI<long double> * r * r);
+        return static_cast<Type>(CONSTANT::PI<Type> * r * r);
     }
 
     /**
@@ -468,7 +468,7 @@ namespace babel::MATH{
     template< typename Type >
     inline constexpr Type circle_circumference(const Type r) noexcept
     {
-        return static_cast<Type>(CONSTANT::PI<long double> * ( r * 2 ));
+        return static_cast<Type>(CONSTANT::PI<Type> * ( r * 2 ));
     }
 
     /**
@@ -477,7 +477,7 @@ namespace babel::MATH{
     template< typename Type >
     inline constexpr Type sphere_volume(const Type R) noexcept
     {
-        return static_cast<Type>(CONSTANT::PI<long double> * ( 4.0 / 3.0 ) * R * R * R);
+        return static_cast<Type>(CONSTANT::PI<Type> * ( 4.0 / 3.0 ) * R * R * R);
     }
 
     /**
@@ -486,7 +486,7 @@ namespace babel::MATH{
     template< typename Type >
     inline constexpr Type cylinder_volume(const Type r, const Type H) noexcept
     {
-        return static_cast<Type>(circle_area<long double>(r) * H);
+        return static_cast<Type>(circle_area<Type>(r) * H);
     }
 
     /**
@@ -495,7 +495,7 @@ namespace babel::MATH{
     template< typename Type >
     inline constexpr Type cone_volume(const Type r, const Type h) noexcept
     {
-        return static_cast<Type>(cylinder_volume<long double>(r, h) * ( 1.0 / 3.0 ));
+        return static_cast<Type>(cylinder_volume<Type>(r, h) * ( 1.0 / 3.0 ));
     }
 
     /**
@@ -541,13 +541,13 @@ namespace babel::MATH{
 *  @return Return vector of prime number
 */
     template< typename T >
-    requires std::is_integral_v<T>
+    requires (std::is_integral_v<T> && !std::is_signed_v<T>)
     std::vector<T> prime_factors(T number) noexcept
     {
         if ( number <= 2 )
             return {number};
         std::vector<T> _res;
-        for ( size_t i = 2 ; i <= number ; ++i )
+        for ( T i = 2 ; i <= number ; ++i )
             while ( number % i == 0 )
             {
                 _res.emplace_back(i);

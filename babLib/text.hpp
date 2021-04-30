@@ -97,9 +97,9 @@ namespace babel::TEXT{
 *  @param  Char character to count
 *  @return Numbers of character in stored string
 */
-        [[nodiscard]] size_t count(const char Char) const noexcept
+        [[nodiscard]] size_t count(const uint8_t Char) const noexcept
         {
-            return _lett[Char].size();
+            return _lett[static_cast<std::size_t>(Char)].size();
         }
 
         /**
@@ -122,10 +122,10 @@ namespace babel::TEXT{
             if(to_find.empty())
                 return nullptr;
 
-            for(size_t i = 0 ; i < _lett[to_find[0]].size() ; ++i)
+            for(size_t i = 0 ; i < _lett[static_cast<std::size_t>(static_cast<uint8_t>(to_find[0]))].size() ; ++i)
             {
                 size_t j;
-                char* ptr = _lett[to_find[0]][i];
+                char* ptr = _lett[static_cast<std::size_t>(static_cast<uint8_t>(to_find[0]))][i];
                 bool same = true;
                 for(j = 0 ; j < to_find.size() && *ptr != '\0'; ++j, ++ptr)
                     if (to_find[j] != *ptr)
@@ -134,7 +134,7 @@ namespace babel::TEXT{
                         break;
                     }
                 if (same && j == to_find.size())
-                    return _lett[to_find[0]][i];
+                    return _lett[static_cast<std::size_t>(static_cast<uint8_t>(to_find[0]))][i];
 
             }
 

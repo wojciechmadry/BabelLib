@@ -61,6 +61,10 @@ namespace TESTING{
         auto p2 = t.get_time();
         auto p3 = t.get_time_micro();
         auto p4 = t.get_time_mili();
+        p1 += 5;
+        p2 += static_cast<long double>(0.2);
+        p3 += 5;
+        p4 += 5;
         t.start();
     }
 
@@ -170,14 +174,14 @@ namespace TESTING{
         assert(babel::MATH::map<double>(305, 5, 905, 0, 1) >= 0.0 &&
                babel::MATH::map<double>(305, 5, 905, 0, 1) <= 1.0);
 
-        auto r = babel::MATH::prime_factors(64);
+        auto r = babel::MATH::prime_factors(64u);
         assert(r.size() == 6);
         for ( auto num : r )
             assert(num == 2);
-        r = babel::MATH::prime_factors(210);
+        r = babel::MATH::prime_factors(210u);
         assert(r.size() == 4);
         assert(r[0] == 2 && r[1] == 3 && r[2] == 5 && r[3] == 7);
-        r = babel::MATH::prime_factors(1155);
+        r = babel::MATH::prime_factors(1155u);
         assert(r.size() == 4);
         assert(r[0] == 3 && r[1] == 5 && r[2] == 7 && r[3] == 11);
         assert(babel::MATH::nwd(24, 36) == 12);
@@ -311,19 +315,19 @@ namespace TESTING{
         babel::ALGO::FFT(pd);
         int temp = -3;
         auto temp2 = babel::ALGO::signed_unsigned_conv(temp);
-        assert (temp2 >= 0);
+        assert (!std::is_signed_v<decltype(temp2)>);
         std::vector<int> v = {0, 1, 2, 3, 4, 5, 6, 7};
-        auto v1 = babel::ALGO::drop(v, 3);
+        auto v1 = babel::ALGO::drop<std::vector<int>>(v, 3);
         for ( size_t j = 0 ; j < v1.size() ; ++j )
-            assert(v1[j] == j + 3);
+            assert(v1[j] == static_cast<int64_t>(j + 3));
         v1 = babel::ALGO::drop(v, 300);
         assert(v1.empty());
-        v1 = babel::ALGO::take(v, 3);
+        v1 = babel::ALGO::take<std::vector<int>>(v, 3);
         for ( size_t j = 0 ; j < v1.size() ; ++j )
-            assert(v1[j] == j);
+            assert(v1[j] == static_cast<int64_t>(j));
         v1 = babel::ALGO::take(v, 300);
         for ( size_t j = 0 ; j < v1.size() ; ++j )
-            assert(v1[j] == j);
+            assert(v1[j] == static_cast<int64_t>(j));
         assert(v1.size() == v.size() && v1 == v);
 
         v1 = babel::ALGO::repeat(v, 3);
@@ -377,9 +381,9 @@ namespace TESTING{
         v = {0, 1, 2, 3, 4, 5, 6, 7};
         v1 = babel::ALGO::drop_idx(v, 2);
         for ( size_t j = 0 ; j < 2 ; ++j )
-            assert(v1[j] == j);
+            assert(v1[j] == static_cast<int64_t>(j));
         for ( size_t j = 2 ; j < v1.size() ; ++j )
-            assert(v1[j] == j + 1);
+            assert(v1[j] == static_cast<int64_t>(j + 1));
         assert(v1.size() + 1 == v.size());
         v = { };
         v1 = babel::ALGO::drop_idx(v, 2);
@@ -390,10 +394,10 @@ namespace TESTING{
         v1 = babel::ALGO::drop_idx(v, 0);
         assert(v1.empty());
         v = {0, 1, 2, 3, 4, 5, 6, 7};
-        v1 = babel::ALGO::drop_last(v, 3);
+        v1 = babel::ALGO::drop_last<std::vector<int>>(v, 3);
         assert(v1.size() == 5);
         for ( size_t j = 0 ; j < v1.size() ; ++j )
-            assert(v1[j] == j);
+            assert(v1[j] == static_cast<int64_t>(j));
         v = {1};
         v1 = babel::ALGO::drop_last(v, 0);
         assert(v1.size() == 1 && v1[0] == 1);
@@ -402,7 +406,7 @@ namespace TESTING{
         v1 = babel::ALGO::drop_last(v, 1);
         assert(v1.empty());
         v = {0, 1, 2, 3, 4, 5, 6, 7};
-        v1 = babel::ALGO::take_last(v, 3);
+        v1 = babel::ALGO::take_last<std::vector<int>>(v, 3);
         assert(v1.size() == 3 && v1[0] == 5 && v1[1] == 6 && v1[2] == 7);
         v = {0, 1};
         v1 = babel::ALGO::take_cyclic(v, 4);
@@ -473,7 +477,9 @@ namespace TESTING{
         std::string str = "testowy napis";
         auto lpc = babel::WINDOWS::CONVERSION::str_to_lpcwstr(str);
         auto p = lpc.get_LPCWSTR();
+        assert(p != nullptr);
         auto &ws = lpc.get_wstring();
+        assert(!ws.empty());
     }
 
     void REQUEST_HPP() //DONE

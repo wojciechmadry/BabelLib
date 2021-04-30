@@ -126,7 +126,7 @@ namespace babel::ALGO{
         uint16_t digits = 0;
         for ( int64_t cpy = n ; cpy > 1 ; ++digits )
             cpy /= 10;
-        return ( static_cast<int64_t>(pow(n, 2)) % static_cast<int64_t>(pow(10, digits)) ) == n;
+        return ( static_cast<int64_t>(pow(static_cast<double>(n), 2.0)) % static_cast<int64_t>(pow(10, digits)) ) == n;
     }
 
     /**
@@ -150,7 +150,7 @@ namespace babel::ALGO{
                 minimaxi.second = *begin;
             else if ( *begin < minimaxi.first )
                 minimaxi.first = *begin;
-        return std::move(minimaxi);
+        return minimaxi;
     }
 
     /**
@@ -271,7 +271,7 @@ namespace babel::ALGO{
 */
     template< typename Container, typename T = typename babel::CONCEPTS::type_in<Container>::type >
     requires ( babel::CONCEPTS::IS_FLOATING_POINT<T> && babel::CONCEPTS::IS_CONTAINER<Container> )
-    std::vector<std::complex<T>> FFT(const Container &fn) noexcept
+    std::vector<std::complex<T>> FFT(const Container& probes) noexcept
     {
         std::function<void(std::vector<std::complex<T>> &)> ditfft2;
         ditfft2 = [&ditfft2](std::vector<std::complex<T>> &fn) -> void {
@@ -288,13 +288,13 @@ namespace babel::ALGO{
             ditfft2(odd);
             for ( size_t k = 0 ; k < N / 2 ; ++k )
             {
-                auto t = std::polar(1.0, -2.0 * std::numbers::pi * k / N) * odd[k];
+                auto t = std::polar(1.0, -2.0 * std::numbers::pi * static_cast<double>(k) / static_cast<double>(N)) * odd[k];
                 fn[k] = even[k] + t;
                 fn[k + N / 2] = even[k] - t;
             }
         };
 
-        std::vector<std::complex<T>> res(std::begin(fn), std::end(fn));
+        std::vector<std::complex<T>> res(std::begin(probes), std::end(probes));
         ditfft2(res);
         return res;
     }
@@ -325,7 +325,7 @@ namespace babel::ALGO{
     requires ( std::is_signed_v<T> || std::is_unsigned_v<T> )
     constexpr auto signed_unsigned_conv(const T data) noexcept
     {
-        return static_cast< typename babel::CONCEPTS::type_of_number<sizeof(data), !std::is_signed_v<T>>::type >(data);
+        return static_cast< typename babel::CONCEPTS::type_of_number<static_cast<uint8_t>(sizeof(data)), !std::is_signed_v<T>>::type >(data);
     }
 
     /**
@@ -343,7 +343,7 @@ namespace babel::ALGO{
     {
         if ( n > cont.size() )
             return { };
-        return {std::begin(cont) + n, std::end(cont)};
+        return {std::begin(cont) + static_cast<int64_t>(n), std::end(cont)};
     }
 
     /**
@@ -361,7 +361,7 @@ namespace babel::ALGO{
     {
         if ( n >= cont.size() )
             return cont;
-        return {std::begin(cont), std::begin(cont) + n};
+        return {std::begin(cont), std::begin(cont) + static_cast<int64_t>(n)};
     }
 
     /**
@@ -468,7 +468,7 @@ namespace babel::ALGO{
     {
         if ( n > cont.size() )
             return { };
-        return {std::begin(cont), std::end(cont) - n};
+        return {std::begin(cont), std::end(cont) - static_cast<int64_t>(n)};
     }
 
 
@@ -487,7 +487,7 @@ namespace babel::ALGO{
     {
         if ( n >= cont.size() )
             return cont;
-        return {std::end(cont) - n, std::end(cont)};
+        return {std::end(cont) - static_cast<int64_t>(n), std::end(cont)};
     }
 
     /**
@@ -606,7 +606,7 @@ namespace babel::ALGO{
             step = -1;
         if ( start == end || step == 0 )
             return {start};
-        if ( start > end && step > 0 || start < end && step < 0 )
+        if ( (start > end && step > 0) || (start < end && step < 0) )
             return { };
         std::vector<int64_t> _res;
         if ( start < end )
@@ -696,8 +696,8 @@ namespace babel::ALGO{
 */
     template< typename T, typename U, typename DECAY_T = typename std::decay_t<T>, typename DECAY_U = typename std::decay_t<U>>
     requires ( std::is_convertible_v<T, U>
-               || std::is_same_v<std::string, DECAY_T> && std::is_arithmetic_v<U>
-               || std::is_same_v<std::string, DECAY_U> && std::is_arithmetic_v<T> )
+               || (std::is_same_v<std::string, DECAY_T> && std::is_arithmetic_v<U>)
+               || (std::is_same_v<std::string, DECAY_U> && std::is_arithmetic_v<T>) )
     [[nodiscard]] constexpr T asType(const U &data) noexcept
     {
         if constexpr ( std::is_same_v<std::string, DECAY_T> && std::is_arithmetic_v<U> )
