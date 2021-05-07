@@ -1,3 +1,4 @@
-F:/BabelLibrary/babellib/cmake-build-debug/CMakeFiles/ClionProject.dir
+F:/BabelLibrary/babellib/cmake-build-debug/CMakeFiles/BabLib.dir
+F:/BabelLibrary/babellib/cmake-build-debug/CMakeFiles/BabelLibrary.dir
 F:/BabelLibrary/babellib/cmake-build-debug/CMakeFiles/edit_cache.dir
 F:/BabelLibrary/babellib/cmake-build-debug/CMakeFiles/rebuild_cache.dir

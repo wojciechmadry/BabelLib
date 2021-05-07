@@ -213,6 +213,18 @@ namespace TESTING{
         assert(babel::FILE_SYS::filename_contain(files[0], "hpp"));
         //assert(babel::FILE_SYS::load_txt_to_vector("../loremipsum.txt").size() == 21600);
         //auto li = babel::FILE_SYS::load_txt("../loremipsum.txt");
+        assert(babel::FILE_SYS::file_exist("../babel.hpp"));
+        assert(!babel::FILE_SYS::file_exist("dhshds"));
+        assert(!babel::FILE_SYS::file_exist("../cmake-build-release"));
+
+
+        assert(!babel::FILE_SYS::folder_exist("../babel.hpp"));
+        assert(!babel::FILE_SYS::folder_exist("dhshds"));
+        assert(babel::FILE_SYS::folder_exist("../cmake-build-release"));
+
+        assert(babel::FILE_SYS::file_folder_exist("../babel.hpp"));
+        assert(!babel::FILE_SYS::file_folder_exist("dhshds"));
+        assert(babel::FILE_SYS::file_folder_exist("../cmake-build-release"));
     }
 
     void CHAR_HPP()
@@ -373,8 +385,8 @@ namespace TESTING{
         assert(v1.size() == 2 && v1[1] == 4);
 
         v.clear();
-        size_t s = rand() % 1000 + 5;
-        size_t step = rand() % 100 + 1;
+        auto s = static_cast<size_t>(rand() % 1000 + 5);
+        auto step = static_cast<size_t>(rand() % 100 + 1);
         for ( size_t j = 0 ; j < s ; ++j )
             v.emplace_back(rand() % 100);
         v1 = babel::ALGO::stride(v, step);
@@ -461,7 +473,7 @@ namespace TESTING{
         assert(ones.size() == 3 && ones[0].size() == 2 && ones[0][0] == 1);
         auto ones1 = babel::ALGO::ones(4);
         assert(ones1.size() == 4 && ones1[3] == 1);
-        const float f = 3.14f;
+        float f = 3.14f;
         auto astype = babel::ALGO::asType<int>(f);
         assert(astype==3);
         astype = 213;
@@ -469,7 +481,103 @@ namespace TESTING{
         assert(astypestr == "213");
         auto astypeint = babel::ALGO::asType<int32_t>(astypestr);
         assert(astypeint == 213);
+        {
+            struct P
+            {
+                int x = 2;
 
+                virtual void del() = 0;
+            };
+            struct Y : public P
+            {
+                int z = 2;
+
+                void del() override
+                {
+
+                }
+            };
+            Y y;
+            y.x = 4;
+            y.z = 12;
+            auto z = babel::ALGO::asType<P *>(y);
+            auto z1 = babel::ALGO::asType<P *>(&y);
+            assert(z->x == 4 && z1->x == 4);
+            auto z2 = babel::ALGO::asType<Y *>(z);
+            auto z3 = babel::ALGO::asType<Y *>(z1);
+            assert(z2->x == 4 && z3->x == 4);
+            assert(z2->z == 12 && z3->z == 12);
+            auto z4 = babel::ALGO::asType<P *>(z2);
+            auto z5 = babel::ALGO::asType<P *>(z3);
+            assert(z4->x == 4 && z5->x == 4);
+
+            std::vector<int> vtype = {3, 1 , 2};
+            std::list <float> ltype;
+            ltype = babel::ALGO::asType<decltype(ltype)>(vtype);
+
+
+            std::list <float> ltype1 = {1.f, 2.f, 3.f};
+            std::vector<int> vtype1;
+            vtype1 = babel::ALGO::asType<decltype(vtype1)>(ltype1);
+
+            assert(vtype1[0] == 1 && vtype1[1] == 2 && vtype1[2] == 3);
+            auto bltype = ltype.begin();
+            assert(*bltype == 3);
+            ++bltype;
+            assert(*bltype == 1);
+            ++bltype;
+            assert(*bltype == 2);
+
+            std::vector<std::string> ts = {"3", "1" , "5"};
+            std::vector<int> ti;
+            ti = babel::ALGO::asType<decltype(ti)>(ts);
+
+
+            std::vector<int> ti1 = {1, 2, 3};
+            std::vector<std::string> ts1;
+            ts1 = babel::ALGO::asType<decltype(ts1)>(ti1);
+
+            assert(ti[0] == 3 && ti[1] == 1 && ti[2] == 5);
+            assert(ts[0] == "3" && ts[1] == "1" && ts[2] == "5");
+            assert(ts1[0] == "1" && ts1[1] == "2" && ts1[2] == "3");
+            assert(ti1[0] == 1 && ti1[1] == 2 && ti1[2] == 3);
+
+            auto lambda = [](int p) -> std::unique_ptr<std::string> {
+                return std::make_unique<std::string>(std::to_string(p*p));};
+            int xlamb = 2;
+            auto ylamb = babel::ALGO::asType<std::unique_ptr<std::string>>(xlamb, lambda);
+            assert(xlamb == 2 && *ylamb == std::to_string(xlamb*xlamb));
+            auto PXP = babel::ALGO::asType<int>(std::string("25"), [](const std::string&)->int{return 555;});
+            assert(PXP == 555);
+            PXP = babel::ALGO::asType<int>(std::string("25"));
+            assert(PXP == 25);
+            auto l1 = [](const std::vector<std::string>& vec) -> std::vector<int>
+            {
+                int suma = 0;
+                for(const auto& El : vec)
+                {
+                    suma += babel::ALGO::string_to<int>(El);
+                }
+                return {suma};
+            };
+            auto l2 = [](const std::string& Str) -> int
+            {
+                return babel::ALGO::string_to<int>(Str) * 10;
+            };
+            std::vector<std::string> pps ={"1", "2"};
+            std::vector<int> vv, vv1;
+            vv = babel::ALGO::asType<decltype(vv)>(pps, l1);
+            assert(vv.size() == 1 && vv[0] == 3);
+
+            vv1 = babel::ALGO::asType<decltype(vv1)>(pps, l2);
+            assert(vv1.size() == 2 && vv1[0] == 10 && vv1[1] == 20);
+
+            std::string st1 = "test";
+            auto st2 = babel::ALGO::asType<std::string>(std::move(st1));
+            assert(st1.empty() && st2 == "test");
+            st1 = babel::ALGO::asType<std::string>(st2);
+            assert(st1== "test" && st2 == "test");
+        }
     }
 
 #ifdef _WIN32
