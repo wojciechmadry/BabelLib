@@ -6,8 +6,6 @@
 
 int main()
 {
-
-
     std::cout << "BABEL VERSION : " << babel::VERSION << '\n';
     srand(static_cast<unsigned>(time(nullptr)));
     auto T = babel::TIME::measure_time(1, TESTING::START_ALL_TEST, 1);

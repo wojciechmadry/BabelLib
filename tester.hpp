@@ -184,11 +184,11 @@ namespace TESTING{
         r = babel::MATH::prime_factors(1155u);
         assert(r.size() == 4);
         assert(r[0] == 3 && r[1] == 5 && r[2] == 7 && r[3] == 11);
-        assert(babel::MATH::nwd(24, 36) == 12);
-        assert(babel::MATH::nww(24, 36) == 72);
+        assert(babel::MATH::gcd(24, 36) == 12);
+        assert(babel::MATH::lcm(24, 36) == 72);
 
-        assert(babel::MATH::nwd(256, 24) == 8);
-        assert(babel::MATH::nww(256, 24) == 768);
+        assert(babel::MATH::gcd(256, 24) == 8);
+        assert(babel::MATH::lcm(256, 24) == 768);
 
         auto fx = babel::MATH::find_x(-1.0, -11.0, 12.0);
         assert(fx.size() == 2 && fx[0] == -12 && fx[1] == 1);
