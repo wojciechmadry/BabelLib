@@ -542,8 +542,8 @@ namespace TESTING{
             assert(ts1[0] == "1" && ts1[1] == "2" && ts1[2] == "3");
             assert(ti1[0] == 1 && ti1[1] == 2 && ti1[2] == 3);
 
-            auto lambda = [](int p) -> std::unique_ptr<std::string> {
-                return std::make_unique<std::string>(std::to_string(p*p));};
+            auto lambda = [](int pt) -> std::unique_ptr<std::string> {
+                return std::make_unique<std::string>(std::to_string(pt*pt));};
             int xlamb = 2;
             auto ylamb = babel::ALGO::asType<std::unique_ptr<std::string>>(xlamb, lambda);
             assert(xlamb == 2 && *ylamb == std::to_string(xlamb*xlamb));
