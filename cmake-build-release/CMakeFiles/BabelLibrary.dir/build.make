@@ -79,15 +79,15 @@ CMakeFiles/BabelLibrary.dir/main.cpp.obj: CMakeFiles/BabelLibrary.dir/flags.make
 CMakeFiles/BabelLibrary.dir/main.cpp.obj: CMakeFiles/BabelLibrary.dir/includes_CXX.rsp
 CMakeFiles/BabelLibrary.dir/main.cpp.obj: ../main.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=F:\BabelLibrary\babellib\cmake-build-release\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/BabelLibrary.dir/main.cpp.obj"
-	C:\msys64\mingw32\bin\clang++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\BabelLibrary.dir\main.cpp.obj -c F:\BabelLibrary\babellib\main.cpp
+	C:\msys64\mingw64\bin\clang++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\BabelLibrary.dir\main.cpp.obj -c F:\BabelLibrary\babellib\main.cpp
 
 CMakeFiles/BabelLibrary.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/BabelLibrary.dir/main.cpp.i"
-	C:\msys64\mingw32\bin\clang++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E F:\BabelLibrary\babellib\main.cpp > CMakeFiles\BabelLibrary.dir\main.cpp.i
+	C:\msys64\mingw64\bin\clang++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E F:\BabelLibrary\babellib\main.cpp > CMakeFiles\BabelLibrary.dir\main.cpp.i
 
 CMakeFiles/BabelLibrary.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/BabelLibrary.dir/main.cpp.s"
-	C:\msys64\mingw32\bin\clang++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S F:\BabelLibrary\babellib\main.cpp -o CMakeFiles\BabelLibrary.dir\main.cpp.s
+	C:\msys64\mingw64\bin\clang++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S F:\BabelLibrary\babellib\main.cpp -o CMakeFiles\BabelLibrary.dir\main.cpp.s
 
 # Object files for target BabelLibrary
 BabelLibrary_OBJECTS = \

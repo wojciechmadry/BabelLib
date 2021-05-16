@@ -342,10 +342,10 @@ namespace babel::ALGO{
     requires babel::CONCEPTS::IS_CONTAINER<Container>
     [[nodiscard]] Container drop(const Container &cont, const int64_t n) noexcept
     {
-        if ( n > cont.size() || n <= 0)
+        if ( n > static_cast<int64_t>(cont.size()) || n <= 0)
             return { };
         if constexpr (babel::COMPILER_IS_64B) //NOLINT
-            return {std::begin(cont) + static_cast<uint64_t>(n), std::end(cont)};
+            return {std::begin(cont) + n, std::end(cont)};
         else
             return {std::begin(cont) + static_cast<int>(n), std::end(cont)};
     }
