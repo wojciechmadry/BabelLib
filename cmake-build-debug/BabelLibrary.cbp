@@ -25,12 +25,12 @@
 				<Option compiler="clang"/>
 				<Compiler>
 					<Add directory="F:/BabelLibrary/babellib"/>
-					<Add directory="C:/msys64/mingw64\include\c++\10.2.0"/>
-					<Add directory="C:/msys64/mingw64\include\c++\10.2.0\x86_64-w64-mingw32"/>
-					<Add directory="C:/msys64/mingw64\include\c++\10.2.0\backward"/>
-					<Add directory="C:\msys64\mingw64\lib\clang\11.0.0\include"/>
-					<Add directory="C:/msys64/mingw64\x86_64-w64-mingw32\include"/>
-					<Add directory="C:/msys64/mingw64\include"/>
+					<Add directory="C:/msys64/mingw32/include/c++/10.2.0"/>
+					<Add directory="C:/msys64/mingw32/include/c++/10.2.0/i686-w64-mingw32"/>
+					<Add directory="C:/msys64/mingw32/include/c++/10.2.0/backward"/>
+					<Add directory="C:/msys64/mingw32/lib/clang/12.0.0/include"/>
+					<Add directory="C:/msys64/mingw32/i686-w64-mingw32/include"/>
+					<Add directory="C:/msys64/mingw32/include"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;F:/BabelLibrary/babellib/cmake-build-debug/Makefile&quot;  VERBOSE=1 BabLib"/>
@@ -47,12 +47,12 @@
 				<Option compiler="clang"/>
 				<Compiler>
 					<Add directory="F:/BabelLibrary/babellib"/>
-					<Add directory="C:/msys64/mingw64\include\c++\10.2.0"/>
-					<Add directory="C:/msys64/mingw64\include\c++\10.2.0\x86_64-w64-mingw32"/>
-					<Add directory="C:/msys64/mingw64\include\c++\10.2.0\backward"/>
-					<Add directory="C:\msys64\mingw64\lib\clang\11.0.0\include"/>
-					<Add directory="C:/msys64/mingw64\x86_64-w64-mingw32\include"/>
-					<Add directory="C:/msys64/mingw64\include"/>
+					<Add directory="C:/msys64/mingw32/include/c++/10.2.0"/>
+					<Add directory="C:/msys64/mingw32/include/c++/10.2.0/i686-w64-mingw32"/>
+					<Add directory="C:/msys64/mingw32/include/c++/10.2.0/backward"/>
+					<Add directory="C:/msys64/mingw32/lib/clang/12.0.0/include"/>
+					<Add directory="C:/msys64/mingw32/i686-w64-mingw32/include"/>
+					<Add directory="C:/msys64/mingw32/include"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;F:/BabelLibrary/babellib/cmake-build-debug/Makefile&quot;  VERBOSE=1 BabLib/fast"/>
@@ -69,12 +69,12 @@
 				<Option compiler="clang"/>
 				<Compiler>
 					<Add directory="F:/BabelLibrary/babellib"/>
-					<Add directory="C:/msys64/mingw64\include\c++\10.2.0"/>
-					<Add directory="C:/msys64/mingw64\include\c++\10.2.0\x86_64-w64-mingw32"/>
-					<Add directory="C:/msys64/mingw64\include\c++\10.2.0\backward"/>
-					<Add directory="C:\msys64\mingw64\lib\clang\11.0.0\include"/>
-					<Add directory="C:/msys64/mingw64\x86_64-w64-mingw32\include"/>
-					<Add directory="C:/msys64/mingw64\include"/>
+					<Add directory="C:/msys64/mingw32/include/c++/10.2.0"/>
+					<Add directory="C:/msys64/mingw32/include/c++/10.2.0/i686-w64-mingw32"/>
+					<Add directory="C:/msys64/mingw32/include/c++/10.2.0/backward"/>
+					<Add directory="C:/msys64/mingw32/lib/clang/12.0.0/include"/>
+					<Add directory="C:/msys64/mingw32/i686-w64-mingw32/include"/>
+					<Add directory="C:/msys64/mingw32/include"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;F:/BabelLibrary/babellib/cmake-build-debug/Makefile&quot;  VERBOSE=1 BabelLibrary"/>
@@ -91,12 +91,12 @@
 				<Option compiler="clang"/>
 				<Compiler>
 					<Add directory="F:/BabelLibrary/babellib"/>
-					<Add directory="C:/msys64/mingw64\include\c++\10.2.0"/>
-					<Add directory="C:/msys64/mingw64\include\c++\10.2.0\x86_64-w64-mingw32"/>
-					<Add directory="C:/msys64/mingw64\include\c++\10.2.0\backward"/>
-					<Add directory="C:\msys64\mingw64\lib\clang\11.0.0\include"/>
-					<Add directory="C:/msys64/mingw64\x86_64-w64-mingw32\include"/>
-					<Add directory="C:/msys64/mingw64\include"/>
+					<Add directory="C:/msys64/mingw32/include/c++/10.2.0"/>
+					<Add directory="C:/msys64/mingw32/include/c++/10.2.0/i686-w64-mingw32"/>
+					<Add directory="C:/msys64/mingw32/include/c++/10.2.0/backward"/>
+					<Add directory="C:/msys64/mingw32/lib/clang/12.0.0/include"/>
+					<Add directory="C:/msys64/mingw32/i686-w64-mingw32/include"/>
+					<Add directory="C:/msys64/mingw32/include"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;F:/BabelLibrary/babellib/cmake-build-debug/Makefile&quot;  VERBOSE=1 BabelLibrary/fast"/>

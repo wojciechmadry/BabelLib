@@ -335,7 +335,7 @@ namespace babel::MATH{
 *  @return Factorial N
 */
 
-    [[nodiscard]] constexpr uint64_t factorial(size_t N) noexcept
+    [[nodiscard]] constexpr uint64_t factorial(uint64_t N) noexcept
     {
         uint64_t res = 1;
         while ( N > 1 )
