@@ -1,4 +1,0 @@
-F:/BabelLibrary/babellib/cmake-build-release/CMakeFiles/BabLib.dir
-F:/BabelLibrary/babellib/cmake-build-release/CMakeFiles/BabelLibrary.dir
-F:/BabelLibrary/babellib/cmake-build-release/CMakeFiles/edit_cache.dir
-F:/BabelLibrary/babellib/cmake-build-release/CMakeFiles/rebuild_cache.dir
