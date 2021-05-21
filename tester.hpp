@@ -26,6 +26,7 @@ namespace TESTING{
         up = std::make_unique<int>(300);
         assert(**up == 300);
         babel::WRAPER::wrap<int> p1(15);
+        p1 =15;
         babel::WRAPER::wrap<std::unique_ptr<int>> up1(std::make_unique<int>(15));
         assert(*p1 == 15 && **up1 == 15);
         babel::WRAPER::wrap<std::unique_ptr<int>> up2(std::move(up1));
