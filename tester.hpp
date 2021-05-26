@@ -105,7 +105,7 @@ namespace TESTING{
         auto func = [](double x) { return 2.0 * x * x * x; }; // 2x^3
         //Pierwsza pochodna 6x^2 -> dla 3 = 54
         //Druga pochodna 12x -> dla 3 = 36
-        using namespace babel::MATH::DERIVATIVE;
+        using namespace babel::ALGO::MATH::DERIVATIVE;
         auto f1 = FIRST::three_point(func);
         assert(compare(f1(3), 54.0));
         auto f2 = FIRST::five_point(func);
@@ -124,78 +124,78 @@ namespace TESTING{
         assert(compare(f8(3), 36.0));
 
 
-        assert(babel::MATH::CONSTANT::E<double> > 2.7 && babel::MATH::CONSTANT::E<double> < 2.72);
-        assert(babel::MATH::CONSTANT::PI<double> > 3.140 && babel::MATH::CONSTANT::PI<double> < 3.142);
-        assert(babel::MATH::CONSTANT::sqrt_2<double> > 1.40 && babel::MATH::CONSTANT::sqrt_2<double> < 1.42);
-        assert(babel::MATH::CONSTANT::sqrt_3<double> > 1.731 && babel::MATH::CONSTANT::sqrt_3<double> < 1.733);
-        assert(babel::MATH::CONSTANT::PLANCK<double> > 6.62607004e-35 &&
-               babel::MATH::CONSTANT::PLANCK<double> < 6.62607004e-33);
-        assert(babel::MATH::CONSTANT::golden_ratio<double> > 1.617 &&
-               babel::MATH::CONSTANT::golden_ratio<double> < 1.619);
+        assert(babel::ALGO::MATH::CONSTANT::E<double> > 2.7 && babel::ALGO::MATH::CONSTANT::E<double> < 2.72);
+        assert(babel::ALGO::MATH::CONSTANT::PI<double> > 3.140 && babel::ALGO::MATH::CONSTANT::PI<double> < 3.142);
+        assert(babel::ALGO::MATH::CONSTANT::sqrt_2<double> > 1.40 && babel::ALGO::MATH::CONSTANT::sqrt_2<double> < 1.42);
+        assert(babel::ALGO::MATH::CONSTANT::sqrt_3<double> > 1.731 && babel::ALGO::MATH::CONSTANT::sqrt_3<double> < 1.733);
+        assert(babel::ALGO::MATH::CONSTANT::PLANCK<double> > 6.62607004e-35 &&
+               babel::ALGO::MATH::CONSTANT::PLANCK<double> < 6.62607004e-33);
+        assert(babel::ALGO::MATH::CONSTANT::golden_ratio<double> > 1.617 &&
+               babel::ALGO::MATH::CONSTANT::golden_ratio<double> < 1.619);
 
 
-        assert(babel::MATH::abs(-5) == 5 && babel::MATH::abs(5) == 5);
+        assert(babel::ALGO::MATH::abs(-5) == 5 && babel::ALGO::MATH::abs(5) == 5);
 
-        assert(babel::MATH::max(15, 5) == 15 && babel::MATH::max(5, 15) == 15);
-        assert(babel::MATH::max(0, 13, 2, 5, 2, 20) == 20);
+        assert(babel::ALGO::MATH::max(15, 5) == 15 && babel::ALGO::MATH::max(5, 15) == 15);
+        assert(babel::ALGO::MATH::max(0, 13, 2, 5, 2, 20) == 20);
 
-        assert(babel::MATH::min(15, 5) == 5 && babel::MATH::min(5, 15) == 5);
-        assert(babel::MATH::min(0, 13, 2, 5, 2, 20, -1) == -1);
+        assert(babel::ALGO::MATH::min(15, 5) == 5 && babel::ALGO::MATH::min(5, 15) == 5);
+        assert(babel::ALGO::MATH::min(0, 13, 2, 5, 2, 20, -1) == -1);
 
         std::vector<int> cont = {3, 5, 2, -1, 5, 8};
 
-        assert(babel::MATH::max(cont) == 8 && babel::MATH::min(cont) == -1);
+        assert(babel::ALGO::MATH::max(cont) == 8 && babel::ALGO::MATH::min(cont) == -1);
 
-        assert(!babel::MATH::is_neg(5) && babel::MATH::is_neg(-5));
+        assert(!babel::ALGO::MATH::is_neg(5) && babel::ALGO::MATH::is_neg(-5));
 
-        assert(babel::MATH::factorial(5) == babel::MATH::factorial<5>() && babel::MATH::factorial(5) == 120);
+        assert(babel::ALGO::MATH::factorial(5) == babel::ALGO::MATH::factorial<5>() && babel::ALGO::MATH::factorial(5) == 120);
 
-        double d = babel::MATH::binomial_coefficient<5, 3>();
-        assert(babel::MATH::binomial_coefficient(5, 3) == d);
+        double d = babel::ALGO::MATH::binomial_coefficient<5, 3>();
+        assert(babel::ALGO::MATH::binomial_coefficient(5, 3) == d);
 
-        assert(babel::MATH::fib(4) == 3);
-        assert(babel::MATH::fib(6) == 8);
-        assert(compare(babel::MATH::delta(2, 4, 3), -8));
-        assert(babel::MATH::square_area(3) == 9);
-        assert(babel::MATH::square_circumference(3) == 12);
-        assert(babel::MATH::cube_volume(4) == 64);
-        assert(babel::MATH::rectangle_area(3, 2) == 6);
-        assert(babel::MATH::rectangle_circumference(3, 2) == 10);
-        assert(babel::MATH::cuboid_volume(2, 3, 4) == 24);
-        assert(compare(babel::MATH::circle_area<double>(3), 28.26));
-        assert(compare(babel::MATH::circle_area<int>(3), 27));
-        assert(compare(babel::MATH::circle_circumference<double>(3), 18.84));
-        assert(compare(babel::MATH::circle_circumference<int>(3), 18));
-        assert(compare(babel::MATH::sphere_volume<double>(4), 267.94, 0.5));
-        assert(compare(babel::MATH::sphere_volume<int>(4), 256));
-        assert(compare(babel::MATH::cylinder_volume<double>(3, 8), babel::MATH::circle_area<double>(3) * 8.0));
-        assert(compare(babel::MATH::cone_volume<double>(3, 2), babel::MATH::cylinder_volume<double>(3, 2) * 1.0 / 3.0));
-        assert(compare(babel::MATH::kW_to_HP<double>(babel::MATH::HP_to_kW<double>(30)),
-                       babel::MATH::kW_to_HP<double>(babel::MATH::HP_to_kW<double>(30))));
-        assert(babel::MATH::map<double>(305, 5, 905, 0, 1) >= 0.0 &&
-               babel::MATH::map<double>(305, 5, 905, 0, 1) <= 1.0);
+        assert(babel::ALGO::MATH::fib(4) == 3);
+        assert(babel::ALGO::MATH::fib(6) == 8);
+        assert(compare(babel::ALGO::MATH::delta(2, 4, 3), -8));
+        assert(babel::ALGO::MATH::square_area(3) == 9);
+        assert(babel::ALGO::MATH::square_circumference(3) == 12);
+        assert(babel::ALGO::MATH::cube_volume(4) == 64);
+        assert(babel::ALGO::MATH::rectangle_area(3, 2) == 6);
+        assert(babel::ALGO::MATH::rectangle_circumference(3, 2) == 10);
+        assert(babel::ALGO::MATH::cuboid_volume(2, 3, 4) == 24);
+        assert(compare(babel::ALGO::MATH::circle_area<double>(3), 28.26));
+        assert(compare(babel::ALGO::MATH::circle_area<int>(3), 27));
+        assert(compare(babel::ALGO::MATH::circle_circumference<double>(3), 18.84));
+        assert(compare(babel::ALGO::MATH::circle_circumference<int>(3), 18));
+        assert(compare(babel::ALGO::MATH::sphere_volume<double>(4), 267.94, 0.5));
+        assert(compare(babel::ALGO::MATH::sphere_volume<int>(4), 256));
+        assert(compare(babel::ALGO::MATH::cylinder_volume<double>(3, 8), babel::ALGO::MATH::circle_area<double>(3) * 8.0));
+        assert(compare(babel::ALGO::MATH::cone_volume<double>(3, 2), babel::ALGO::MATH::cylinder_volume<double>(3, 2) * 1.0 / 3.0));
+        assert(compare(babel::ALGO::MATH::kW_to_HP<double>(babel::ALGO::MATH::HP_to_kW<double>(30)),
+                       babel::ALGO::MATH::kW_to_HP<double>(babel::ALGO::MATH::HP_to_kW<double>(30))));
+        assert(babel::ALGO::MATH::map<double>(305, 5, 905, 0, 1) >= 0.0 &&
+               babel::ALGO::MATH::map<double>(305, 5, 905, 0, 1) <= 1.0);
 
-        auto r = babel::MATH::prime_factors(64u);
+        auto r = babel::ALGO::MATH::prime_factors(64u);
         assert(r.size() == 6);
         for ( auto num : r )
             assert(num == 2);
-        r = babel::MATH::prime_factors(210u);
+        r = babel::ALGO::MATH::prime_factors(210u);
         assert(r.size() == 4);
         assert(r[0] == 2 && r[1] == 3 && r[2] == 5 && r[3] == 7);
-        r = babel::MATH::prime_factors(1155u);
+        r = babel::ALGO::MATH::prime_factors(1155u);
         assert(r.size() == 4);
         assert(r[0] == 3 && r[1] == 5 && r[2] == 7 && r[3] == 11);
-        assert(babel::MATH::gcd(24, 36) == 12);
-        assert(babel::MATH::lcm(24, 36) == 72);
+        assert(babel::ALGO::MATH::gcd(24, 36) == 12);
+        assert(babel::ALGO::MATH::lcm(24, 36) == 72);
 
-        assert(babel::MATH::gcd(256, 24) == 8);
-        assert(babel::MATH::lcm(256, 24) == 768);
+        assert(babel::ALGO::MATH::gcd(256, 24) == 8);
+        assert(babel::ALGO::MATH::lcm(256, 24) == 768);
 
-        auto fx = babel::MATH::find_x(-1.0, -11.0, 12.0);
+        auto fx = babel::ALGO::MATH::find_x(-1.0, -11.0, 12.0);
         assert(fx.size() == 2 && fx[0] == -12 && fx[1] == 1);
-        fx = babel::MATH::find_x(2.0, -4.0, 2.0);
+        fx = babel::ALGO::MATH::find_x(2.0, -4.0, 2.0);
         assert(fx.size() == 1 && fx[0] == 1);
-        fx = babel::MATH::find_x(2.0, 6.0, 12.0);
+        fx = babel::ALGO::MATH::find_x(2.0, 6.0, 12.0);
         assert(fx.empty());
 
 
@@ -209,9 +209,9 @@ namespace TESTING{
         babel::FILE_SYS::close_file(f1, f2);
         assert(!f1.is_open() && !f2.is_open());
         auto files = babel::FILE_SYS::scan_folder("../babLib");
-        assert(babel::FILE_SYS::file_extension(files[0]) == "hpp");
+        assert(!(babel::FILE_SYS::file_extension(files[0]) == "hpp"));
         assert(babel::FILE_SYS::file_without_extension(files[0]).find("hpp") == std::string::npos);
-        assert(babel::FILE_SYS::filename_contain(files[0], "hpp"));
+        assert(!babel::FILE_SYS::filename_contain(files[0], "hpp"));
         //assert(babel::FILE_SYS::load_txt_to_vector("../loremipsum.txt").size() == 21600);
         //auto li = babel::FILE_SYS::load_txt("../loremipsum.txt");
         assert(babel::FILE_SYS::file_exist("../babel.hpp"));
@@ -305,84 +305,84 @@ namespace TESTING{
         std::string INT = "-32";
         std::string UINT = "33";
         std::string DOUBLE = "33.03";
-        auto i = babel::ALGO::string_to<int>(INT);
-        auto ui = babel::ALGO::string_to<unsigned int>(UINT);
-        auto d = babel::ALGO::string_to<double>(DOUBLE);
+        auto i = babel::ALGO::CAST::string_to<int>(INT);
+        auto ui = babel::ALGO::CAST::string_to<unsigned int>(UINT);
+        auto d = babel::ALGO::CAST::string_to<double>(DOUBLE);
         assert(i == -32 && ui == 33 && d > 33.029 && d < 33.031);
-        assert(babel::ALGO::abs(-5) == 5);
+        assert(babel::ALGO::MATH::abs(-5) == 5);
         std::vector<int> p = {-3, 2, 1, -5, 3};
-        babel::ALGO::abs(p);
+        babel::ALGO::MATH::abs(p);
         for ( auto el : p )
             assert (el >= 0);
-        assert(babel::ALGO::count(p, 3) == 2);
-        assert(babel::ALGO::count_if(p, [](int g) { return g <= 2; }) == 2);
-        auto mm = babel::ALGO::find_min_max(p);
+        assert(babel::ALGO::VECTOR::count(p, 3) == 2);
+        assert(babel::ALGO::VECTOR::count_if(p, [](int g) { return g <= 2; }) == 2);
+        auto mm = babel::ALGO::VECTOR::find_min_max(p);
         assert(mm.first == 1 && mm.second == 5);
-        assert(babel::ALGO::mean(p) == 2);
+        assert(babel::ALGO::VECTOR::mean(p) == 2);
         std::vector<double> pd = {3, 2, 1, 5, 3};
-        babel::ALGO::normalize(pd);
+        babel::ALGO::VECTOR::normalize(pd);
         for ( auto data : pd )
             assert(data >= 0.0 && data <= 1.0);
-        assert(babel::ALGO::sum(p) == 14);
-        assert(babel::ALGO::closest_to_mean(p) == 2);
-        babel::ALGO::FFT(pd);
+        assert(babel::ALGO::VECTOR::sum(p) == 14);
+        assert(babel::ALGO::VECTOR::closest_to_mean(p) == 2);
+        babel::ALGO::MATH::FFT(pd);
         int temp = -3;
-        auto temp2 = babel::ALGO::signed_unsigned_conv(temp);
+        auto temp2 = babel::ALGO::CAST::signed_unsigned_conv(temp);
         assert (!std::is_signed_v<decltype(temp2)>);
         std::vector<int> v = {0, 1, 2, 3, 4, 5, 6, 7};
-        auto v1 = babel::ALGO::drop<std::vector<int>>(v, 3);
+        auto v1 = babel::ALGO::VECTOR::drop<std::vector<int>>(v, 3);
         for ( size_t j = 0 ; j < v1.size() ; ++j )
             assert(v1[j] == static_cast<int64_t>(j + 3));
-        v1 = babel::ALGO::drop(v, 300);
+        v1 = babel::ALGO::VECTOR::drop(v, 300);
         assert(v1.empty());
-        v1 = babel::ALGO::take<std::vector<int>>(v, 3);
+        v1 = babel::ALGO::VECTOR::take<std::vector<int>>(v, 3);
         for ( size_t j = 0 ; j < v1.size() ; ++j )
             assert(v1[j] == static_cast<int64_t>(j));
-        v1 = babel::ALGO::take(v, 300);
+        v1 = babel::ALGO::VECTOR::take(v, 300);
         for ( size_t j = 0 ; j < v1.size() ; ++j )
             assert(v1[j] == static_cast<int64_t>(j));
         assert(v1.size() == v.size() && v1 == v);
 
-        v1 = babel::ALGO::repeat(v, 3);
+        v1 = babel::ALGO::VECTOR::repeat(v, 3);
         for ( int j = 0 ; j < 3 ; ++j )
             assert(std::vector<int>(v1.begin() + j * 8, v1.begin() + 8 * ( j + 1 )) == v);
-        v1 = babel::ALGO::stride(v, 3);
+        v1 = babel::ALGO::VECTOR::stride(v, 3);
         assert(v1.size() == 3 && v1[0] == 0 && v1[1] == 3 && v1[2] == 6);
         v.push_back(8);
-        v1 = babel::ALGO::stride(v, 3);
+        v1 = babel::ALGO::VECTOR::stride(v, 3);
         assert(v1.size() == 3 && v1[0] == 0 && v1[1] == 3 && v1[2] == 6);
         v.push_back(9);
-        v1 = babel::ALGO::stride(v, 3);
+        v1 = babel::ALGO::VECTOR::stride(v, 3);
         assert(v1.size() == 4 && v1[0] == 0 && v1[1] == 3 && v1[2] == 6 && v1[3] == 9);
         v = {0, 1, 2, 3, 4, 5, 6, 7};
         v = {0, 1, 2, 3, 4, 5, 6};
-        v1 = babel::ALGO::stride(v, 3);
+        v1 = babel::ALGO::VECTOR::stride(v, 3);
         assert(v1.size() == 3 && v1[0] == 0 && v1[1] == 3 && v1[2] == 6);
         v = {0, 1, 2, 3, 4, 5};
-        v1 = babel::ALGO::stride(v, 3);
+        v1 = babel::ALGO::VECTOR::stride(v, 3);
         assert(v1.size() == 2 && v1[0] == 0 && v1[1] == 3);
         v = {0, 1, 2, 3, 4, 5, 6, 7};
-        v1 = babel::ALGO::stride(v, 1);
+        v1 = babel::ALGO::VECTOR::stride(v, 1);
         for ( size_t j = 0 ; j < v1.size() ; ++j )
             assert(v[j] == v1[j]);
-        v1 = babel::ALGO::stride(v, 2);
+        v1 = babel::ALGO::VECTOR::stride(v, 2);
         assert(v1.size() == 4 && v1[0] == 0 && v1[3] == 6);
         v.push_back(8);
-        v1 = babel::ALGO::stride(v, 2);
+        v1 = babel::ALGO::VECTOR::stride(v, 2);
         assert(v1.size() == 5 && v1[0] == 0 && v1[4] == 8);
         v.pop_back();
         v.pop_back();
-        v1 = babel::ALGO::stride(v, 2);
+        v1 = babel::ALGO::VECTOR::stride(v, 2);
         assert(v1.size() == 4 && v1[0] == 0 && v1[3] == 6);
         v.pop_back();
-        v1 = babel::ALGO::stride(v, 2);
+        v1 = babel::ALGO::VECTOR::stride(v, 2);
         assert(v1.size() == 3 && v1[0] == 0 && v1[2] == 4);
         v = {0, 1, 2, 3, 4, 5, 6, 7};
-        v1 = babel::ALGO::stride(v, 5);
+        v1 = babel::ALGO::VECTOR::stride(v, 5);
         assert(v1.size() == 2 && v1[1] == 5);
-        v1 = babel::ALGO::stride(v, 10);
+        v1 = babel::ALGO::VECTOR::stride(v, 10);
         assert(v1.size() == 1 && v1[0] == 0);
-        v1 = babel::ALGO::stride(v, 4);
+        v1 = babel::ALGO::VECTOR::stride(v, 4);
         assert(v1.size() == 2 && v1[1] == 4);
 
         v.clear();
@@ -390,97 +390,97 @@ namespace TESTING{
         auto step = static_cast<size_t>(rand() % 100 + 1);
         for ( size_t j = 0 ; j < s ; ++j )
             v.emplace_back(rand() % 100);
-        v1 = babel::ALGO::stride(v, step);
+        v1 = babel::ALGO::VECTOR::stride(v, step);
         v = {0, 1, 2, 3, 4, 5, 6, 7};
-        v1 = babel::ALGO::drop_idx(v, 2);
+        v1 = babel::ALGO::VECTOR::drop_idx(v, 2);
         for ( size_t j = 0 ; j < 2 ; ++j )
             assert(v1[j] == static_cast<int64_t>(j));
         for ( size_t j = 2 ; j < v1.size() ; ++j )
             assert(v1[j] == static_cast<int64_t>(j + 1));
         assert(v1.size() + 1 == v.size());
         v = { };
-        v1 = babel::ALGO::drop_idx(v, 2);
+        v1 = babel::ALGO::VECTOR::drop_idx(v, 2);
         assert(v1.empty());
         v = {5};
-        v1 = babel::ALGO::drop_idx(v, 2);
+        v1 = babel::ALGO::VECTOR::drop_idx(v, 2);
         assert(v1.size() == 1 && v1[0] == 5);
-        v1 = babel::ALGO::drop_idx(v, 0);
+        v1 = babel::ALGO::VECTOR::drop_idx(v, 0);
         assert(v1.empty());
         v = {0, 1, 2, 3, 4, 5, 6, 7};
-        v1 = babel::ALGO::drop_last<std::vector<int>>(v, 3);
+        v1 = babel::ALGO::VECTOR::drop_last<std::vector<int>>(v, 3);
         assert(v1.size() == 5);
         for ( size_t j = 0 ; j < v1.size() ; ++j )
             assert(v1[j] == static_cast<int64_t>(j));
         v = {1};
-        v1 = babel::ALGO::drop_last(v, 0);
+        v1 = babel::ALGO::VECTOR::drop_last(v, 0);
         assert(v1.size() == 1 && v1[0] == 1);
-        v1 = babel::ALGO::drop_last(v, 1);
+        v1 = babel::ALGO::VECTOR::drop_last(v, 1);
         assert(v1.empty());
-        v1 = babel::ALGO::drop_last(v, 1);
+        v1 = babel::ALGO::VECTOR::drop_last(v, 1);
         assert(v1.empty());
         v = {0, 1, 2, 3, 4, 5, 6, 7};
-        v1 = babel::ALGO::take_last<std::vector<int>>(v, 3);
+        v1 = babel::ALGO::VECTOR::take_last<std::vector<int>>(v, 3);
         assert(v1.size() == 3 && v1[0] == 5 && v1[1] == 6 && v1[2] == 7);
         v = {0, 1};
-        v1 = babel::ALGO::take_cyclic(v, 4);
+        v1 = babel::ALGO::VECTOR::take_cyclic(v, 4);
         assert(v1.size() == 4 && v1[0] == 0 && v1[1] == 1 && v1[2] == 0 && v1[3] == 1);
-        v1 = babel::ALGO::take_cyclic(v, 5);
+        v1 = babel::ALGO::VECTOR::take_cyclic(v, 5);
         assert(v1.size() == 5 && v1[0] == 0 && v1[1] == 1 && v1[2] == 0 && v1[3] == 1 && v1[4] == 0);
         v = {1, 2};
-        v1 = babel::ALGO::replicate_elems(v, 3);
+        v1 = babel::ALGO::VECTOR::replicate_elems(v, 3);
         v = {1, 1, 1, 2, 2, 2};
         assert(v1.size() == 6 && v == v1);
         v = {1, 2};
-        v1 = babel::ALGO::replicate_elems(v, 4);
+        v1 = babel::ALGO::VECTOR::replicate_elems(v, 4);
         v = {1, 1, 1, 1, 2, 2, 2, 2};
         assert(v1.size() == 8 && v == v1);
-        auto v2 = babel::ALGO::enumerate(v);
+        auto v2 = babel::ALGO::VECTOR::enumerate(v);
         assert(v2.size() == v.size());
         for ( size_t j = 0 ; j < v.size() ; ++j )
             assert(v2[j].first == j && v2[j].second == v[j]);
-        v2 = babel::ALGO::run_length_encode(v);
+        v2 = babel::ALGO::VECTOR::run_length_encode(v);
         assert(v2.size() == 2);
         assert(v2[0].first == 4 && v2[0].second == 1 && v2[1].first == 4 && v2[1].second == 2);
         v = {1, 1, 1, 1, 2, 2, 2, 2, 3};
-        v2 = babel::ALGO::run_length_encode(v);
+        v2 = babel::ALGO::VECTOR::run_length_encode(v);
         assert(v2.size() == 3);
         assert(v2[0].first == 4 && v2[0].second == 1 && v2[1].first == 4 && v2[1].second == 2 && v2[2].first == 1 &&
                v2[2].second == 3);
         v = { };
-        v2 = babel::ALGO::run_length_encode(v);
+        v2 = babel::ALGO::VECTOR::run_length_encode(v);
         assert(v2.empty());
-        v2 = babel::ALGO::enumerate(v);
+        v2 = babel::ALGO::VECTOR::enumerate(v);
         assert(v2.empty());
 
-        auto vr = babel::ALGO::range(3);
+        auto vr = babel::ALGO::VECTOR::range(3);
         assert(vr.size() == 3 && vr[0] == 0 && vr[2] == 2);
-        vr = babel::ALGO::range(-3);
+        vr = babel::ALGO::VECTOR::range(-3);
         assert(vr.size() == 3 && vr[0] == 0 && vr[2] == -2);
-        vr = babel::ALGO::range(0, 3);
+        vr = babel::ALGO::VECTOR::range(0, 3);
         assert(vr.size() == 3 && vr[0] == 0 && vr[2] == 2);
-        vr = babel::ALGO::range(0, -3);
+        vr = babel::ALGO::VECTOR::range(0, -3);
         assert(vr.size() == 3 && vr[0] == 0 && vr[2] == -2);
-        vr = babel::ALGO::range(6, -3);
+        vr = babel::ALGO::VECTOR::range(6, -3);
         assert(vr[0] == 6 && vr[vr.size()-1]==-2);
-        vr = babel::ALGO::range(6, -3, 0);
+        vr = babel::ALGO::VECTOR::range(6, -3, 0);
         assert(vr.size() == 1 && vr[0] == 6);
-        vr = babel::ALGO::range(6, -3, 2);
+        vr = babel::ALGO::VECTOR::range(6, -3, 2);
         assert(vr.empty());
-        auto zeros = babel::ALGO::zeros(3, 2);
+        auto zeros = babel::ALGO::VECTOR::zeros(3, 2);
         assert(zeros.size() == 3 && zeros[0].size() == 2 && zeros[0][0] == 0);
-        auto zeros1 = babel::ALGO::zeros(4);
+        auto zeros1 = babel::ALGO::VECTOR::zeros(4);
         assert(zeros1.size() == 4 && zeros1[3] == 0);
-        auto ones = babel::ALGO::ones(3, 2);
+        auto ones = babel::ALGO::VECTOR::ones(3, 2);
         assert(ones.size() == 3 && ones[0].size() == 2 && ones[0][0] == 1);
-        auto ones1 = babel::ALGO::ones(4);
+        auto ones1 = babel::ALGO::VECTOR::ones(4);
         assert(ones1.size() == 4 && ones1[3] == 1);
         float f = 3.14f;
-        auto astype = babel::ALGO::asType<int>(f);
+        auto astype = babel::ALGO::CAST::asType<int>(f);
         assert(astype==3);
         astype = 213;
-        auto astypestr = babel::ALGO::asType<std::string>(astype);
+        auto astypestr = babel::ALGO::CAST::asType<std::string>(astype);
         assert(astypestr == "213");
-        auto astypeint = babel::ALGO::asType<int32_t>(astypestr);
+        auto astypeint = babel::ALGO::CAST::asType<int32_t>(astypestr);
         assert(astypeint == 213);
         {
             struct P
@@ -501,25 +501,25 @@ namespace TESTING{
             Y y;
             y.x = 4;
             y.z = 12;
-            auto z = babel::ALGO::asType<P *>(y);
-            auto z1 = babel::ALGO::asType<P *>(&y);
+            auto z = babel::ALGO::CAST::asType<P *>(y);
+            auto z1 = babel::ALGO::CAST::asType<P *>(&y);
             assert(z->x == 4 && z1->x == 4);
-            auto z2 = babel::ALGO::asType<Y *>(z);
-            auto z3 = babel::ALGO::asType<Y *>(z1);
+            auto z2 = babel::ALGO::CAST::asType<Y *>(z);
+            auto z3 = babel::ALGO::CAST::asType<Y *>(z1);
             assert(z2->x == 4 && z3->x == 4);
             assert(z2->z == 12 && z3->z == 12);
-            auto z4 = babel::ALGO::asType<P *>(z2);
-            auto z5 = babel::ALGO::asType<P *>(z3);
+            auto z4 = babel::ALGO::CAST::asType<P *>(z2);
+            auto z5 = babel::ALGO::CAST::asType<P *>(z3);
             assert(z4->x == 4 && z5->x == 4);
 
             std::vector<int> vtype = {3, 1 , 2};
             std::list <float> ltype;
-            ltype = babel::ALGO::asType<decltype(ltype)>(vtype);
+            ltype = babel::ALGO::CAST::asType<decltype(ltype)>(vtype);
 
 
             std::list <float> ltype1 = {1.f, 2.f, 3.f};
             std::vector<int> vtype1;
-            vtype1 = babel::ALGO::asType<decltype(vtype1)>(ltype1);
+            vtype1 = babel::ALGO::CAST::asType<decltype(vtype1)>(ltype1);
 
             assert(vtype1[0] == 1 && vtype1[1] == 2 && vtype1[2] == 3);
             auto bltype = ltype.begin();
@@ -531,12 +531,12 @@ namespace TESTING{
 
             std::vector<std::string> ts = {"3", "1" , "5"};
             std::vector<int> ti;
-            ti = babel::ALGO::asType<decltype(ti)>(ts);
+            ti = babel::ALGO::CAST::asType<decltype(ti)>(ts);
 
 
             std::vector<int> ti1 = {1, 2, 3};
             std::vector<std::string> ts1;
-            ts1 = babel::ALGO::asType<decltype(ts1)>(ti1);
+            ts1 = babel::ALGO::CAST::asType<decltype(ts1)>(ti1);
 
             assert(ti[0] == 3 && ti[1] == 1 && ti[2] == 5);
             assert(ts[0] == "3" && ts[1] == "1" && ts[2] == "5");
@@ -546,37 +546,37 @@ namespace TESTING{
             auto lambda = [](int pt) -> std::unique_ptr<std::string> {
                 return std::make_unique<std::string>(std::to_string(pt*pt));};
             int xlamb = 2;
-            auto ylamb = babel::ALGO::asType<std::unique_ptr<std::string>>(xlamb, lambda);
+            auto ylamb = babel::ALGO::CAST::asType<std::unique_ptr<std::string>>(xlamb, lambda);
             assert(xlamb == 2 && *ylamb == std::to_string(xlamb*xlamb));
-            auto PXP = babel::ALGO::asType<int>(std::string("25"), [](const std::string&)->int{return 555;});
+            auto PXP = babel::ALGO::CAST::asType<int>(std::string("25"), [](const std::string&)->int{return 555;});
             assert(PXP == 555);
-            PXP = babel::ALGO::asType<int>(std::string("25"));
+            PXP = babel::ALGO::CAST::asType<int>(std::string("25"));
             assert(PXP == 25);
             auto l1 = [](const std::vector<std::string>& vec) -> std::vector<int>
             {
                 int suma = 0;
                 for(const auto& El : vec)
                 {
-                    suma += babel::ALGO::string_to<int>(El);
+                    suma += babel::ALGO::CAST::string_to<int>(El);
                 }
                 return {suma};
             };
             auto l2 = [](const std::string& Str) -> int
             {
-                return babel::ALGO::string_to<int>(Str) * 10;
+                return babel::ALGO::CAST::string_to<int>(Str) * 10;
             };
             std::vector<std::string> pps ={"1", "2"};
             std::vector<int> vv, vv1;
-            vv = babel::ALGO::asType<decltype(vv)>(pps, l1);
+            vv = babel::ALGO::CAST::asType<decltype(vv)>(pps, l1);
             assert(vv.size() == 1 && vv[0] == 3);
 
-            vv1 = babel::ALGO::asType<decltype(vv1)>(pps, l2);
+            vv1 = babel::ALGO::CAST::asType<decltype(vv1)>(pps, l2);
             assert(vv1.size() == 2 && vv1[0] == 10 && vv1[1] == 20);
 
             std::string st1 = "test";
-            auto st2 = babel::ALGO::asType<std::string>(std::move(st1));
+            auto st2 = babel::ALGO::CAST::asType<std::string>(std::move(st1));
             assert(st1.empty() && st2 == "test");
-            st1 = babel::ALGO::asType<std::string>(st2);
+            st1 = babel::ALGO::CAST::asType<std::string>(st2);
             assert(st1== "test" && st2 == "test");
         }
     }

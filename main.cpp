@@ -4,14 +4,31 @@
 
 #include <atomic>
 
+
+void show(int& p)
+{
+    while(p <= 100)
+    std::cout << "Iter : " << ++p << "\n";
+}
+
+int show1(int& p)
+{
+    while(p <= 100)
+        std::cout << "Iter : " << ++p << "\n";
+    return p+ 1000;
+}
 int main()
 {
     std::cout << "Compiler is 64bit ? : " << babel::COMPILER_IS_64B <<'\n';
     std::cout << "BABEL VERSION : " << babel::VERSION << '\n';
+
     srand(static_cast<unsigned>(time(nullptr)));
     auto T = babel::TIME::measure_time(1, TESTING::START_ALL_TEST, 1);
     std::cout << "Done\nTime : " << T << " seconds\n";
-    std::cin.get();
-    std::cin.get();
+    auto disc = babel::WINDOWS::SYSTEM::all_discs();
+    for(const auto& D : disc)
+        std::cout << D << '\n';
+    //std::cin.get();
+    //std::cin.get();
     return 0;
 }
