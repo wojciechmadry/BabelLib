@@ -30,5 +30,17 @@ int main()
         std::cout << D << '\n';
     //std::cin.get();
     //std::cin.get();
+    std::cout << "Is pointer :" << babel::CONCEPTS::IS_ANY_POINTER<int> << "\n";
+    std::cout << "Is pointer :" << babel::CONCEPTS::IS_ANY_POINTER<int*> << "\n";
+    std::cout << "Is pointer :" << babel::CONCEPTS::IS_ANY_POINTER<std::unique_ptr<int>> << "\n";
+    std::cout << "Is pointer :" << babel::CONCEPTS::IS_ANY_POINTER<std::shared_ptr<int>> << "\n";
+    std::cout << "Is pointer :" << babel::CONCEPTS::IS_ANY_POINTER<std::weak_ptr<int>> << "\n";
+    std::cout << "Is pointer :" << babel::CONCEPTS::IS_ANY_POINTER<std::vector<int>> << "\n";
+    std::cout << "Is pointer :" << babel::CONCEPTS::IS_ANY_POINTER<std::vector<int*>> << "\n";
+    std::cout << "Is pointer :" << babel::CONCEPTS::IS_ANY_POINTER<std::string> << "\n";
+    std::weak_ptr<int> w;
+    std::unique_ptr<int> u;
+    std::shared_ptr<int> s;
+
     return 0;
 }
