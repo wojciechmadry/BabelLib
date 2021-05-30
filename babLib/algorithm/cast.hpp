@@ -64,7 +64,12 @@ namespace babel::ALGO::CAST{
 *  @brief  Convert from one type to another
 *  \Example_1 T = std::string AND U is arithmetic -> std::to_string(data)
 *  \Example_2 T is arithmetic AND U = std::string-> babel::ALGO::string_to<T>(data)
-*  \Example_3 If T/U is base of U/T and T must be pointer !!! You can transform from one Base/Derived to Derived/Base. (using dynamic_cast<>)
+*  \Example_3 If T/U is base of U/T You can transform from one Base/Derived to Derived/Base. (using dynamic_cast<>)
+     *  For example:
+     *  Struct P {}, Struct Y : public P {}.
+     *  Y y;
+     *  P* = asType<P *>(y); OR P* = asType<P *>(&y);
+     * auto& YRef = babel::ALGO::CAST::asType<Y&>(*pp);
 *  \Example_4 Can convert std::list<T> to std::vector<U> T need to be convertible to U etc.
 *  \Example_5 Can convert std::list<int/float...> to std::vector<std::string>
 *  \Example_6 Can convert values with Convert Function -> Top priority!
@@ -81,6 +86,11 @@ namespace babel::ALGO::CAST{
      * U = std::string s1 = "test"
      * T = std::string s2 = ""
      * s2 = asType<std::string>(std::move(s1)) -> s1 = "" and s2 = "test"
+ * \Example_9
+     * U = std::vector<std::string> vs = {"t1", "t2"};
+     * T = std::list<std::string> ls = {};
+     * ls = asType<decltype(ls)>(std::move(vs));
+     * vs == {"", ""} and ls == {"t1", "t2"};
 *  \Example_LAST In other case return static_cast<T>(data)
 *  @template  U Convert to T
 *  @param  U (data) Convert from U data to T data
@@ -152,13 +162,11 @@ namespace babel::ALGO::CAST{
                     else
                     {
                         T ArrayLike(data.size());
-                        auto begin = std::begin(ArrayLike);
-                        auto ConvBegin = std::begin(data);
-                        auto end = std::end(ArrayLike);
-                        for ( ; begin != end ; ++begin, ++ConvBegin )
-                        {
-                            *begin = std::move(*ConvBegin);
-                        }
+                        std::transform(std::begin(data), std::end(data),std::begin(ArrayLike),
+                                       []<typename LambdaType>(LambdaType& Element)
+                                       {
+                                           return std::move(Element);
+                                       });
                         return ArrayLike;
                     }
                 }
@@ -168,16 +176,11 @@ namespace babel::ALGO::CAST{
                                       std::is_arithmetic_v<babel::CONCEPTS::type_in<DECAY_U>> ) )
             {
                 T ArrayLike(data.size());
-                if ( ArrayLike.size() == data.size() )
-                {
-                    auto begin = std::begin(ArrayLike);
-                    auto ConvBegin = std::begin(data);
-                    auto end = std::end(ArrayLike);
-                    for ( ; begin != end ; ++begin, ++ConvBegin )
-                    {
-                        *begin = asType<std::decay_t<decltype(*begin)>>(*ConvBegin);
-                    }
-                }
+                std::transform(std::begin(data), std::end(data), std::begin(ArrayLike),
+                               []< typename LambdaType >(LambdaType &&Data) {
+                                   return asType<std::decay_t<decltype(*std::begin(ArrayLike))>>(
+                                           std::forward<LambdaType>(Data));
+                               });
                 return ArrayLike;
             }
         } else if constexpr ( std::is_same_v<DECAY_T, DECAY_U> )
@@ -185,7 +188,7 @@ namespace babel::ALGO::CAST{
             return std::forward<U>(data);
         } else
         {
-            return static_cast<T>(data);
+            return static_cast<T>(std::forward<U>(data));
         }
 
     }
