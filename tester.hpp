@@ -26,7 +26,7 @@ namespace TESTING{
         up = std::make_unique<int>(300);
         assert(**up == 300);
         babel::WRAPER::wrap<int> p1(15);
-        p1 =15;
+        p1 = 15;
         babel::WRAPER::wrap<std::unique_ptr<int>> up1(std::make_unique<int>(15));
         assert(*p1 == 15 && **up1 == 15);
         babel::WRAPER::wrap<std::unique_ptr<int>> up2(std::move(up1));
@@ -126,8 +126,10 @@ namespace TESTING{
 
         assert(babel::ALGO::MATH::CONSTANT::E<double> > 2.7 && babel::ALGO::MATH::CONSTANT::E<double> < 2.72);
         assert(babel::ALGO::MATH::CONSTANT::PI<double> > 3.140 && babel::ALGO::MATH::CONSTANT::PI<double> < 3.142);
-        assert(babel::ALGO::MATH::CONSTANT::sqrt_2<double> > 1.40 && babel::ALGO::MATH::CONSTANT::sqrt_2<double> < 1.42);
-        assert(babel::ALGO::MATH::CONSTANT::sqrt_3<double> > 1.731 && babel::ALGO::MATH::CONSTANT::sqrt_3<double> < 1.733);
+        assert(babel::ALGO::MATH::CONSTANT::sqrt_2<double> > 1.40 &&
+               babel::ALGO::MATH::CONSTANT::sqrt_2<double> < 1.42);
+        assert(babel::ALGO::MATH::CONSTANT::sqrt_3<double> > 1.731 &&
+               babel::ALGO::MATH::CONSTANT::sqrt_3<double> < 1.733);
         assert(babel::ALGO::MATH::CONSTANT::PLANCK<double> > 6.62607004e-35 &&
                babel::ALGO::MATH::CONSTANT::PLANCK<double> < 6.62607004e-33);
         assert(babel::ALGO::MATH::CONSTANT::golden_ratio<double> > 1.617 &&
@@ -148,7 +150,8 @@ namespace TESTING{
 
         assert(!babel::ALGO::MATH::is_neg(5) && babel::ALGO::MATH::is_neg(-5));
 
-        assert(babel::ALGO::MATH::factorial(5) == babel::ALGO::MATH::factorial<5>() && babel::ALGO::MATH::factorial(5) == 120);
+        assert(babel::ALGO::MATH::factorial(5) == babel::ALGO::MATH::factorial<5>() &&
+               babel::ALGO::MATH::factorial(5) == 120);
 
         double d = babel::ALGO::MATH::binomial_coefficient<5, 3>();
         assert(babel::ALGO::MATH::binomial_coefficient(5, 3) == d);
@@ -168,8 +171,10 @@ namespace TESTING{
         assert(compare(babel::ALGO::MATH::circle_circumference<int>(3), 18));
         assert(compare(babel::ALGO::MATH::sphere_volume<double>(4), 267.94, 0.5));
         assert(compare(babel::ALGO::MATH::sphere_volume<int>(4), 256));
-        assert(compare(babel::ALGO::MATH::cylinder_volume<double>(3, 8), babel::ALGO::MATH::circle_area<double>(3) * 8.0));
-        assert(compare(babel::ALGO::MATH::cone_volume<double>(3, 2), babel::ALGO::MATH::cylinder_volume<double>(3, 2) * 1.0 / 3.0));
+        assert(compare(babel::ALGO::MATH::cylinder_volume<double>(3, 8),
+                       babel::ALGO::MATH::circle_area<double>(3) * 8.0));
+        assert(compare(babel::ALGO::MATH::cone_volume<double>(3, 2),
+                       babel::ALGO::MATH::cylinder_volume<double>(3, 2) * 1.0 / 3.0));
         assert(compare(babel::ALGO::MATH::kW_to_HP<double>(babel::ALGO::MATH::HP_to_kW<double>(30)),
                        babel::ALGO::MATH::kW_to_HP<double>(babel::ALGO::MATH::HP_to_kW<double>(30))));
         assert(babel::ALGO::MATH::map<double>(305, 5, 905, 0, 1) >= 0.0 &&
@@ -209,7 +214,7 @@ namespace TESTING{
         babel::FILE_SYS::close_file(f1, f2);
         assert(!f1.is_open() && !f2.is_open());
         auto files = babel::FILE_SYS::scan_folder("../babLib");
-        assert(!(babel::FILE_SYS::file_extension(files[0]) == "hpp"));
+        assert(!( babel::FILE_SYS::file_extension(files[0]) == "hpp" ));
         assert(babel::FILE_SYS::file_without_extension(files[0]).find("hpp") == std::string::npos);
         assert(!babel::FILE_SYS::filename_contain(files[0], "hpp"));
         //assert(babel::FILE_SYS::load_txt_to_vector("../loremipsum.txt").size() == 21600);
@@ -297,7 +302,7 @@ namespace TESTING{
         d3.emplace<std::string>("t2");
         assert(d4 == d3 && !d4.cmp<std::string>(d3));
         d3.reset();
-        assert(d4!=d3  && !d4.cmp<std::string>(d3));
+        assert(d4 != d3 && !d4.cmp<std::string>(d3));
     }
 
     void ALGORITHM_HPP() // DONE
@@ -461,7 +466,7 @@ namespace TESTING{
         vr = babel::ALGO::VECTOR::range(0, -3);
         assert(vr.size() == 3 && vr[0] == 0 && vr[2] == -2);
         vr = babel::ALGO::VECTOR::range(6, -3);
-        assert(vr[0] == 6 && vr[vr.size()-1]==-2);
+        assert(vr[0] == 6 && vr[vr.size() - 1] == -2);
         vr = babel::ALGO::VECTOR::range(6, -3, 0);
         assert(vr.size() == 1 && vr[0] == 6);
         vr = babel::ALGO::VECTOR::range(6, -3, 2);
@@ -476,7 +481,7 @@ namespace TESTING{
         assert(ones1.size() == 4 && ones1[3] == 1);
         float f = 3.14f;
         auto astype = babel::ALGO::CAST::asType<int>(f);
-        assert(astype==3);
+        assert(astype == 3);
         astype = 213;
         auto astypestr = babel::ALGO::CAST::asType<std::string>(astype);
         assert(astypestr == "213");
@@ -487,7 +492,8 @@ namespace TESTING{
             {
                 int x = 2;
 
-                virtual void del() = 0;
+                virtual void del()
+                {}
             };
             struct Y : public P
             {
@@ -512,12 +518,33 @@ namespace TESTING{
             auto z5 = babel::ALGO::CAST::asType<P *>(z3);
             assert(z4->x == 4 && z5->x == 4);
 
-            std::vector<int> vtype = {3, 1 , 2};
-            std::list <float> ltype;
+            std::vector<int> vtype = {3, 1, 2};
+            std::list<float> ltype;
             ltype = babel::ALGO::CAST::asType<decltype(ltype)>(vtype);
 
+            {
+                Y yy;
+                yy.z = 25;
+                yy.x = 12;
+                P* pp = babel::ALGO::CAST::asType<P*>(yy);
+                P* pp1 = babel::ALGO::CAST::asType<P*>(&yy);
+                assert(pp->x == 12);
+                assert(pp1->x == 12);
+                yy.x = 30;
+                assert(pp->x == 30);
+                assert(pp1->x == 30);
+                auto& org = babel::ALGO::CAST::asType<Y&>(*pp);
+                yy.z = 222;
+                yy.x = 15;
+                assert(pp->x == 15);
+                assert(pp1->x == 15);
+                assert(org.x == 15 && org.z == 222);
+                org.x = 10;
+                assert(pp->x == 10 && yy.x == 10);
+                assert(pp1->x == 10);
+            }
 
-            std::list <float> ltype1 = {1.f, 2.f, 3.f};
+            std::list<float> ltype1 = {1.f, 2.f, 3.f};
             std::vector<int> vtype1;
             vtype1 = babel::ALGO::CAST::asType<decltype(vtype1)>(ltype1);
 
@@ -529,7 +556,7 @@ namespace TESTING{
             ++bltype;
             assert(*bltype == 2);
 
-            std::vector<std::string> ts = {"3", "1" , "5"};
+            std::vector<std::string> ts = {"3", "1", "5"};
             std::vector<int> ti;
             ti = babel::ALGO::CAST::asType<decltype(ti)>(ts);
 
@@ -538,34 +565,72 @@ namespace TESTING{
             std::vector<std::string> ts1;
             ts1 = babel::ALGO::CAST::asType<decltype(ts1)>(ti1);
 
+            std::vector<int> ti2 = {1, 2, 3};
+            std::vector<std::string> ts2;
+            ts2 = babel::ALGO::CAST::asType<decltype(ts2)>(ti2, [](int) -> std::string { return "str"; });
+            for ( const auto &TS2 : ts2 )
+                assert(TS2 == "str");
+
+            int pp = 4;
+            auto &pp1 = babel::ALGO::CAST::asType<int &>(pp);
+            assert(pp == 4 && pp1 == 4);
+            pp = 25;
+            assert(pp == 25 && pp1 == 25);
+            {
+                std::vector<std::string> sv = {"t1", "t2", "t3"};
+                std::list<std::string> sl;
+                sl = babel::ALGO::CAST::asType<decltype(sl)>(sv);
+                auto beg = sl.begin();
+                assert(sv[0] == "t1" && sv[1] == "t2" && sv[2] == "t3");
+                assert(*beg == "t1");
+                ++beg;
+                assert(*beg == "t2");
+                ++beg;
+                assert(*beg == "t3");
+            }
+            {
+                std::vector<std::string> sv = {"t1", "t2", "t3"};
+                std::list<std::string> sl;
+
+                sl = babel::ALGO::CAST::asType<decltype(sl)>(std::move(sv));
+                auto beg = sl.begin();
+                assert(sv[0].empty() && sv[1].empty() && sv[2].empty());
+                assert(*beg == "t1");
+                ++beg;
+                assert(*beg == "t2");
+                ++beg;
+                assert(*beg == "t3");
+            }
+
+
             assert(ti[0] == 3 && ti[1] == 1 && ti[2] == 5);
             assert(ts[0] == "3" && ts[1] == "1" && ts[2] == "5");
             assert(ts1[0] == "1" && ts1[1] == "2" && ts1[2] == "3");
             assert(ti1[0] == 1 && ti1[1] == 2 && ti1[2] == 3);
 
             auto lambda = [](int pt) -> std::unique_ptr<std::string> {
-                return std::make_unique<std::string>(std::to_string(pt*pt));};
+                return std::make_unique<std::string>(std::to_string(pt * pt));
+            };
             int xlamb = 2;
             auto ylamb = babel::ALGO::CAST::asType<std::unique_ptr<std::string>>(xlamb, lambda);
-            assert(xlamb == 2 && *ylamb == std::to_string(xlamb*xlamb));
-            auto PXP = babel::ALGO::CAST::asType<int>(std::string("25"), [](const std::string&)->int{return 555;});
+            assert(xlamb == 2 && *ylamb == std::to_string(xlamb * xlamb));
+            auto PXP = babel::ALGO::CAST::asType<int>(std::string("25"),
+                                                      [](const std::string &) -> int { return 555; });
             assert(PXP == 555);
             PXP = babel::ALGO::CAST::asType<int>(std::string("25"));
             assert(PXP == 25);
-            auto l1 = [](const std::vector<std::string>& vec) -> std::vector<int>
-            {
+            auto l1 = [](const std::vector<std::string> &vec) -> std::vector<int> {
                 int suma = 0;
-                for(const auto& El : vec)
+                for ( const auto &El : vec )
                 {
                     suma += babel::ALGO::CAST::string_to<int>(El);
                 }
                 return {suma};
             };
-            auto l2 = [](const std::string& Str) -> int
-            {
+            auto l2 = [](const std::string &Str) -> int {
                 return babel::ALGO::CAST::string_to<int>(Str) * 10;
             };
-            std::vector<std::string> pps ={"1", "2"};
+            std::vector<std::string> pps = {"1", "2"};
             std::vector<int> vv, vv1;
             vv = babel::ALGO::CAST::asType<decltype(vv)>(pps, l1);
             assert(vv.size() == 1 && vv[0] == 3);
@@ -577,11 +642,12 @@ namespace TESTING{
             auto st2 = babel::ALGO::CAST::asType<std::string>(std::move(st1));
             assert(st1.empty() && st2 == "test");
             st1 = babel::ALGO::CAST::asType<std::string>(st2);
-            assert(st1== "test" && st2 == "test");
+            assert(st1 == "test" && st2 == "test");
         }
     }
 
 #ifdef _WIN32
+
     void WINDOWSCONV_HPP() //DONE
     {
         std::string str = "testowy napis";
@@ -591,6 +657,7 @@ namespace TESTING{
         auto &ws = lpc.get_wstring();
         assert(!ws.empty());
     }
+
 #endif
 
     void REQUEST_HPP() //DONE
@@ -628,9 +695,24 @@ namespace TESTING{
         assert(tekst.find("t to") != nullptr);
     }
 
+    void CONCEPT_HPP()
+    {
+        assert(!babel::CONCEPTS::IS_ANY_POINTER<int>);
+        assert(babel::CONCEPTS::IS_ANY_POINTER<int *>);
+        assert(babel::CONCEPTS::IS_ANY_POINTER<std::unique_ptr<int>>);
+        assert(babel::CONCEPTS::IS_ANY_POINTER<std::shared_ptr<int>>);
+        assert(babel::CONCEPTS::IS_ANY_POINTER<std::weak_ptr<int>>);
+        assert(!babel::CONCEPTS::IS_ANY_POINTER<std::vector<int>>);
+        assert(!babel::CONCEPTS::IS_ANY_POINTER<std::vector<int *>>);
+        assert(!babel::CONCEPTS::IS_ANY_POINTER<std::string>);
+        assert(!babel::CONCEPTS::IS_ANY_POINTER<std::reference_wrapper<int>>);
+        assert(babel::CONCEPTS::IS_ANY_POINTER<std::reference_wrapper<int *>>);
+    }
+
     void START_ALL_TEST(const int times = 1)
     {
         auto start_test = []() {
+            CONCEPT_HPP();
             TEXT_HPP();
             WRAPER_HPP();
             VARIADIC_HPP();
