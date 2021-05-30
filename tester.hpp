@@ -330,7 +330,8 @@ namespace TESTING{
             assert(data >= 0.0 && data <= 1.0);
         assert(babel::ALGO::VECTOR::sum(p) == 14);
         assert(babel::ALGO::VECTOR::closest_to_mean(p) == 2);
-        babel::ALGO::MATH::FFT(pd);
+        auto fft = babel::ALGO::MATH::FFT(pd);
+        (void) fft;
         int temp = -3;
         auto temp2 = babel::ALGO::CAST::signed_unsigned_conv(temp);
         assert (!std::is_signed_v<decltype(temp2)>);
@@ -493,7 +494,7 @@ namespace TESTING{
                 int x = 2;
 
                 virtual void del()
-                {}
+                { }
             };
             struct Y : public P
             {
@@ -526,14 +527,14 @@ namespace TESTING{
                 Y yy;
                 yy.z = 25;
                 yy.x = 12;
-                P* pp = babel::ALGO::CAST::asType<P*>(yy);
-                P* pp1 = babel::ALGO::CAST::asType<P*>(&yy);
+                P *pp = babel::ALGO::CAST::asType<P *>(yy);
+                P *pp1 = babel::ALGO::CAST::asType<P *>(&yy);
                 assert(pp->x == 12);
                 assert(pp1->x == 12);
                 yy.x = 30;
                 assert(pp->x == 30);
                 assert(pp1->x == 30);
-                auto& org = babel::ALGO::CAST::asType<Y&>(*pp);
+                auto &org = babel::ALGO::CAST::asType<Y &>(*pp);
                 yy.z = 222;
                 yy.x = 15;
                 assert(pp->x == 15);
@@ -714,7 +715,8 @@ namespace TESTING{
 
     void DYNAMIC_ARRAY_HPP()
     {
-        {babel::CONTAINER::dynamic_array<int> x;
+        {
+            babel::CONTAINER::dynamic_array<int> x;
             x.push_back(1);
             assert(x.size() == 1 && x[0] == 1);
             x.push_back(2);
@@ -745,19 +747,19 @@ namespace TESTING{
             assert(h1.size() == 4 && h1[0] == 1 && h1[3] == 8);
             babel::CONTAINER::dynamic_array<int> h2(500, 5);
             assert(h2.size() == 500 && h2[0] == 5 && h2[499] == 5);
-            for (int pp : h2)
+            for ( int pp : h2 )
                 assert(pp == 5);
 
-            babel::CONTAINER::dynamic_array<int> dd {3, 1, 5 , 7};
+            babel::CONTAINER::dynamic_array<int> dd {3, 1, 5, 7};
             auto dp(dd);
             auto dk(std::move(dd));
             dd.push_back(15);
 
             assert(dd.size() == 1 && dd[0] == 15);
             assert(dp.size() == dk.size() && dp.size() == 4);
-            for(std::size_t i = 0 ; i < dp.size() ; ++i)
+            for ( std::size_t i = 0 ; i < dp.size() ; ++i )
                 assert(dp[i] == dk[i]);
-                }
+        }
 
 
         float fl = 30.14f;
@@ -775,12 +777,145 @@ namespace TESTING{
         x = std::move(p);
         assert(p.size() == 0);
         x.clear();
+    }
 
+    void LIST_HPP()
+    {
+        using namespace babel::CONTAINER;
+        list<int> l;
+        assert(l.size() == 0);
+        l.push_back(5);
+        assert(l.size() == 1 && l[0] == 5);
+        l.push_back(10);
+        assert(l.size() == 2 && l[0] == 5 && l[1] == 10);
+        l.push_back(20);
+        assert(l.size() == 3 && l[0] == 5 && l[1] == 10 && l[2] == 20);
+        l.clear();
+        assert(l.size() == 0);
+        l.push_front(10);
+        assert(l.size() == 1 && l[0] == 10);
+        l.push_front(12);
+        assert(l.size() == 2 && l[0] == 12 && l[1] == 10);
+        l.push_front(13);
+        assert(l.size() == 3 && l[0] == 13 && l[1] == 12 && l[2] == 10);
+        l.clear();
+        assert(l.size() == 0);
+        list<int> _l(15, 5);
+        assert(_l[0] == 5 && _l[14] == 5 && _l.size() == 15);
+        l = list<int>({1, 2, 3, 4, 5});
+        assert(l.size() == 5 && l[0] == 1 && l[4] == 5);
+        l.pop_back();
+        assert(l[3] == 4);
+        l.pop_back();
+        assert(l[2] == 3);
+        l.pop_back();
+        assert(l[1] == 2);
+        l.pop_back();
+        assert(l[0] == 1);
+        l.pop_back();
+        assert(l.size() == 0);
+        l = list<int>({1, 2, 3, 4, 5});
+        l.pop_front();
+        assert(l[0] == 2);
+        l.pop_front();
+        assert(l[0] == 3);
+        l.pop_front();
+        assert(l[0] == 4);
+        l.pop_front();
+        assert(l[0] == 5);
+        l.pop_front();
+        assert(l.size() == 0);
+        l = list<int>({1, 2, 3, 4, 5});
+        assert(*l.find(5) == 5);
+        assert(*l.find(2) == 2);
+        assert(l.find(312) == nullptr);
+        assert(*l.find([](int my_i) { return my_i > 3; }) == 4);
+        assert(l.find([](int my_i) { return my_i > 30; }) == nullptr);
+        l[0] = 12;
+        assert(l[0] == 12);
+        _l = l;
+        assert(_l[0] == 12 && _l[4] == 5 && _l.size() == 5);
+        l = list<int>({1, 2, 3});
+        l.remove(2);
+        assert(l.size() == 2 && l[0] == 1 && l[1] == 3);
+        _l = l;
+        l.remove(1);
+        _l.remove(3);
+        assert(l.size() == 1 && _l.size() == 1);
+        assert(l[0] == 3 && _l[0] == 1);
+        l.remove(3);
+        _l.remove(1);
+        assert(l.size() == 0 && _l.size() == 0);
+        l.push_back(2);
+        l.push_front(4);
+        l.push_back(3);
+        assert(l.size() == 3 && l[0] == 4 && l[1] == 2 && l[2] == 3);
+        l.remove([](int y) { return y == 3; });
+        assert(l.size() == 2 && l[0] == 4 && l[1] == 2);
+        l.remove([](int y) { return y == 3; });
+        assert(l.size() == 2);
+        l.clear();
+        l = {1, 2, 3};
+        assert(l.size() == 3 && l[0] == 1 && l[1] == 2 && l[2] == 3);
+        l.clear();
+        for ( int i = 10 ; i >= 0 ; --i )
+            l.push_in_order(i, std::greater<>());
+        for ( int i = 0 ; i < 10 ; ++i )
+            assert(l[static_cast<std::size_t>(i)] == i);
+        l.clear();
+        for ( std::size_t i = 0 ; i < 10 ; ++i )
+        {
+            l.push_in_order(static_cast<int>(i), std::greater<>());
+            assert(l[i] == static_cast<int>(i));
+        }
+        l.clear();
+        for ( int i = 0 ; i < 10 ; ++i )
+            l.push_in_order(i, std::less<>());
+        for ( int i = 9 ; i >= 0 ; --i )
+            assert(l[static_cast<std::size_t>(9 - i)] == i);
+        l.clear();
+        for ( std::size_t i = 0 ; i < 10000 ; ++i )
+            l.push_in_order(rand() % 100000, std::greater<>());
+        for ( std::size_t i = 0 ; i < 10000 - 1 ; ++i )
+            assert(l[i + 1] >= l[i]);
+        l.clear();
+        for ( int i = 0 ; i < 100000 ; ++i )
+            l.push_back(i);
+        l.clear();
+        l.push_back({3, 1, 2});
+        assert(l.size() == 3 && l[0] == 3 && l[1] == 1 && l[2] == 2);
+        l.clear();
+        l.push_back({1, 1, 1, 1, 1, 1, 1, 1, 1});
+        for ( auto el : l )
+            assert(el == 1);
+        l.clear();
+        l.push_back(1);
+        assert(l.size() == 1 && l[0] == 1);
+        l.remove(1);
+        assert(l.size() == 0);
+        l.push_front(1);
+        assert(l.size() == 1 && l[0] == 1);
+        l.remove(1);
+        assert(l.size() == 0);
+        l.push_front(5);
+        l.push_back(2);
+        assert(l.size() == 2 && l[1] == 2 && l[0] == 5);
+        l.remove(2);
+        assert(l.size() == 1 && l[0] == 5);
+        l.remove(5);
+        assert(l.size() == 0);
+        l.push_front(5);
+        l.push_back(2);
+        l.remove(5);
+        assert(l.size() == 1 && l[0] == 2);
+        l.remove(2);
+        assert(l.size() == 0);
     }
 
     void START_ALL_TEST(const int times = 1)
     {
         auto start_test = []() {
+            LIST_HPP();
             DYNAMIC_ARRAY_HPP();
             CONCEPT_HPP();
             TEXT_HPP();

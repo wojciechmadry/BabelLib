@@ -127,8 +127,8 @@ namespace babel::ALGO::CAST{
                 return Func(std::forward<U>(data));
             else
             {
-                T ArrayLike(data.size());
-                std::transform(std::begin(data), std::end(data), std::begin(ArrayLike), Func);
+                T ArrayLike;
+                std::transform(std::begin(data), std::end(data), std::back_inserter(ArrayLike), Func);
                 return ArrayLike;
             }
         } else if constexpr ( std::is_same_v<std::string, DECAY_T> && std::is_arithmetic_v<DECAY_U> )
@@ -161,8 +161,8 @@ namespace babel::ALGO::CAST{
                         return T {std::begin(data), std::end(data)};
                     else
                     {
-                        T ArrayLike(data.size());
-                        std::transform(std::begin(data), std::end(data),std::begin(ArrayLike),
+                        T ArrayLike;
+                        std::transform(std::begin(data), std::end(data),std::back_inserter(ArrayLike),
                                        []<typename LambdaType>(LambdaType& Element)
                                        {
                                            return std::move(Element);
@@ -175,8 +175,8 @@ namespace babel::ALGO::CAST{
                                  || ( std::is_same_v<std::string, babel::CONCEPTS::type_in<DECAY_T>> &&
                                       std::is_arithmetic_v<babel::CONCEPTS::type_in<DECAY_U>> ) )
             {
-                T ArrayLike(data.size());
-                std::transform(std::begin(data), std::end(data), std::begin(ArrayLike),
+                T ArrayLike;
+                std::transform(std::begin(data), std::end(data), std::back_inserter(ArrayLike),
                                []< typename LambdaType >(LambdaType &&Data) {
                                    return asType<std::decay_t<decltype(*std::begin(ArrayLike))>>(
                                            std::forward<LambdaType>(Data));
