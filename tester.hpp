@@ -1000,6 +1000,14 @@ namespace TESTING{
                               index -= 4;
                           });
         }
+        {
+            long long correct = 5;
+            for(auto range : babel::ITERATOR::range(5, 15))
+            {
+                assert(correct == range);
+                ++correct;
+            }
+        }
     }
 
 

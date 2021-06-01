@@ -71,42 +71,42 @@ namespace babel::ITERATOR{
             _step = Step;
         }
 
-        [[nodiscard]] int64_t Start() const noexcept
+        [[nodiscard]]constexpr int64_t Start() const noexcept
         {
             return _start;
         }
 
-        [[nodiscard]] int64_t Stop() const noexcept
+        [[nodiscard]]constexpr int64_t Stop() const noexcept
         {
             return _start;
         }
 
-        [[nodiscard]] int64_t Step() const noexcept
+        [[nodiscard]]constexpr int64_t Step() const noexcept
         {
             return _start;
         }
 
-        [[nodiscard]] int64_t &Start() noexcept
+        [[nodiscard]]constexpr int64_t &Start() noexcept
         {
             return _start;
         }
 
-        [[nodiscard]] int64_t &Stop() noexcept
+        [[nodiscard]]constexpr int64_t &Stop() noexcept
         {
             return _start;
         }
 
-        [[nodiscard]] int64_t &Step() noexcept
+        [[nodiscard]]constexpr int64_t &Step() noexcept
         {
             return _start;
         }
 
-        [[nodiscard]] Iterator begin() const noexcept
+        [[nodiscard]]constexpr Iterator begin() const noexcept
         {
             return Iterator(_start, _step);
         }
 
-        [[nodiscard]] Iterator end() const noexcept
+        [[nodiscard]]constexpr Iterator end() const noexcept
         {
             return Iterator(_stop, _step);
         }
