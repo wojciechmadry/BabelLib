@@ -952,10 +952,75 @@ namespace TESTING{
                               --good;
                           });
         }
+        {
+            std::vector<std::string> stt = {"Test1", "Test2", "Test3"};
+            auto Enum = babel::ITERATOR::enumerator(stt);
+            long long i = 0;
+            for ( const auto &data : Enum )
+            {
+                assert(i++ == data.first());//NOLINT
+            }
+            i = 25;
+            std::for_each(Enum.begin(25), Enum.end(),
+                          [&i](auto Data) mutable {
+                              assert(Data.first() == i++); //NOLINT
+                          });
+        }
+        {
+            std::vector<std::string> stt = {"Test1", "Test2", "Test3"};
+            auto beg = babel::ITERATOR::enumerate(stt.begin());
+            auto end = babel::ITERATOR::enumerate(stt.end());
+            while (beg != end)
+            {
+                (*beg).second() = "CHANGED";
+                ++beg;
+            }
+            for(const auto& SS: stt)
+            {
+                assert(SS == "CHANGED");
+            }
+
+        }
+        {
+            const std::vector<std::string> stt = {"Test1", "Test2", "Test3"};
+            auto Enum = babel::ITERATOR::enumerator(stt);
+            long long i = 0;
+            for ( const auto &data : Enum )
+            {
+                assert(i++ == data.first());//NOLINT
+            }
+            i = 25;
+            std::for_each(Enum.begin(25), Enum.end(),
+                          [&i](auto Data) mutable {
+                              assert(Data.first() == i++); //NOLINT
+                          });
+        }
+        {
+            std::vector<std::string> stt = {"Test1", "Test2", "Test3"};
+            auto Enum = babel::ITERATOR::enumerator(stt);
+            for ( auto data : Enum )
+            {
+                data.second() = "CHANGED";
+            }
+            for(const auto& CH :stt)
+            {
+                assert(CH == "CHANGED");
+            }
+        }
+
     }
 
     void RANGES_ITERATOR()
     {
+        {
+            const auto Ranges = babel::ITERATOR::range(0, 10, 1);
+            int64_t index = 0;
+            std::for_each(Ranges.begin(), Ranges.end(),
+                          [&index](const auto &Data) mutable {
+                              assert(index == Data);
+                              ++index;
+                          });
+        }
         {
             auto Ranges = babel::ITERATOR::range(0, 10, 1);
             auto Ranges1 = babel::ITERATOR::range(0, 9, 2);
@@ -1002,7 +1067,7 @@ namespace TESTING{
         }
         {
             long long correct = 5;
-            for(auto range : babel::ITERATOR::range(5, 15))
+            for ( auto range : babel::ITERATOR::range(5, 15) )
             {
                 assert(correct == range);
                 ++correct;

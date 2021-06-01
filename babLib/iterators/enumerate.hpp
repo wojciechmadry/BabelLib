@@ -1,17 +1,20 @@
 #ifndef babel_ITERATOR_ENUMERATE
 #define babel_ITERATOR_ENUMERATE
+
 #include "../must_have.hpp"
 
 namespace babel::ITERATOR{
+
     template< typename Iter, typename Increment = std::plus<> >
     class enumerate
     {
         int64_t _index;
         Iter _iterator;
+        Increment _incr { };
 
-        template< typename In >
         class Pair
         {
+            using In = std::remove_reference_t<decltype(*Iter{})>;
             int64_t _index;
             std::reference_wrapper<In> _value;
         public:
@@ -31,12 +34,12 @@ namespace babel::ITERATOR{
                 return _index;
             }
 
-            [[nodiscard]] constexpr In &get_value() noexcept
+            [[nodiscard]] constexpr auto &get_value() noexcept
             {
                 return _value.get();
             }
 
-            [[nodiscard]] constexpr const In &get_value() const noexcept
+            [[nodiscard]] constexpr const auto &get_value() const noexcept
             {
                 return _value.get();
             }
@@ -46,20 +49,19 @@ namespace babel::ITERATOR{
                 return _index;
             }
 
-            [[nodiscard]] constexpr In &second() noexcept
+            [[nodiscard]] constexpr auto &second() noexcept
             {
                 return _value.get();
             }
 
-            [[nodiscard]] constexpr const In &second() const noexcept
+            [[nodiscard]] constexpr const auto &second() const noexcept
             {
                 return _value.get();
             }
         };
 
     public:
-        using value_type = Pair<std::decay_t<decltype(*_iterator)>>;
-
+        using value_type = Pair;
         constexpr enumerate() = delete;
 
         explicit constexpr enumerate(Iter iterator, const int64_t Start = 0) noexcept: _index(Start),
@@ -100,24 +102,24 @@ namespace babel::ITERATOR{
 
         [[nodiscard]] constexpr auto operator*() noexcept
         {
-            return Pair<std::decay_t<decltype(*_iterator)>>(_index, *_iterator);
+            return Pair{_index, *_iterator};
         }
 
         [[nodiscard]] constexpr auto operator*() const noexcept
         {
-            return Pair<std::decay_t<decltype(*_iterator)>>(_index, *_iterator);
+            return Pair{_index, *_iterator};
         }
 
         constexpr enumerate &operator++() noexcept
         {
-            _index = Increment()(_index, 1);
+            _index = _incr(_index, 1);
             ++_iterator;
             return *this;
         }
 
         constexpr enumerate &operator--() noexcept
         {
-            _index = Increment()(_index, -1);
+            _index = _incr(_index, -1);
             --_iterator;
             return *this;
         }
@@ -125,7 +127,7 @@ namespace babel::ITERATOR{
         constexpr const enumerate operator++(int) noexcept //NOLINT
         {
             auto old = *this;
-            _index = Increment()(_index, 1);
+            _index = _incr(_index, 1);
             ++_iterator;
             return old;
         }
@@ -133,7 +135,7 @@ namespace babel::ITERATOR{
         constexpr const enumerate operator--(int) noexcept //NOLINT
         {
             auto old = *this;
-            _index = Increment()(_index, -1);
+            _index = _incr(_index, -1);
             --_iterator;
             return old;
         }
@@ -156,6 +158,37 @@ namespace babel::ITERATOR{
         constexpr bool operator!=(const Iter &other) const noexcept
         {
             return _iterator != other;
+        }
+    };
+
+    template< typename Container, typename Increment = std::plus<> >
+    class enumerator
+    {
+        std::reference_wrapper<std::remove_reference_t<Container>> _cont;
+    public:
+        constexpr enumerator() = default;
+
+        constexpr explicit enumerator(Container &Cont) noexcept: _cont(Cont)
+        { }
+
+        constexpr auto begin(const int64_t Start = 0) noexcept
+        {
+            return enumerate<decltype((std::begin(_cont.get()))), Increment>(std::begin(_cont.get()), Start);
+        }
+
+        constexpr auto begin(const int64_t Start = 0) const noexcept //NOLINT
+        {
+            return enumerate<decltype((std::begin(_cont.get()))), Increment>(std::begin(_cont.get()), Start);
+        }
+
+        constexpr auto end() const noexcept //NOLINT
+        {
+            return enumerate<decltype((std::begin(_cont.get()))), Increment>(std::end(_cont.get()));
+        }
+
+        constexpr auto end() noexcept
+        {
+            return enumerate<decltype((std::begin(_cont.get()))), Increment>(std::end(_cont.get()));
         }
     };
 }
