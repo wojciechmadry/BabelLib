@@ -37,6 +37,7 @@ List of namespaces `babel::`:
 * `WINDOWS` - Available only in _Windows_, simple windows function (like resolution of screen, search available discs)
 * `WRAPER` - Class `wrap`, nothing special just wrap data `T`
 * `SYSTEM` - Simple system function like number of threads etc.
+* `ITERATOR` - Iterator like enumerate, range
 
 Docs
 ---

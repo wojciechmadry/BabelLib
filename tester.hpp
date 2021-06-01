@@ -912,6 +912,47 @@ namespace TESTING{
         assert(l.size() == 0);
     }
 
+    void ENUMERATE_ITERATOR()
+    {
+        {
+            std::list<std::string> lit = {"test", "tu", "test2"};
+            std::vector<int> vit = {3, 8, 12, 5, 3, 4, 5};
+            auto en = babel::ITERATOR::enumerate(vit.begin());
+            auto f = *en;
+            assert(f.get_index() == 0 && f.get_value() == 3);
+            f.get_value() = 15;
+            assert(f.get_value() == 15 && vit[0] == 15);
+            ++en;
+            assert(( *en ).get_index() == 1 && ( *en ).get_value() == 8);
+            en++;
+            assert(( *en ).get_index() == 2 && ( *en ).get_value() == 12);
+            --en;
+            assert(( *en ).get_index() == 1 && ( *en ).get_value() == 8);
+            en--;
+            assert(( *en ).get_index() == 0 && ( *en ).get_value() == 15);
+            babel::ITERATOR::enumerate<decltype(vit.begin())>::value_type t = *en;
+            assert(t.get_index() == 0 && t.get_value() == 15);
+            int64_t good = 0;
+            std::for_each(babel::ITERATOR::enumerate(vit.begin()), babel::ITERATOR::enumerate(vit.end()),
+                          [&good](const auto &data) mutable {
+                              assert(good == data.first());
+                              ++good;
+                          });
+            good = 10;
+            std::for_each(babel::ITERATOR::enumerate(lit.begin(), good), babel::ITERATOR::enumerate(lit.end(), good),
+                          [&good](const auto &data) mutable {
+                              assert(good == data.first());
+                              ++good;
+                          });
+            good = 10;
+            std::for_each(babel::ITERATOR::enumerate<decltype(lit.begin()), std::minus<>>(lit.begin(), good), babel::ITERATOR::enumerate<decltype(lit.begin()), std::minus<>>(lit.end(), good),
+                          [&good](const auto &data) mutable {
+                              assert(good == data.first());
+                              --good;
+                          });
+        }
+    }
+
     void START_ALL_TEST(const int times = 1)
     {
         auto start_test = []() {
