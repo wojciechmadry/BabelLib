@@ -17,7 +17,9 @@
 #include "babLib/iterators/iterator.hpp"
 
 #ifdef _WIN32
+
 #include "babLib/windows/windows.hpp"
+
 #endif
 
 namespace babel{

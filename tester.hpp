@@ -945,7 +945,8 @@ namespace TESTING{
                               ++good;
                           });
             good = 10;
-            std::for_each(babel::ITERATOR::enumerate<decltype(lit.begin()), std::minus<>>(lit.begin(), good), babel::ITERATOR::enumerate<decltype(lit.begin()), std::minus<>>(lit.end(), good),
+            std::for_each(babel::ITERATOR::enumerate<decltype(lit.begin()), std::minus<>>(lit.begin(), good),
+                          babel::ITERATOR::enumerate<decltype(lit.begin()), std::minus<>>(lit.end(), good),
                           [&good](const auto &data) mutable {
                               assert(good == data.first());
                               --good;
@@ -953,9 +954,60 @@ namespace TESTING{
         }
     }
 
+    void RANGES_ITERATOR()
+    {
+        {
+            auto Ranges = babel::ITERATOR::range(0, 10, 1);
+            auto Ranges1 = babel::ITERATOR::range(0, 9, 2);
+            auto Ranges2 = babel::ITERATOR::range(0, 10, 4);
+            auto Ranges3 = babel::ITERATOR::range(0, -10, 1);
+            auto Ranges4 = babel::ITERATOR::range(0, -10, -2);
+            auto Ranges5 = babel::ITERATOR::range(0, -10, -4);
+            int64_t index = 0;
+            std::for_each(Ranges.begin(), Ranges.end(),
+                          [&index](const auto &Data) mutable {
+                              assert(index == Data);
+                              ++index;
+                          });
+            index = 0;
+            std::for_each(Ranges1.begin(), Ranges1.end(),
+                          [&index](const auto &Data) mutable {
+                              assert(index == Data);
+                              index += 2;
+                          });
+            index = 0;
+            std::for_each(Ranges2.begin(), Ranges2.end(),
+                          [&index](const auto &Data) mutable {
+                              assert(index == Data);
+                              index += 4;
+                          });
+            index = 0;
+            std::for_each(Ranges3.begin(), Ranges3.end(),
+                          [&index](const auto &Data) mutable {
+                              assert(index == Data);
+                              --index;
+                          });
+            index = 0;
+            std::for_each(Ranges4.begin(), Ranges4.end(),
+                          [&index](const auto &Data) mutable {
+                              assert(index == Data);
+                              index -= 2;
+                          });
+            index = 0;
+            std::for_each(Ranges5.begin(), Ranges5.end(),
+                          [&index](const auto &Data) mutable {
+                              assert(index == Data);
+                              index -= 4;
+                          });
+        }
+    }
+
+
     void START_ALL_TEST(const int times = 1)
     {
         auto start_test = []() {
+            RANGES_ITERATOR();
+            ENUMERATE_ITERATOR();
             LIST_HPP();
             DYNAMIC_ARRAY_HPP();
             CONCEPT_HPP();
