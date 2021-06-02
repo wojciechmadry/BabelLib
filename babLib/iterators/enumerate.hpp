@@ -29,6 +29,8 @@ namespace babel::ITERATOR{
             constexpr Pair(const Pair &other) noexcept: _index(other._index), _value(other._value)
             { }
 
+            constexpr ~Pair() = default;
+
             [[nodiscard]] constexpr int64_t get_index() const noexcept
             {
                 return _index;
@@ -75,6 +77,8 @@ namespace babel::ITERATOR{
         constexpr enumerate(const enumerate &Enumerate) noexcept: _index(Enumerate._index),
                                                                   _iterator(Enumerate._iterator)
         { }
+
+        constexpr ~enumerate() = default;
 
         [[nodiscard]] constexpr int64_t &get_index() noexcept
         {
@@ -165,6 +169,7 @@ namespace babel::ITERATOR{
     class enumerator
     {
         std::reference_wrapper<std::remove_reference_t<Container>> _cont;
+        using Iterator = decltype(std::begin(_cont.get()));
     public:
         constexpr enumerator() = default;
 
@@ -173,22 +178,22 @@ namespace babel::ITERATOR{
 
         constexpr auto begin(const int64_t Start = 0) noexcept
         {
-            return enumerate<decltype((std::begin(_cont.get()))), Increment>(std::begin(_cont.get()), Start);
+            return enumerate<Iterator, Increment>(std::begin(_cont.get()), Start);
         }
 
         constexpr auto begin(const int64_t Start = 0) const noexcept //NOLINT
         {
-            return enumerate<decltype((std::begin(_cont.get()))), Increment>(std::begin(_cont.get()), Start);
+            return enumerate<Iterator, Increment>(std::begin(_cont.get()), Start);
         }
 
         constexpr auto end() const noexcept //NOLINT
         {
-            return enumerate<decltype((std::begin(_cont.get()))), Increment>(std::end(_cont.get()));
+            return enumerate<Iterator, Increment>(std::end(_cont.get()));
         }
 
         constexpr auto end() noexcept
         {
-            return enumerate<decltype((std::begin(_cont.get()))), Increment>(std::end(_cont.get()));
+            return enumerate<Iterator, Increment>(std::end(_cont.get()));
         }
     };
 }

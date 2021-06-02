@@ -7,6 +7,7 @@ namespace babel::ITERATOR{
     class range
     {
         int64_t _start, _stop, _step;
+    public:
 
         class Iterator
         {
@@ -14,6 +15,7 @@ namespace babel::ITERATOR{
         public:
             constexpr Iterator(const int64_t Val, const int64_t Step) noexcept: _val(Val), _step(Step)
             { }
+            constexpr ~Iterator() = default;
 
             [[nodiscard]] constexpr int64_t operator*() const noexcept
             {
@@ -41,21 +43,21 @@ namespace babel::ITERATOR{
             constexpr bool operator==(const Iterator &Other) const noexcept
             {
                 if ( _step > 0 )
-                    return Other._val >= _val;
-                return Other._val <= _val;
+                    return Other._val <= _val;
+                return Other._val >= _val;
             }
 
             constexpr bool operator!=(const Iterator &Other) const noexcept
             {
-                return !( Other == *this );
+                if ( _step < 0 )
+                    return _val > Other._val;
+                return _val < Other._val;
             }
 
         };
 
-    public:
         constexpr range() noexcept: _start(0), _stop(0), _step(0)
         { }
-
         constexpr range(int64_t Start, int64_t Stop, int64_t Step = 1)
         {
             if ( Start > Stop && Step == 1 )
@@ -70,6 +72,8 @@ namespace babel::ITERATOR{
             _stop = Stop;
             _step = Step;
         }
+
+        constexpr ~range() = default;
 
         [[nodiscard]]constexpr int64_t Start() const noexcept
         {

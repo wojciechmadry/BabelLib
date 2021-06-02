@@ -457,7 +457,7 @@ namespace TESTING{
         assert(v2.empty());
         v2 = babel::ALGO::VECTOR::enumerate(v);
         assert(v2.empty());
-
+        /*
         auto vr = babel::ALGO::VECTOR::range(3);
         assert(vr.size() == 3 && vr[0] == 0 && vr[2] == 2);
         vr = babel::ALGO::VECTOR::range(-3);
@@ -471,7 +471,7 @@ namespace TESTING{
         vr = babel::ALGO::VECTOR::range(6, -3, 0);
         assert(vr.size() == 1 && vr[0] == 6);
         vr = babel::ALGO::VECTOR::range(6, -3, 2);
-        assert(vr.empty());
+        assert(vr.empty());*/
         auto zeros = babel::ALGO::VECTOR::zeros(3, 2);
         assert(zeros.size() == 3 && zeros[0].size() == 2 && zeros[0][0] == 0);
         auto zeros1 = babel::ALGO::VECTOR::zeros(4);
@@ -1034,36 +1034,42 @@ namespace TESTING{
                               assert(index == Data);
                               ++index;
                           });
+            assert(index == 10);
             index = 0;
             std::for_each(Ranges1.begin(), Ranges1.end(),
                           [&index](const auto &Data) mutable {
                               assert(index == Data);
                               index += 2;
                           });
+            assert(index == 10);
             index = 0;
             std::for_each(Ranges2.begin(), Ranges2.end(),
                           [&index](const auto &Data) mutable {
                               assert(index == Data);
                               index += 4;
                           });
+            assert(index == 12);
             index = 0;
             std::for_each(Ranges3.begin(), Ranges3.end(),
                           [&index](const auto &Data) mutable {
                               assert(index == Data);
                               --index;
                           });
+            assert(index == -10);
             index = 0;
             std::for_each(Ranges4.begin(), Ranges4.end(),
                           [&index](const auto &Data) mutable {
                               assert(index == Data);
                               index -= 2;
                           });
+            assert(index == -10);
             index = 0;
             std::for_each(Ranges5.begin(), Ranges5.end(),
                           [&index](const auto &Data) mutable {
                               assert(index == Data);
                               index -= 4;
                           });
+            assert(index == -12);
         }
         {
             long long correct = 5;
