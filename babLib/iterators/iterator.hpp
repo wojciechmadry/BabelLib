@@ -3,5 +3,6 @@
 
 #include "enumerate.hpp"
 #include "range.hpp"
+#include "read.hpp"
 
 #endif

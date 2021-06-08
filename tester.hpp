@@ -970,12 +970,12 @@ namespace TESTING{
             std::vector<std::string> stt = {"Test1", "Test2", "Test3"};
             auto beg = babel::ITERATOR::enumerate(stt.begin());
             auto end = babel::ITERATOR::enumerate(stt.end());
-            while (beg != end)
+            while ( beg != end )
             {
-                (*beg).second() = "CHANGED";
+                ( *beg ).second() = "CHANGED";
                 ++beg;
             }
-            for(const auto& SS: stt)
+            for ( const auto &SS: stt )
             {
                 assert(SS == "CHANGED");
             }
@@ -1002,7 +1002,7 @@ namespace TESTING{
             {
                 data.second() = "CHANGED";
             }
-            for(const auto& CH :stt)
+            for ( const auto &CH :stt )
             {
                 assert(CH == "CHANGED");
             }
