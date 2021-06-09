@@ -4,5 +4,6 @@
 #include "enumerate.hpp"
 #include "range.hpp"
 #include "read.hpp"
+#include "write.hpp"
 
 #endif

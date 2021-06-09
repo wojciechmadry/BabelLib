@@ -7,9 +7,9 @@ namespace babel::ITERATOR{
 
     class reader
     {
-        bool _end_line {true};
+        bool _end_line {true}; // it false when no lines in file left
         std::ifstream *_if {nullptr};
-        std::string _line;
+        std::string _line; // line read
 
         class Iterator
         {
@@ -73,6 +73,32 @@ namespace babel::ITERATOR{
 
         ~reader() = default;
 
+        reader &operator=(std::ifstream &IfStream) noexcept
+        {
+            _line.clear();
+            _end_line = true;
+            _if = &IfStream;
+            return *this;
+        }
+
+        reader &operator=(std::ifstream *IfStream) noexcept
+        {
+            _line.clear();
+            _end_line = true;
+            _if = IfStream;
+            return *this;
+        }
+
+        reader &operator=(reader &&Reader) noexcept
+        {
+            _end_line = Reader._end_line;
+            _if = Reader._if;
+            _line = std::move(Reader._line);
+            return *this;
+        }
+
+        reader &operator=(const reader &) = default;
+
         [[nodiscard]] std::ifstream &get() noexcept
         {
             return *_if;
@@ -115,6 +141,10 @@ namespace babel::ITERATOR{
             return Iterator(_if, false);
         }
 
+        void close() noexcept
+        {
+            _if->close();
+        }
 
     };
 }
