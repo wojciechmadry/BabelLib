@@ -96,11 +96,11 @@ namespace babel::CONTAINER{
             });
         }
 
-        dynamic_array(size_t SIZE, const T &data)
+        dynamic_array(size_t _SIZE, const T &data)
         {
-            _max_size = SIZE + GROW;
+            _max_size = _SIZE + GROW;
             _array = new T[_max_size];
-            _size = SIZE;
+            _size = _SIZE;
             std::for_each(_array, _array + _size, [&data](T &ArrayElement) {
                 ArrayElement = data;
             });

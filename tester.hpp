@@ -457,21 +457,6 @@ namespace TESTING{
         assert(v2.empty());
         v2 = babel::ALGO::VECTOR::enumerate(v);
         assert(v2.empty());
-        /*
-        auto vr = babel::ALGO::VECTOR::range(3);
-        assert(vr.size() == 3 && vr[0] == 0 && vr[2] == 2);
-        vr = babel::ALGO::VECTOR::range(-3);
-        assert(vr.size() == 3 && vr[0] == 0 && vr[2] == -2);
-        vr = babel::ALGO::VECTOR::range(0, 3);
-        assert(vr.size() == 3 && vr[0] == 0 && vr[2] == 2);
-        vr = babel::ALGO::VECTOR::range(0, -3);
-        assert(vr.size() == 3 && vr[0] == 0 && vr[2] == -2);
-        vr = babel::ALGO::VECTOR::range(6, -3);
-        assert(vr[0] == 6 && vr[vr.size() - 1] == -2);
-        vr = babel::ALGO::VECTOR::range(6, -3, 0);
-        assert(vr.size() == 1 && vr[0] == 6);
-        vr = babel::ALGO::VECTOR::range(6, -3, 2);
-        assert(vr.empty());*/
         auto zeros = babel::ALGO::VECTOR::zeros(3, 2);
         assert(zeros.size() == 3 && zeros[0].size() == 2 && zeros[0][0] == 0);
         auto zeros1 = babel::ALGO::VECTOR::zeros(4);

@@ -481,7 +481,6 @@ namespace babel::ALGO::VECTOR{
                 _res.emplace_back(start);
             }
         return _res;
-
     }
 
     /**
@@ -493,7 +492,26 @@ namespace babel::ALGO::VECTOR{
 */
     [[deprecated("Use ITERATOR::range instead.")]][[nodiscard]] std::vector<int64_t> range(int64_t end) noexcept
     {
-        return range(0, end);
+        int64_t start = 0;
+        int64_t step = 1;
+        if ( start > end )
+            step = -1;
+        if ( start == end )
+            return {start};
+        if ( ( start > end && step > 0 ) || ( start < end && step < 0 ) )
+            return { };
+        std::vector<int64_t> _res;
+        if ( start < end )
+            for ( ; start < end ; start += step )
+            {
+                _res.emplace_back(start);
+            }
+        else
+            for ( ; start > end ; start += step )
+            {
+                _res.emplace_back(start);
+            }
+        return _res;
     }
 
     /**
