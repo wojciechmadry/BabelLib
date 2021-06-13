@@ -1,25 +1,35 @@
 #ifndef BABEL_MUST_HAVE
 #define BABEL_MUST_HAVE
 
-#include <cmath>
+
 #include <chrono>
 #include <functional>
+#include <utility>
+#include <variant>
+#include "concepts/concepts.hpp"
+#include <thread>
+
+
+//FILE OPERATION
 #include <fstream>
 #include <filesystem>
-#include <utility>
-#include <stdexcept>
-#include <variant>
-#include "container/list.hpp"
-#include "container/dynamic_array.hpp"
-#include "concepts/concepts.hpp"
+
+//EXCEPTION, ASSERTS
 #include <cassert>
-#include <queue>
+#include <stdexcept>
+
+// MATH - NUMBER
+#include <random>
 #include <numeric>
 #include <complex>
 #include <numbers>
+#include <cmath>
+
+// CONTAINER
 #include <list>
-#include <random>
-#include <thread>
+#include <queue>
+#include "container/list.hpp"
+#include "container/dynamic_array.hpp"
 
 #ifdef _WIN32
     #include <Windows.h>
@@ -27,7 +37,7 @@
 
 namespace babel
 {
-    static constexpr const double VERSION = 1.17;
+    static constexpr const double VERSION = 1.18;
     static constexpr const bool COMPILER_IS_64B = (sizeof(void*) == 8); //NOLINT
     static constexpr const bool COMPILER_IS_32B = (sizeof(void*) == 4); //NOLINT
 }

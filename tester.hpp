@@ -226,11 +226,11 @@ namespace TESTING{
 
         assert(!babel::FILE_SYS::folder_exist("../babel.hpp"));
         assert(!babel::FILE_SYS::folder_exist("dhshds"));
-        assert(babel::FILE_SYS::folder_exist("../cmake-build-release"));
+        assert(babel::FILE_SYS::folder_exist("../Screen"));
 
         assert(babel::FILE_SYS::file_folder_exist("../babel.hpp"));
         assert(!babel::FILE_SYS::file_folder_exist("dhshds"));
-        assert(babel::FILE_SYS::file_folder_exist("../cmake-build-release"));
+        assert(babel::FILE_SYS::file_folder_exist("../Screen"));
     }
 
     void CHAR_HPP()
@@ -273,9 +273,9 @@ namespace TESTING{
         assert(babel::ANY::cast_any<int>(d1) == 15);
         assert(*babel::ANY::cast_any<std::unique_ptr<int>>(d2) == 33);
         assert(*babel::ANY::cast_any<std::unique_ptr<int>>(d3) == 25);
-        babel::ANY::VoidAny::destroy_any<int>(d1);
-        babel::ANY::VoidAny::destroy_any<std::unique_ptr<int>>(d2);
-        babel::ANY::VoidAny::destroy_any<std::unique_ptr<int>>(d3);
+        d1.destroy_any<int>();
+        d2.destroy_any<std::unique_ptr<int>>();
+        d3.destroy_any<std::unique_ptr<int>>();
         d4 = std::string("pies");
         babel::ANY::destroy_any<std::string>(d4);
         assert(!d4.has_value() && !d2.has_value());
@@ -1102,21 +1102,21 @@ namespace TESTING{
         auto beg = lines.begin();
         while ( rd )
         {
-            assert((*beg) == rd.line());
+            assert(( *beg ) == rd.line());
             ++beg;
         }
         std::string line_f1 = "3.143.220.1525.4";
         for ( const auto &Line : rd1 )
         {
-           assert(Line == line_f1);
+            assert(Line == line_f1);
         }
         rd2.read();
         lines = {"3.22", "0.15", "25.4"};
         beg = lines.begin();
         for ( const auto &Line : rd2 )
         {
-           assert(Line == (*beg));
-           ++beg;
+            assert(Line == ( *beg ));
+            ++beg;
         }
     }
 
@@ -1136,16 +1136,21 @@ namespace TESTING{
             OPTIONAL_HPP();
             MUST_HAVE_HPP();
             MATH_HPP();
-            FILE_SYSTEM_HPP();
+            if ( babel::COMPILER_IS_64B ) //TODO on 32 bit clang compiler, cant see folder above
+            {
+                FILE_SYSTEM_HPP();
+                WRITER_READER_ITERATOR();
+            }
             CHAR_HPP();
-            ANY_HPP_VOID_ANY();
-            ANY_HPP_POLY_ANY();
             ALGORITHM_HPP();
-            WRITER_READER_ITERATOR();
+
 #ifdef _WIN32
             WINDOWSCONV_HPP();
 #endif
             REQUEST_HPP();
+
+            ANY_HPP_VOID_ANY();
+            ANY_HPP_POLY_ANY();
         };
         if ( times <= 0 )
         {

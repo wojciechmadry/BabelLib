@@ -24,9 +24,7 @@ namespace babel::CONTAINER{
                 _max_size = GROW * GROW;
 
             T *temp = new T[_max_size];
-            std::transform(_array, _array + _size, temp, [](T &Data) {
-                return std::move(Data);
-            });
+            std::transform(_array, _array + _size, temp, std::move<T&>);
             delete[] _array;
             _array = temp;
         }
