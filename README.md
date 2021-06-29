@@ -20,7 +20,7 @@ List of namespaces `babel::`:
 * `CONCEPTS` - All concepts I use in this library.
 * `ALGO` - 
   Functions in this namespace are contained in other namespaces :
-  * `CRYPT` encryption `SHA256` 
+  * `CRYPT` encryption `SHA256`, `SHA1`, `SHA224` 
   * `STRING` string operation like: `str_to_upper/lower`
   * `VECTOR` Container operator like: `sum`, `normalize`, `mean`
   * `MATH` Math function like: `FFT`, `distance`, constant value (`e`, `pi`)

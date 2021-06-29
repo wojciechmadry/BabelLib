@@ -8,6 +8,7 @@
 
 //CRYPT
 #include "crypt/sha/sha256.hpp"
+#include "crypt/sha/sha224.hpp"
 #include "crypt/sha/sha1.hpp"
 
 namespace babel::ALGO{
