@@ -1,14 +1,16 @@
 #ifndef BABEL_SHA_256
 #define BABEL_SHA_256
 
-#include "../must_have.hpp"
-#include "../iterators/iterator.hpp"
-//#include "../concepts/concepts.hpp"
+#include "../../../must_have.hpp"
+#include "../../../iterators/iterator.hpp"
+
 namespace babel::ALGO::CRYPT{
     std::string sha256(const std::string &HASH) noexcept
     {
 
         using WORD = babel::CONCEPTS::type_of_number<4, false>::type;
+
+        assert(sizeof(WORD) == 4);
 
         static const constexpr std::array<WORD, 64> K = {
                 0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5,

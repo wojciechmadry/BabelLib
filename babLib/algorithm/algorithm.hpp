@@ -5,7 +5,10 @@
 #include "cast.hpp"
 #include "vector.hpp"
 #include "string.hpp"
-#include "sha256.hpp"
+
+//CRYPT
+#include "crypt/sha/sha256.hpp"
+#include "crypt/sha/sha1.hpp"
 
 namespace babel::ALGO{
 }

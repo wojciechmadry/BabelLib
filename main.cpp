@@ -10,6 +10,6 @@ int main()
     std::cout << "Done\nTime : " << T << " seconds\n";
 
      */
-    std::cout << babel::ALGO::CRYPT::sha256("hello world");
+    std::cout << babel::ALGO::CRYPT::sha1("hello world");
     return 0;
 }

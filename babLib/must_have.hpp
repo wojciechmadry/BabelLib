@@ -38,7 +38,7 @@
 
 namespace babel
 {
-    static constexpr const char* VERSION = "1.21";
+    static constexpr const char* VERSION = "1.22";
     static constexpr const bool COMPILER_IS_64B = (sizeof(void*) == 8); //NOLINT
     static constexpr const bool COMPILER_IS_32B = (sizeof(void*) == 4); //NOLINT
 }
