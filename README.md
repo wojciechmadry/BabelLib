@@ -18,8 +18,13 @@ All babel function/namespaces are in namespace `babel`
 List of namespaces `babel::`:
 * `VERSION` - Actual version of babelLib
 * `CONCEPTS` - All concepts I use in this library.
-* `ALGO` - Algorithm function like: `sum`, `normalize`, `mean` etc. 
-  Functions in this namespace are contained in other namespaces
+* `ALGO` - 
+  Functions in this namespace are contained in other namespaces :
+  * `CRYPT` encryption `SHA256` 
+  * `STRING` string operation like: `str_to_upper/lower`
+  * `VECTOR` Container operator like: `sum`, `normalize`, `mean`
+  * `MATH` Math function like: `FFT`, `distance`, constant value (`e`, `pi`)
+  * `CAST` Function like: `string_to`, `asType`
 * `TIME` - Function or class to measure time like: `timer`, `measure_time`
 * `ANY` - Class `PolAny` and `VoidAny`. They are very similar to std::any.
 * `CHAR` - Class `ASCII_CHAR` it jus wrapped char with function like: `is_alphabetical`, `is_lower` etc.
