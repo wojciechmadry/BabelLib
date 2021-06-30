@@ -9,7 +9,7 @@ namespace babel::ALGO::CRYPT{
 
         using WORD = babel::CONCEPTS::type_of_number<4, false>::type;
 
-        assert(sizeof(WORD) == 4);
+        static_assert(sizeof(WORD) == 4);
 
         constexpr const WORD CHUNK_LENGTH = 512;
         constexpr const WORD ROUNDS = 64;
@@ -88,7 +88,7 @@ namespace babel::ALGO::CRYPT{
         }
 
         std::string res;
-        res.reserve(256);
+        res.reserve(64);
         for ( i = 0 ; i < H.size() ; ++i )
         {
             res +=  babel::ALGO::CAST::to_hex(H[i]);

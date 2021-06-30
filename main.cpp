@@ -8,5 +8,7 @@ int main()
     srand(static_cast<unsigned>(time(nullptr)));
     auto T = babel::TIME::measure_time(1, TESTING::START_ALL_TEST, 1);
     std::cout << "Done\nTime : " << T << " seconds\n";
+
+    std::cout << babel::ALGO::CRYPT::sha512t<12>("hello_world") << "\n";
     return 0;
 }

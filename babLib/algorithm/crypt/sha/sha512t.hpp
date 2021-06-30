@@ -1,13 +1,11 @@
-#ifndef BABEL_SHA_512
-#define BABEL_SHA_512
+#ifndef BABEL_SHA_512_t
+#define BABEL_SHA_512_t
 
 #include "../../../must_have.hpp"
 
 namespace babel::ALGO::CRYPT{
-    std::string sha512(const std::string &HASH,   std::array<babel::CONCEPTS::type_of_number<8, false>::type, 8> H = {
-            0x6a09e667f3bcc908, 0xbb67ae8584caa73b, 0x3c6ef372fe94f82b, 0xa54ff53a5f1d36f1,
-            0x510e527fade682d1, 0x9b05688c2b3e6c1f, 0x1f83d9abfb41bd6b, 0x5be0cd19137e2179
-    }) noexcept
+    template<std::size_t T>
+    std::string sha512t(const std::string &HASH) noexcept
     {
         using WORD = babel::CONCEPTS::type_of_number<8, false>::type;
 
@@ -15,8 +13,24 @@ namespace babel::ALGO::CRYPT{
         constexpr const WORD ROUNDS = 80;
 
         static_assert(sizeof(WORD) == 8);
+        static_assert(T != 384 && T < 512 && T != 0);
 
-       constexpr const auto& K = _BABEL_PRIVATE_DO_NOT_USE::_PRIVATE_BABEL::PRIME_SHA_ARRAY_64;
+        constexpr const auto& K = _BABEL_PRIVATE_DO_NOT_USE::_PRIVATE_BABEL::PRIME_SHA_ARRAY_64;
+
+        std::array<WORD, 8> H = {
+                0x6a09e667f3bcc908, 0xbb67ae8584caa73b, 0x3c6ef372fe94f82b, 0xa54ff53a5f1d36f1,
+                0x510e527fade682d1, 0x9b05688c2b3e6c1f, 0x1f83d9abfb41bd6b, 0x5be0cd19137e2179
+        };
+        std::for_each(H.begin(), H.end(),
+                      [](auto& Date) {
+            Date ^= 0xa5a5a5a5a5a5a5a5;
+        });
+
+        // IV Generate function
+        auto NewH = sha512(std::string("SHA-512/") + std::to_string(T), H);
+        auto Hiter = std::begin(H);
+        for(std::size_t i = 0 ; i < NewH.size() ; i += 16, ++Hiter)
+            *Hiter = std::stoull(NewH.substr(i, 16), nullptr, 16);
 
 
         auto len = HASH.size() << 3;
@@ -84,14 +98,40 @@ namespace babel::ALGO::CRYPT{
             H[7] += h;
         }
 
-        std::string res;
-        res.reserve(128);
+        std::string BITS;
+        BITS.reserve(T);
         for ( i = 0 ; i < H.size() ; ++i )
         {
-            res +=  babel::ALGO::CAST::to_hex(H[i]);
+            std::bitset<sizeof(WORD)*8> bits (H[i]);
+            BITS += bits.to_string();
+            if (BITS.size() >= T)
+                break;
+        }
+        if(BITS.size() > T)
+        {
+            BITS.erase(T, BITS.size() - T);
         }
 
-        return res;
+        // Convert to HEX
+        if (BITS.size() % 4 == 0)
+        {
+            std::string HEX;
+            HEX.reserve(BITS.size() >> 2);
+            for(i = 0 ; i < BITS.size() ; i += 4)
+            {
+                auto b0 = static_cast<WORD>(BITS[i] - '0') << 3;
+                auto b1 = static_cast<WORD>(BITS[i + 1] - '0') << 2;
+                auto b2 = static_cast<WORD>(BITS[i + 2] - '0') << 1;
+                auto b3 = static_cast<WORD>(BITS[i + 3] - '0');
+                auto sum = b0 + b1 + b2 + b3;
+                if ( sum < 10 )
+                    HEX.push_back(static_cast<char>(sum + '0'));
+                else
+                    HEX.push_back(static_cast<char>(sum + 87));
+            }
+            BITS = std::move(HEX);
+        }
+        return BITS;
     }
 }
 #endif
