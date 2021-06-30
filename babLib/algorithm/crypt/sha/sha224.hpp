@@ -10,9 +10,12 @@ namespace babel::ALGO::CRYPT{
 
         using WORD = babel::CONCEPTS::type_of_number<4, false>::type;
 
+        constexpr const WORD CHUNK_LENGTH = 512;
+        constexpr const WORD ROUNDS = 64;
+
         assert(sizeof(WORD) == 4);
 
-        static const constexpr std::array<WORD, 64> K = {
+        static const constexpr std::array<WORD, ROUNDS> K = {
                 0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5,
                 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
                 0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3,
@@ -36,10 +39,6 @@ namespace babel::ALGO::CRYPT{
                 0xffc00b31, 0x68581511, 0x64f98fa7, 0xbefa4fa4
         };
 
-        auto right_rotate = [](const WORD n, const WORD d) -> WORD {
-            return ( n >> d ) | ( n << ( 32 - d ) );
-        };
-
         auto to_bits = [](const std::string &MSG) {
             std::string bits;
             bits.reserve(( MSG.size() << 3 ) + 1);
@@ -51,35 +50,35 @@ namespace babel::ALGO::CRYPT{
         auto tb = to_bits(HASH);
         auto len = tb.size();
         tb.push_back('1');
-        while ( tb.size() % 512 != 448 )
+        while ( tb.size() % CHUNK_LENGTH != 448 )
             tb.push_back('0');
         tb += std::bitset<64>(len).to_string();
 
-        std::array<WORD, 64> w {0};
+        std::array<WORD, ROUNDS> w {0};
         std::size_t i;
-        auto CHUNK = babel::ITERATOR::range<std::size_t, std::size_t>(0, 512, 32);
+        auto CHUNK = babel::ITERATOR::range<std::size_t, std::size_t>(0, CHUNK_LENGTH, sizeof(WORD) * 8);
 
-        for ( auto start : babel::ITERATOR::range<std::size_t, std::size_t>(0, tb.size(), 512) )
+        for ( auto start : babel::ITERATOR::range<std::size_t, std::size_t>(0, tb.size(), CHUNK_LENGTH) )
         {
             CHUNK.Start() = start;
-            CHUNK.Stop() = start + 512;
+            CHUNK.Stop() = start + CHUNK_LENGTH;
             std::transform(CHUNK.begin(), CHUNK.end(), w.begin(),
                            [&tb](const auto chunk) {
                                WORD res {0};
-                               for ( std::size_t i = chunk ; i < chunk + 32 ; ++i )
+                               for ( std::size_t i = chunk ; i < chunk + sizeof(WORD) * 8 ; ++i )
                                {
                                    if ( tb[i] == '1' )
                                    {
-                                       res += 1 << ( 31 - ( i - chunk ) );
+                                       res += 1 << ( (sizeof(WORD) * 8 - 1) - ( i - chunk ) );
                                    }
                                }
                                return res;
                            });
 
-            for ( i = 16 ; i < 64 ; ++i )
+            for ( i = 16 ; i < ROUNDS ; ++i )
             {
-                auto s0 = right_rotate(w[i - 15], 7) ^ right_rotate(w[i - 15], 18) ^ ( w[i - 15] >> 3 );
-                auto s1 = right_rotate(w[i - 2], 17) ^ right_rotate(w[i - 2], 19) ^ ( w[i - 2] >> 10 );
+                auto s0 = std::rotr(w[i - 15], 7) ^ std::rotr(w[i - 15], 18) ^ ( w[i - 15] >> 3 );
+                auto s1 = std::rotr(w[i - 2], 17) ^ std::rotr(w[i - 2], 19) ^ ( w[i - 2] >> 10 );
 
                 w[i] = w[i - 16] + s0 + w[i - 7] + s1;
             }
@@ -94,12 +93,12 @@ namespace babel::ALGO::CRYPT{
             auto h = H[7];
 
 
-            for ( i = 0 ; i < 64 ; ++i )
+            for ( i = 0 ; i < ROUNDS ; ++i )
             {
-                auto s1 = right_rotate(e, 6) ^ right_rotate(e, 11) ^ right_rotate(e, 25);
+                auto s1 = std::rotr(e, 6) ^ std::rotr(e, 11) ^ std::rotr(e, 25);
                 auto ch = ( e & f ) ^ ( ( ~e ) & g );
                 auto temp1 = h + s1 + ch + K[i] + w[i];
-                auto s0 = right_rotate(a, 2) ^ right_rotate(a, 13) ^ right_rotate(a, 22);
+                auto s0 = std::rotr(a, 2) ^ std::rotr(a, 13) ^ std::rotr(a, 22);
                 auto maj = ( a & b ) ^ ( a & c ) ^ ( b & c );
                 auto temp2 = s0 + maj;
                 h = g;

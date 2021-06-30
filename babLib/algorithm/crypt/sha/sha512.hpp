@@ -7,12 +7,14 @@
 namespace babel::ALGO::CRYPT{
     std::string sha512(const std::string &HASH) noexcept
     {
-
         using WORD = babel::CONCEPTS::type_of_number<8, false>::type;
+
+        constexpr const WORD CHUNK_LENGTH = 1024;
+        constexpr const WORD ROUNDS = 80;
 
         assert(sizeof(WORD) == 8);
 
-        static const constexpr std::array<WORD, 80> K = {
+        static const constexpr std::array<WORD, ROUNDS> K = {
                 0x428a2f98d728ae22, 0x7137449123ef65cd, 0xb5c0fbcfec4d3b2f, 0xe9b5dba58189dbbc,
                 0x3956c25bf348b538, 0x59f111f1b605d019, 0x923f82a4af194f9b, 0xab1c5ed5da6d8118,
                 0xd807aa98a3030242, 0x12835b0145706fbe, 0x243185be4ee4b28c, 0x550c7dc3d5ffb4e2,
@@ -40,10 +42,6 @@ namespace babel::ALGO::CRYPT{
                 0x510e527fade682d1, 0x9b05688c2b3e6c1f, 0x1f83d9abfb41bd6b, 0x5be0cd19137e2179
         };
 
-        auto right_rotate = [](const WORD n, const int d) -> WORD {
-             return (n >> d) | (n << (64 - d));
-            //return std::rotr(n, d);
-        };
 
         auto to_bits = [](const std::string &MSG) {
             std::string bits;
@@ -56,33 +54,33 @@ namespace babel::ALGO::CRYPT{
         auto tb = to_bits(HASH);
         auto len = tb.size();
         tb += "1";
-        while ( tb.size() % 1024 != 896 )
+        while ( tb.size() % CHUNK_LENGTH != 896 )
             tb.push_back('0');
-        tb += std::bitset<128>(len).to_string();
-        std::array<WORD, 80> w {0};
+        tb += std::bitset<sizeof(WORD)*8*2>(len).to_string();
+        std::array<WORD, ROUNDS> w {0};
         std::size_t i;
-        auto CHUNK = babel::ITERATOR::range<std::size_t, std::size_t>(0, 1024, 64);
+        auto CHUNK = babel::ITERATOR::range<std::size_t, std::size_t>(0, CHUNK_LENGTH, sizeof(WORD) * 8);
 
-        for ( auto start : babel::ITERATOR::range<std::size_t, std::size_t>(0, tb.size(), 1024) )
+        for ( auto start : babel::ITERATOR::range<std::size_t, std::size_t>(0, tb.size(), CHUNK_LENGTH) )
         {
             CHUNK.Start() = start;
-            CHUNK.Stop() = start + 1024;
+            CHUNK.Stop() = start + CHUNK_LENGTH;
             std::transform(CHUNK.begin(), CHUNK.end(), w.begin(),
                            [&tb](const auto chunk) {
                                WORD res {0};
-                               for ( std::size_t i = chunk ; i < chunk + 64 ; ++i )
+                               for ( std::size_t i = chunk ; i < chunk + sizeof(WORD) * 8 ; ++i )
                                {
                                    if ( tb[i] == '1' )
                                    {
-                                       res += static_cast<WORD>(1) << ( 63 - ( i - chunk ) );
+                                       res += static_cast<WORD>(1) << ( (sizeof(WORD) * 8 - 1) - ( i - chunk ) );
                                    }
                                }
                                return res;
                            });
-            for ( i = 16 ; i < 80 ; ++i )
+            for ( i = 16 ; i < ROUNDS ; ++i )
             {
-                auto s0 = right_rotate(w[i - 15], 1) ^ right_rotate(w[i - 15], 8) ^ ( w[i - 15] >> 7 );
-                auto s1 = right_rotate(w[i - 2], 19) ^ right_rotate(w[i - 2], 61) ^ ( w[i - 2] >> 6 );
+                auto s0 = std::rotr(w[i - 15], 1) ^ std::rotr(w[i - 15], 8) ^ ( w[i - 15] >> 7 );
+                auto s1 = std::rotr(w[i - 2], 19) ^ std::rotr(w[i - 2], 61) ^ ( w[i - 2] >> 6 );
 
                 w[i] = w[i - 16] + s0 + w[i - 7] + s1;
             }
@@ -97,11 +95,11 @@ namespace babel::ALGO::CRYPT{
             auto h = H[7];
 
 
-            for ( i = 0 ; i < 80 ; ++i )
+            for ( i = 0 ; i < ROUNDS ; ++i )
             {
-                auto s1 = right_rotate(e, 14) ^ right_rotate(e, 18) ^ right_rotate(e, 41);
+                auto s1 = std::rotr(e, 14) ^ std::rotr(e, 18) ^ std::rotr(e, 41);
                 auto ch = ( e & f ) ^ ( ( ~e ) & g );
-                auto s0 = right_rotate(a, 28) ^ right_rotate(a, 34) ^ right_rotate(a, 39);
+                auto s0 = std::rotr(a, 28) ^ std::rotr(a, 34) ^ std::rotr(a, 39);
                 auto temp1 = h + s1 + ch + K[i] + w[i];
                 auto maj = ( a & b ) ^ ( a & c ) ^ ( b & c );
                 auto temp2 = s0 + maj;
