@@ -90,9 +90,7 @@ namespace babel::ALGO::CRYPT{
         res.reserve(224);
         for ( i = 0 ; i < H.size() - 1 ; ++i )
         {
-            std::stringstream stream;
-            stream << std::hex << H[i];
-            res += stream.str();
+            res +=  babel::ALGO::CAST::to_hex(H[i]);
         }
 
         return res;

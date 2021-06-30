@@ -162,9 +162,8 @@ namespace babel::ALGO::CAST{
                     else
                     {
                         T ArrayLike;
-                        std::transform(std::begin(data), std::end(data),std::back_inserter(ArrayLike),
-                                       []<typename LambdaType>(LambdaType& Element)
-                                       {
+                        std::transform(std::begin(data), std::end(data), std::back_inserter(ArrayLike),
+                                       []< typename LambdaType >(LambdaType &Element) {
                                            return std::move(Element);
                                        });
                         return ArrayLike;
@@ -209,6 +208,27 @@ namespace babel::ALGO::CAST{
         rhs = std::move(temp);
     }
 
+    template< typename T >
+    requires(std::is_integral_v<std::decay_t<T>>)
+    [[nodiscard]] std::string to_hex(const T number) noexcept
+    {
+        std::string res;
+        res.reserve(sizeof(T) * 2);
+
+        for ( std::int64_t i = sizeof(T) * 8 - 1 ; i >= 0 ; i -= 4 )
+        {
+            auto b0 = ( number >> ( i ) ) & 1;
+            auto b1 = ( number >> ( i - 1 ) ) & 1;
+            auto b2 = ( number >> ( i - 2 ) ) & 1;
+            auto b3 = ( number >> ( i - 3 ) ) & 1;
+            auto value = ( b0 << 3 ) + ( b1 << 2 ) + ( b2 << 1 ) + b3;
+            if ( value < 10 )
+                res.push_back(static_cast<char>(value + '0'));
+            else
+                res.push_back(static_cast<char>(value + 87));
+        }
+        return res;
+    }
 
 }
 
