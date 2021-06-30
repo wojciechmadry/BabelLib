@@ -38,7 +38,7 @@
 
 namespace babel
 {
-    static constexpr const char* VERSION = "1.22";
+    static constexpr const char* VERSION = "1.23";
     static constexpr const bool COMPILER_IS_64B = (sizeof(void*) == 8); //NOLINT
     static constexpr const bool COMPILER_IS_32B = (sizeof(void*) == 4); //NOLINT
 }
@@ -115,12 +115,17 @@ namespace _BABEL_PRIVATE_DO_NOT_USE //NOLINT
                 data = 0;
             }
 
+            void check_data_full() noexcept
+            {
+                if (nob % MAX_BIT == 0)
+                    push_data();
+            }
+
             void push_bit(const bool _bit) noexcept
             {
                 data |= (static_cast<INT>(_bit) << ((sizeof(INT) * 8 - 1) - (nob % MAX_BIT)) );
                 ++nob;
-                if (nob % MAX_BIT == 0)
-                    push_data();
+                check_data_full();
             }
 
         public:
@@ -140,10 +145,40 @@ namespace _BABEL_PRIVATE_DO_NOT_USE //NOLINT
             requires (!std::is_same_v<std::decay_t<ToPush>, bool>)
             void push(ToPush DATA) noexcept
             {
-                for(int64_t i = (sizeof(ToPush) * 8 - 1); i >= 0; --i)
+
+                if constexpr(sizeof(ToPush) > sizeof(INT))
                 {
-                    push_bit(static_cast<bool>(DATA & (static_cast<ToPush>(1) << i)));
+                    for(std::int64_t i = sizeof(ToPush) * 8 - sizeof(INT) * 8 ; i >= 0 ; i -= sizeof(INT) * 8)
+                    {
+                        push( static_cast<INT>(DATA >> i));
+                    }
+
                 }
+                else
+                {
+                    auto fulled = nob % MAX_BIT;
+                    auto space = MAX_BIT - fulled;
+
+                    if (space >= sizeof(ToPush) * 8)
+                    {
+                        auto CASTED_DATA = static_cast<INT>(DATA);
+                        auto SHIFT = MAX_BIT - sizeof(ToPush) * 8 - fulled;
+                        CASTED_DATA = CASTED_DATA << SHIFT;
+                        data |= CASTED_DATA;
+                        nob += sizeof(ToPush) * 8;
+                        check_data_full();
+                        return;
+                    }
+                    else
+                    {
+                        for(int64_t i = (sizeof(ToPush) * 8 - 1); i >= 0; --i)
+                        {
+                            push_bit(static_cast<bool>(DATA & (static_cast<ToPush>(1) << i)));
+                        }
+                    }
+                }
+
+
             }
             [[nodiscard]] auto number_of_bits() const noexcept
             {
