@@ -230,6 +230,11 @@ namespace babel::ALGO::CAST{
         return res;
     }
 
+    template<typename T>
+    [[nodiscard]] std::string to_bits(const T number) noexcept
+    {
+        return std::bitset<sizeof(T) << 3>(static_cast<unsigned long long>(number)).to_string();
+    }
 }
 
 #endif

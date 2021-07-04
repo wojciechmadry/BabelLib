@@ -23,6 +23,7 @@
 #include <complex>
 #include <numbers>
 #include <cmath>
+#include <random>
 
 // CONTAINER
 #include <list>
@@ -31,16 +32,18 @@
 #include "container/list.hpp"
 #include "container/dynamic_array.hpp"
 
+
 #ifdef _WIN32
-    #include <Windows.h>
+    #include <windows.h>
+#elif linux //TODO Need check if it works
+    #include <unistd.h>
 #endif
 
 
-namespace babel
-{
-    static constexpr const char* VERSION = "1.23";
-    static constexpr const bool COMPILER_IS_64B = (sizeof(void*) == 8); //NOLINT
-    static constexpr const bool COMPILER_IS_32B = (sizeof(void*) == 4); //NOLINT
+namespace babel{
+    static constexpr const char *VERSION = "1.24";
+    static constexpr const bool COMPILER_IS_64B = ( sizeof(void *) == 8 ); //NOLINT
+    static constexpr const bool COMPILER_IS_32B = ( sizeof(void *) == 4 ); //NOLINT
 }
 
 namespace _BABEL_PRIVATE_DO_NOT_USE //NOLINT
@@ -104,11 +107,13 @@ namespace _BABEL_PRIVATE_DO_NOT_USE //NOLINT
                 0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2
         };
 
-        template<typename INT, std::size_t MAX_BIT = sizeof(INT) * 8>
-        class INT_HOLDER{
+        template< typename INT, std::size_t MAX_BIT = sizeof(INT) * 8 >
+        class INT_HOLDER
+        {
             std::vector<INT> _holder;
             std::size_t nob = 0;
             INT data = 0;
+
             void push_data() noexcept
             {
                 _holder.emplace_back(data);
@@ -117,49 +122,49 @@ namespace _BABEL_PRIVATE_DO_NOT_USE //NOLINT
 
             void check_data_full() noexcept
             {
-                if (nob % MAX_BIT == 0)
+                if ( nob % MAX_BIT == 0 )
                     push_data();
             }
 
             void push_bit(const bool _bit) noexcept
             {
-                data |= (static_cast<INT>(_bit) << ((sizeof(INT) * 8 - 1) - (nob % MAX_BIT)) );
+                data |= ( static_cast<INT>(_bit) << ( ( sizeof(INT) * 8 - 1 ) - ( nob % MAX_BIT ) ) );
                 ++nob;
                 check_data_full();
             }
 
         public:
-            [[nodiscard]] std::vector<INT>&& get_vec() noexcept
+            [[nodiscard]] std::vector<INT> &&get_vec() noexcept
             {
                 return std::move(_holder);
             }
 
-            template<typename ToPush>
-            requires (std::is_same_v<std::decay_t<ToPush>, bool>)
-            void push(ToPush DATA) noexcept
+            template< typename ToPush >
+            requires(std::is_same_v<std::decay_t<ToPush>, bool>)
+            void push(ToPush
+            DATA) noexcept
             {
                 push_bit(DATA);
             }
 
-            template<typename ToPush>
-            requires (!std::is_same_v<std::decay_t<ToPush>, bool>)
+            template< typename ToPush >
+            requires ( !std::is_same_v<std::decay_t<ToPush>, bool> )
             void push(ToPush DATA) noexcept
             {
 
-                if constexpr(sizeof(ToPush) > sizeof(INT))
+                if constexpr( sizeof(ToPush) > sizeof(INT) )
                 {
-                    for(std::int64_t i = sizeof(ToPush) * 8 - sizeof(INT) * 8 ; i >= 0 ; i -= sizeof(INT) * 8)
+                    for ( std::int64_t i = sizeof(ToPush) * 8 - sizeof(INT) * 8 ; i >= 0 ; i -= sizeof(INT) * 8 )
                     {
-                        push( static_cast<INT>(DATA >> i));
+                        push(static_cast<INT>(DATA >> i));
                     }
 
-                }
-                else
+                } else
                 {
                     auto fulled = nob % MAX_BIT;
                     auto space = MAX_BIT - fulled;
 
-                    if (space >= sizeof(ToPush) * 8)
+                    if ( space >= sizeof(ToPush) * 8 )
                     {
                         auto CASTED_DATA = static_cast<INT>(DATA);
                         auto SHIFT = MAX_BIT - sizeof(ToPush) * 8 - fulled;
@@ -168,18 +173,18 @@ namespace _BABEL_PRIVATE_DO_NOT_USE //NOLINT
                         nob += sizeof(ToPush) * 8;
                         check_data_full();
                         return;
-                    }
-                    else
+                    } else
                     {
-                        for(int64_t i = (sizeof(ToPush) * 8 - 1); i >= 0; --i)
+                        for ( int64_t i = ( sizeof(ToPush) * 8 - 1 ) ; i >= 0 ; --i )
                         {
-                            push_bit(static_cast<bool>(DATA & (static_cast<ToPush>(1) << i)));
+                            push_bit(static_cast<bool>(DATA & ( static_cast<ToPush>(1) << i )));
                         }
                     }
                 }
 
 
             }
+
             [[nodiscard]] auto number_of_bits() const noexcept
             {
                 return nob;

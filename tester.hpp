@@ -6,13 +6,13 @@
 #define CLIONPROJECT_TESTER_HPP
 
 #include "babel.hpp"
-#include "cassert"
+#include <cassert>
 
 namespace TESTING{
 
     void WRAPER_HPP() //DONE
     {
-        babel::WRAPER::wrap<int> p;
+        babel::WRAPER::wrap<int> p {0};
         babel::WRAPER::wrap<std::unique_ptr<int>> up;
         p.emplace(15);
         up.emplace(std::make_unique<int>(15));
@@ -208,9 +208,20 @@ namespace TESTING{
 
     void FILE_SYSTEM_HPP() //DONE
     {
-        std::ifstream f1("../main.cpp");
-        std::ifstream f2("../babel.hpp");
-        assert(f1.is_open() && f2.is_open());
+        {
+            std::ofstream f("FILE_SYSTEM_TEST.cpp", std::ios::out);
+            f << "";
+            f.close();
+        }
+        {
+            std::ofstream f("FILE_SYSTEM_TEST.hpp", std::ios::out);
+            f << "";
+            f.close();
+        }
+        std::fstream f1("FILE_SYSTEM_TEST.cpp", std::ios::in | std::ios::binary);
+        std::fstream f2("FILE_SYSTEM_TEST.hpp", std::ios::in | std::ios::binary);
+        assert(f1.good());
+        assert(f2.good());
         babel::FILE_SYS::close_file(f1, f2);
         assert(!f1.is_open() && !f2.is_open());
         auto files = babel::FILE_SYS::scan_folder("../babLib");
@@ -222,7 +233,6 @@ namespace TESTING{
         assert(babel::FILE_SYS::file_exist("../babel.hpp"));
         assert(!babel::FILE_SYS::file_exist("dhshds"));
         assert(!babel::FILE_SYS::file_exist("../cmake-build-release"));
-
 
         assert(!babel::FILE_SYS::folder_exist("../babel.hpp"));
         assert(!babel::FILE_SYS::folder_exist("dhshds"));
@@ -281,7 +291,7 @@ namespace TESTING{
         assert(!d4.has_value() && !d2.has_value());
         std::string t = "pies";
         auto d5 = babel::ANY::VoidAny::make_any(std::move(t));
-        assert(d5.cast<std::string>() == "pies" && t == "");
+        assert(d5.cast<std::string>() == "pies" && t == ""); //NOLINT
         babel::ANY::destroy_any<std::string>(d5);
     }
 
@@ -296,7 +306,7 @@ namespace TESTING{
         vid d3(babel::ANY::PolAny::make_any(test));
         assert(d3.cast<std::string>() == "pies" && test == "pies");
         vid d4(babel::ANY::PolAny::make_any(std::move(test)));
-        assert(d4.cast<std::string>() == "pies" && test == "");
+        assert(d4.cast<std::string>() == "pies" && test == ""); //NOLINT
         d4.emplace<std::string>("testowy napis");
         assert(d4.cast<std::string>() == "testowy napis");
         d3.emplace<std::string>("t2");
@@ -391,11 +401,14 @@ namespace TESTING{
         v1 = babel::ALGO::VECTOR::stride(v, 4);
         assert(v1.size() == 2 && v1[1] == 4);
 
+
         v.clear();
-        auto s = static_cast<size_t>(rand() % 1000 + 5);
-        auto step = static_cast<size_t>(rand() % 100 + 1);
+        auto s = babel::ALGO::MATH::random_generator::generate<std::size_t>(5, 1006);
+
+        auto step = babel::ALGO::MATH::random_generator::generate<std::size_t>(1, 101);
+
         for ( size_t j = 0 ; j < s ; ++j )
-            v.emplace_back(rand() % 100);
+            v.emplace_back(babel::ALGO::MATH::random_generator::generate<std::size_t>(1, 101));
         v1 = babel::ALGO::VECTOR::stride(v, step);
         v = {0, 1, 2, 3, 4, 5, 6, 7};
         v1 = babel::ALGO::VECTOR::drop_idx(v, 2);
@@ -580,7 +593,7 @@ namespace TESTING{
 
                 sl = babel::ALGO::CAST::asType<decltype(sl)>(std::move(sv));
                 auto beg = sl.begin();
-                assert(sv[0].empty() && sv[1].empty() && sv[2].empty());
+                assert(sv[0].empty() && sv[1].empty() && sv[2].empty()); //NOLINT
                 assert(*beg == "t1");
                 ++beg;
                 assert(*beg == "t2");
@@ -626,7 +639,7 @@ namespace TESTING{
 
             std::string st1 = "test";
             auto st2 = babel::ALGO::CAST::asType<std::string>(std::move(st1));
-            assert(st1.empty() && st2 == "test");
+            assert(st1.empty() && st2 == "test"); //NOLINT
             st1 = babel::ALGO::CAST::asType<std::string>(st2);
             assert(st1 == "test" && st2 == "test");
         }
@@ -738,7 +751,7 @@ namespace TESTING{
             babel::CONTAINER::dynamic_array<int> dd {3, 1, 5, 7};
             auto dp(dd);
             auto dk(std::move(dd));
-            dd.push_back(15);
+            dd.push_back(15); //NOLINT
 
             assert(dd.size() == 1 && dd[0] == 15);
             assert(dp.size() == dk.size() && dp.size() == 4);
@@ -760,7 +773,7 @@ namespace TESTING{
         auto x = p;
         assert(x.size() == p.size());
         x = std::move(p);
-        assert(p.size() == 0);
+        assert(p.size() == 0); //NOLINT
         x.clear();
     }
 
@@ -859,8 +872,9 @@ namespace TESTING{
         for ( int i = 9 ; i >= 0 ; --i )
             assert(l[static_cast<std::size_t>(9 - i)] == i);
         l.clear();
+
         for ( std::size_t i = 0 ; i < 10000 ; ++i )
-            l.push_in_order(rand() % 100000, std::greater<>());
+            l.push_in_order(babel::ALGO::MATH::random_generator::generate(0, 100000), std::greater<>());
         for ( std::size_t i = 0 ; i < 10000 - 1 ; ++i )
             assert(l[i + 1] >= l[i]);
         l.clear();
@@ -1122,15 +1136,6 @@ namespace TESTING{
 
     void SHA_HASH_TEST() noexcept
     {
-        std::vector<std::string> msg = {
-                "hello world",
-                "hello world,hello world,hello world",
-                "hello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello world",
-                "asgasmngmxczmvmxz mcxz kasf asf as",
-                "t",
-                "",
-                "TESTED STRING"
-        };
         std::vector<std::string> SHA1 = {
                 "2aae6c35c94fcfb415dbe95f408b9ce91ee846ed",
                 "667922d670dedc11b42f2559ab450464b7acb991",
@@ -1197,6 +1202,15 @@ namespace TESTING{
                 "b3c056a85d2b20832c77c0dae15016d972f2b8eca74aa23332456656c38248a9"
         };
 
+        std::vector<std::string> msg = {
+                "hello world",
+                "hello world,hello world,hello world",
+                "hello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello world",
+                "asgasmngmxczmvmxz mcxz kasf asf as",
+                "t",
+                "",
+                "TESTED STRING"
+        };
         for(std::size_t i = 0 ; i < msg.size(); ++i)
         {
             assert ( babel::ALGO::CRYPT::sha1(msg[i]) == SHA1[i]);
@@ -1206,7 +1220,6 @@ namespace TESTING{
             assert ( babel::ALGO::CRYPT::sha512(msg[i]) == SHA512[i]);
             assert ( babel::ALGO::CRYPT::sha512t<224>(msg[i]) == SHA512_224[i]);
             assert ( babel::ALGO::CRYPT::sha512t<256>(msg[i]) == SHA512_256[i]);
-
         }
     }
 
@@ -1226,7 +1239,7 @@ namespace TESTING{
             OPTIONAL_HPP();
             MUST_HAVE_HPP();
             MATH_HPP();
-            if ( babel::COMPILER_IS_64B ) //TODO on 32 bit clang compiler, cant see folder above
+            if ( babel::COMPILER_IS_64B ) //NOLINT //TODO on 32 bit clang compiler, cant see files
             {
                 FILE_SYSTEM_HPP();
                 WRITER_READER_ITERATOR();

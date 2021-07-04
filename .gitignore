@@ -1,4 +1,10 @@
 .idea
 cmake-build-debug
 cmake-build-release
+cmake-build-debug32
+cmake-build-debug64
+cmake-build-release32
+cmake-build-release64
+cmake-build-debug64-gcc
+cmake-build-release64-gcc
 main.su

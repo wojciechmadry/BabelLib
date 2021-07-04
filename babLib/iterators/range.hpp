@@ -32,14 +32,14 @@ namespace babel::ITERATOR{
 
             constexpr Iterator &operator++() noexcept
             {
-                _val += _step;
+                _val = static_cast<Type>(_val + _step);
                 return *this;
             }
 
             constexpr const Iterator operator++(int) noexcept //NOLINT
             {
                 auto _ret = *this;
-                _val += _step;
+                _val = static_cast<Type>(_val + _step);
                 return _ret;
             }
 
