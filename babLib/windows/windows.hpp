@@ -12,7 +12,7 @@ namespace babel::WINDOWS::CONVERSION {
         {
             std::wstring ws;
         public:
-            LCPWSTR_HOLDER() = delete;
+            explicit LCPWSTR_HOLDER() = delete;
             explicit LCPWSTR_HOLDER(const std::string &str) noexcept: ws(str.begin(), str.end())
             {}
 

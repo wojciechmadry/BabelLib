@@ -15,7 +15,7 @@ namespace babel::GRAPHICS{
 
         [[nodiscard]] static constexpr byte _max(const byte Value) noexcept
         {
-            return Value > 100 ? 100 : Value;
+            return Value > 100 ? static_cast<byte>(100) : Value;
         }
 
         constexpr void _check_and_fix() noexcept

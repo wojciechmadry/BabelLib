@@ -1,6 +1,11 @@
 #include <iostream>
 #include "babel.hpp"
 #include "tester.hpp"
+void show()
+{
+    std::cout <<"HERRE";
+}
+
 int main()
 {
     std::cout << "Compiler is 64bit ? : " << babel::COMPILER_IS_64B << '\n';

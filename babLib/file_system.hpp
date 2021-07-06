@@ -40,8 +40,11 @@ namespace babel::FILE_SYS{
     std::vector<std::string> scan_folder(const std::string &path) noexcept
     {
         std::vector<std::string> _res;
-        for ( const auto &obj : std::filesystem::directory_iterator(path) )
-            _res.emplace_back(obj.path().filename().string());
+        auto Directory = std::filesystem::directory_iterator(path);
+        std::transform(begin(Directory), end(Directory), std::back_inserter(_res),
+                       [](const auto &FILE_PATH) -> std::string {
+                           return FILE_PATH.path().filename().string();
+                       });
         return _res;
     }
 
@@ -93,14 +96,14 @@ namespace babel::FILE_SYS{
 *  @param  filename File to load
 *  @return Loaded file to vector
 */
-    std::vector<std::string> load_txt_to_vector(const std::string& filename) noexcept
+    std::vector<std::string> load_txt_to_vector(const std::string &filename) noexcept
     {
         std::vector<std::string> _out;
         std::ifstream file(filename, std::ios::in | std::ios::binary);
-        if (!(file.good() && file.is_open()))
-            return {};
+        if ( !( file.good() && file.is_open() ) )
+            return { };
         _out.emplace_back("");
-        while(std::getline(file, _out[_out.size() - 1]))
+        while ( std::getline(file, _out[_out.size() - 1]) )
             _out.emplace_back("");
         _out.pop_back();
         close_file(file);
@@ -112,16 +115,16 @@ namespace babel::FILE_SYS{
 *  @param  filename File to load
 *  @return Loaded file to string
 */
-    std::string load_txt(const std::string& filename) noexcept
+    std::string load_txt(const std::string &filename) noexcept
     {
         std::string out, line;
         std::ifstream file(filename, std::ios::in | std::ios::binary);
-        if (!(file.good() && file.is_open()))
+        if ( !( file.good() && file.is_open() ) )
             return out;
-        while(std::getline(file, line))
+        while ( std::getline(file, line) )
         {
             out += line;
-            if (line[line.size() - 1] != '\n')
+            if ( line[line.size() - 1] != '\n' )
                 out += '\n';
         }
         close_file(file);
@@ -133,7 +136,7 @@ namespace babel::FILE_SYS{
 *  @param  filename File to check
 *  @return True if Exist, False in otherwise
 */
-    [[nodiscard]] inline bool file_exist(const std::string& filename) noexcept
+    [[nodiscard]] inline bool file_exist(const std::string &filename) noexcept
     {
         return std::filesystem::is_regular_file(filename);
     }
@@ -143,7 +146,7 @@ namespace babel::FILE_SYS{
 *  @param  foldername Folder to check
 *  @return True if Exist, False in otherwise
 */
-    [[nodiscard]] inline  bool folder_exist(const std::string& foldername) noexcept
+    [[nodiscard]] inline bool folder_exist(const std::string &foldername) noexcept
     {
         return std::filesystem::is_directory(foldername);
     }
@@ -154,7 +157,7 @@ namespace babel::FILE_SYS{
 *  @param  name File/Folder to check
 *  @return True if Exist, False in otherwise
 */
-    [[nodiscard]] inline bool file_folder_exist(const std::string& name) noexcept
+    [[nodiscard]] inline bool file_folder_exist(const std::string &name) noexcept
     {
         return folder_exist(name) | file_exist(name);
     }

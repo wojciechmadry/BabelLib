@@ -13,23 +13,21 @@ namespace babel::SYSTEM{
 */
     [[nodiscard]] auto number_of_threads() noexcept
     {
-        if constexpr(babel::COMPILER_IS_64B)
+        if constexpr( babel::COMPILER_IS_64B )
         {
             return std::thread::hardware_concurrency();
-        }
-        else
+        } else
         {
 #ifdef _WIN32
             SYSTEM_INFO SysInfo;
             GetSystemInfo(&SysInfo);
             return SysInfo.dwNumberOfProcessors;
 #endif
-#ifdef linux //TODDO Need check if this works
+#ifdef linux //TODO Need check if this works
             return sysconf(_SC_NPROCESSORS_ONLN);
 #endif
         }
     }
-
 
 
     /**
@@ -57,9 +55,8 @@ namespace babel::SYSTEM{
     function,
     Args &&... args
     ) noexcept{
-    std::thread t1(function, std::forward<Args>(args)...);
-    return
-    t1;
+    std::thread TemporaryThread(function, std::forward<Args>(args)...);
+    return TemporaryThread;
 }
 
 

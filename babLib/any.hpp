@@ -208,9 +208,8 @@ namespace babel::ANY{
             explicit any(T &&object) noexcept : storage(std::make_unique<_data<U>>(std::forward<T>(object))) //NOLINT
             { }
 
-            any(const any &other) noexcept
+            any(const any &other) noexcept: storage(other.storage->duplicate())
             {
-                storage = other.storage->duplicate();
             }
 
             any(any &&other) noexcept: storage(std::move(other.storage))
@@ -257,7 +256,7 @@ namespace babel::ANY{
             template< typename T >
             [[nodiscard]] bool is() const noexcept
             {
-                return ( dynamic_cast<_data<T> *>(storage.get()) ) ? 1 : 0;
+                return static_cast<bool>( dynamic_cast<_data<T> *>(storage.get()));
             }
 
             /**

@@ -214,10 +214,12 @@ namespace babel::ALGO::MATH{
 */
     template< typename T, typename ... Args >
     requires ( !babel::CONCEPTS::IS_CONTAINER<T> )
-    [[nodiscard]] constexpr T max(T value1, T value2, Args... arg) noexcept
+    [[nodiscard]] constexpr T max(T value1, T value2, T value3,  Args... arg) noexcept
     {
         if ( value1 < value2 )
             value1 = value2;
+        if ( value1 < value3 )
+            value1 = value3;
         babel::VARIADIC::holder<T> _hold(arg...);
         const auto &vec = _hold.get();
         std::for_each(vec.begin(), vec.end(),
@@ -254,10 +256,12 @@ namespace babel::ALGO::MATH{
 *  @return Return the lowest number
 */
     template< typename T, typename ... Args >
-    [[nodiscard]] constexpr T min(T value1, T value2, Args... arg) noexcept
+    [[nodiscard]] constexpr T min(T value1, T value2, T value3,  Args... arg) noexcept
     {
         if ( value1 > value2 )
             value1 = value2;
+        if ( value1 > value3 )
+            value1 = value3;
         babel::VARIADIC::holder<T> _hold(arg...);
         const auto &vec = _hold.get();
         std::for_each(vec.begin(), vec.end(),
@@ -323,7 +327,7 @@ namespace babel::ALGO::MATH{
     template< typename T >
     [[nodiscard]] constexpr inline bool is_neg(const T val) noexcept
     {
-        return val < 0 ? 1 : 0;
+        return val < 0;
     }
 
     /**
@@ -379,7 +383,7 @@ namespace babel::ALGO::MATH{
 *  @return Binomial coefficient
 */
     template< uint64_t N, uint64_t K >
-    [[nodiscard]] consteval double binomial_coefficient() noexcept
+    [[nodiscard]] consteval double binomial_coefficient()
     {
         if ( K > N )
             throw std::out_of_range("K > N.");

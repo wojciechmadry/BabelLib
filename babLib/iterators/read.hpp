@@ -56,11 +56,8 @@ namespace babel::ITERATOR{
 
         reader(const reader &) = default;
 
-        reader(reader &&Reader) noexcept
+        reader(reader &&Reader) noexcept : _end_line(Reader._end_line),  _if(Reader._if), _line( std::move(Reader._line))
         {
-            _end_line = Reader._end_line;
-            _if = Reader._if;
-            _line = std::move(Reader._line);
         }
 
         explicit reader(std::ifstream &&) = delete;

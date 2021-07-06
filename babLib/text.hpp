@@ -126,7 +126,7 @@ namespace babel::TEXT{
                 return nullptr;
             auto& LetterVector = _lett[static_cast<std::size_t>(static_cast<uint8_t>(to_find[0]))];
             char* ReturnValue {nullptr};
-            std::any_of(LetterVector.begin(), LetterVector.end(),
+            auto isFound = std::any_of(LetterVector.begin(), LetterVector.end(),
             [&to_find, &ReturnValue](char* CharPtr) mutable -> bool
             {
                 auto found = std::equal(CharPtr, CharPtr + to_find.size(), to_find.data(), to_find.data() + to_find.size());
@@ -134,7 +134,7 @@ namespace babel::TEXT{
                     ReturnValue = CharPtr;
                 return found;
             });
-            return ReturnValue;
+            return isFound ? ReturnValue : nullptr;
         }
 
         /**

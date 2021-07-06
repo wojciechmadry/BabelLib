@@ -1,5 +1,5 @@
-#ifndef _A_D_ARRAY
-#define _A_D_ARRAY
+#ifndef A_D_ARRAY
+#define A_D_ARRAY
 
 #include <type_traits>
 #include <string>
@@ -83,7 +83,7 @@ namespace babel::CONTAINER{
             }
         };
 
-        dynamic_array() noexcept{}
+        dynamic_array() = default;
 
         dynamic_array(const std::initializer_list<T> &init)
         {
@@ -94,20 +94,24 @@ namespace babel::CONTAINER{
             });
         }
 
-        dynamic_array(size_t _SIZE, const T &data)
+        dynamic_array(size_t NEW_SIZE, const T &data)
         {
-            _max_size = _SIZE + GROW;
+            _max_size = NEW_SIZE + GROW;
             _array = new T[_max_size];
-            _size = _SIZE;
+            _size = NEW_SIZE;
             std::for_each(_array, _array + _size, [&data](T &ArrayElement) {
                 ArrayElement = data;
             });
         }
 
-        template< typename U = dynamic_array, typename = typename std::enable_if_t<std::is_same_v<std::decay_t<U>, dynamic_array>> >
-        dynamic_array(U &&other) noexcept //NOLINT
+        dynamic_array(dynamic_array &&other) noexcept 
         {
-            *this = std::forward<U>(other);
+            *this = std::move(other);
+        }
+        
+        dynamic_array(const dynamic_array &other) noexcept 
+        {
+            *this = other;
         }
 
         ~dynamic_array() noexcept
@@ -123,7 +127,7 @@ namespace babel::CONTAINER{
 
         dynamic_array &operator=(dynamic_array &&other) noexcept
         {
-            if ( _array == other._array )
+            if ( this == &other )
                 return *this;
             delete[] _array;
             _array = other._array;
@@ -137,7 +141,7 @@ namespace babel::CONTAINER{
 
         dynamic_array &operator=(const dynamic_array &other) noexcept
         {
-            if ( _array == other._array )
+            if ( this == &other )
                 return *this;
             if ( other._size < _max_size )
             {

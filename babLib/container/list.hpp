@@ -1,5 +1,5 @@
-#ifndef _A_LIST
-#define _A_LIST
+#ifndef A_LIST
+#define A_LIST
 
 #include <string>
 #include <type_traits>
@@ -125,9 +125,9 @@ namespace babel::CONTAINER {
         list() = default;
 
         template<typename U = T, typename = is_s_c<U, T> >
-        list(size_t _SIZE, U &&data) noexcept
+        list(size_t NEW_SIZE, U &&data) noexcept
         {
-            while (_SIZE-- > 0)
+            while (NEW_SIZE-- > 0)
                 push_back(data);
         }
 
@@ -452,7 +452,7 @@ namespace babel::CONTAINER {
                 return ps.str();
             };
             std::string res =
-                    "Size : " + std::to_string(_size) + '\n'
+                    std::string("Size : ") + std::to_string(_size) + '\n'
                     + "Head : " + p_to_s(head) + '\n'
                     + "Tail : " + p_to_s(tail) + '\n';
             if (to_string_conv)

@@ -46,7 +46,7 @@ namespace babel::ALGO::CAST{
     }
 
     /**
-*  @brief  Convert signed/unsgined data to unsigned/signed.
+*  @brief  Convert signed/unsigned data to unsigned/signed.
 *  \Example_1 int32_t a = -3, function return uint32_t(a)
 *  \Example_2 unt32_t a = 35, function return int32_t(a)
 *  @param  data Signed or Unsigned data to convert
@@ -138,8 +138,8 @@ namespace babel::ALGO::CAST{
         else if constexpr (
                 ( std::is_pointer_v<T> && ( std::is_base_of_v<std::remove_pointer_t<DECAY_T>, DECAY_U> ||
                                             std::is_base_of_v<std::remove_pointer_t<DECAY_T>, std::remove_pointer_t<DECAY_U> > ) )
-                || ( std::is_pointer_v<T> && ( std::is_base_of_v<std::remove_pointer_t<DECAY_U>, DECAY_T> ||
-                                               std::is_base_of_v<std::remove_pointer_t<DECAY_U>, std::remove_pointer_t<DECAY_T> > ) ) )
+                ||(std::is_pointer_v<T> && ( std::is_base_of_v<std::remove_pointer_t<DECAY_U>, DECAY_T> ||
+                                         std::is_base_of_v<std::remove_pointer_t<DECAY_U>, std::remove_pointer_t<DECAY_T> > )) )
         {
             if constexpr( std::is_pointer_v<DECAY_U> )
             {
@@ -230,7 +230,7 @@ namespace babel::ALGO::CAST{
         return res;
     }
 
-    template<typename T>
+    template< typename T >
     [[nodiscard]] std::string to_bits(const T number) noexcept
     {
         return std::bitset<sizeof(T) << 3>(static_cast<unsigned long long>(number)).to_string();

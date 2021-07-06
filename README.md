@@ -18,8 +18,7 @@ All babel function/namespaces are in namespace `babel`
 List of namespaces `babel::`:
 * `VERSION` - Actual version of babelLib
 * `CONCEPTS` - All concepts I use in this library.
-* `ALGO` - 
-  Functions in this namespace are contained in other namespaces :
+* `ALGO` -
   * `CRYPT` encryption `SHA256`, `SHA1`, `SHA224` 
   * `STRING` string operation like: `str_to_upper/lower`
   * `VECTOR` Container operator like: `sum`, `normalize`, `mean`
@@ -49,6 +48,6 @@ Docs
 Every _(almost)_ function have description, and some example of use.
 ![alt text](https://gitlab.com/woitys1999/babellib/-/raw/master/Screen/descr.PNG)
 
-I'm working on put this description in one docs file.
+I'm working on put this description in one documents file.
 
 

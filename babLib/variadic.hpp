@@ -26,8 +26,7 @@ namespace babel::VARIADIC{
         }
 
     public:
-        constexpr holder()
-        { };
+        constexpr holder() = default;
 
         constexpr holder(const holder &other) noexcept
         {
