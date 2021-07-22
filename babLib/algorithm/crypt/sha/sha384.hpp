@@ -1,5 +1,6 @@
-#ifndef BABEL_SHA_384
-#define BABEL_SHA_384
+// Copyright [2021] <Wojtek>
+#ifndef BABLIB_ALGORITHM_CRYPT_SHA_SHA384_HPP_
+#define BABLIB_ALGORITHM_CRYPT_SHA_SHA384_HPP_
 
 #include "../../../must_have.hpp"
 
@@ -13,7 +14,7 @@ namespace babel::ALGO::CRYPT{
 
         static_assert(sizeof(WORD) == 8);
 
-       constexpr const auto& K = _BABEL_PRIVATE_DO_NOT_USE::_PRIVATE_BABEL::PRIME_SHA_ARRAY_64;
+        constexpr const auto &K = _BABEL_PRIVATE_DO_NOT_USE::_PRIVATE_BABEL::PRIME_SHA_ARRAY_64;
 
         std::array<WORD, 8> H = {
                 0xcbbb9d5dc1059ed8, 0x629a292a367cd507, 0x9159015a3070dd17, 0x152fecd8f70e5939,
@@ -90,11 +91,11 @@ namespace babel::ALGO::CRYPT{
         res.reserve(96);
         for ( i = 0 ; i < H.size() - 2 ; ++i )
         {
-            res +=  babel::ALGO::CAST::to_hex(H[i]);
+            res += babel::ALGO::CAST::to_hex(H[i]);
         }
 
         return res;
     }
-}
-#endif
+}  // namespace babel::ALGO::CRYPT
+#endif  // BABLIB_ALGORITHM_CRYPT_SHA_SHA384_HPP_
 

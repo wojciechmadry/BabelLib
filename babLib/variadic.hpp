@@ -1,5 +1,6 @@
-#ifndef BABEL_VARIADIC
-#define BABEL_VARIADIC
+// Copyright [2021] <Wojtek>"
+#ifndef BABLIB_VARIADIC_HPP_
+#define BABLIB_VARIADIC_HPP_
 
 #include "must_have.hpp"
 
@@ -104,6 +105,6 @@ namespace babel::VARIADIC{
             return _hold;
         }
     };
-}
+}  // namespace babel::VARIADIC
 
-#endif
+#endif  // BABLIB_VARIADIC_HPP_

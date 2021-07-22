@@ -1,5 +1,6 @@
-#ifndef BABEL_LIB
-#define BABEL_LIB
+// Copyright [2021] <Wojtek>"
+#ifndef BABEL_HPP_
+#define BABEL_HPP_
 
 #include "babLib/algorithm/algorithm.hpp"
 #include "babLib/any.hpp"
@@ -17,12 +18,6 @@
 #include "babLib/system.hpp"
 #include "babLib/iterators/iterator.hpp"
 
-#ifdef _WIN32
-
-#include "babLib/windows/windows.hpp"
-
-#endif
-
 namespace babel{
-}
-#endif
+}  // namespace babel
+#endif  // BABEL_HPP_

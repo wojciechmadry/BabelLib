@@ -1,5 +1,6 @@
-#ifndef BABEL_FILE_SYSTEM
-#define BABEL_FILE_SYSTEM
+// Copyright [2021] <Wojtek>"
+#ifndef BABLIB_FILE_SYSTEM_HPP_
+#define BABLIB_FILE_SYSTEM_HPP_
 
 #include "must_have.hpp"
 
@@ -161,6 +162,6 @@ namespace babel::FILE_SYS{
     {
         return folder_exist(name) | file_exist(name);
     }
-}
+}  // namespace babel::FILE_SYS
 
-#endif
+#endif  // BABLIB_FILE_SYSTEM_HPP_

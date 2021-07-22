@@ -1,5 +1,6 @@
-#ifndef BABEL_TIME
-#define BABEL_TIME
+// Copyright [2021] <Wojtek>"
+#ifndef BABLIB_TIME_HPP_
+#define BABLIB_TIME_HPP_
 
 #include "must_have.hpp"
 
@@ -34,7 +35,7 @@ namespace babel::TIME{
         /**
 *  @return Get time in nanoseconds
 */
-        [[nodiscard]]long long get_time_ns() const noexcept
+        [[nodiscard]]auto get_time_ns() const noexcept
         {
             return std::chrono::duration_cast<std::chrono::nanoseconds>(
                     std::chrono::high_resolution_clock::now() - ( time )).count();
@@ -43,7 +44,7 @@ namespace babel::TIME{
         /**
 *  @return Get time in milliseconds
 */
-        [[nodiscard]]long long get_time_mili() const noexcept
+        [[nodiscard]]auto get_time_mili() const noexcept
         {
             return std::chrono::duration_cast<std::chrono::milliseconds>(
                     std::chrono::high_resolution_clock::now() - ( time )).count();
@@ -52,7 +53,7 @@ namespace babel::TIME{
         /**
 *  @return Get time in microseconds
 */
-        [[nodiscard]]long long get_time_micro() const noexcept
+        [[nodiscard]]auto get_time_micro() const noexcept
         {
             return std::chrono::duration_cast<std::chrono::microseconds>(
                     std::chrono::high_resolution_clock::now() - ( time )).count();
@@ -105,7 +106,7 @@ namespace babel::TIME{
             {
                 return static_cast<double>(nano) / 3.6e+12;
             }
-        }
+        }  // namespace NS
         namespace MICRO{
             constexpr uint64_t to_ns(const double micro) noexcept
             {
@@ -136,7 +137,7 @@ namespace babel::TIME{
             {
                 return micro / 8.64e+10;
             }
-        }
+        }  // namespace MICRO
         namespace MILI{
             constexpr uint64_t to_nano(const double mili) noexcept
             {
@@ -172,7 +173,7 @@ namespace babel::TIME{
             {
                 return mili / 2.628e+9;
             }
-        }
+        }  // namespace MILI
         namespace SECOND{
             constexpr uint64_t to_ns(const double sec) noexcept
             {
@@ -213,7 +214,7 @@ namespace babel::TIME{
             {
                 return sec / 3.154e+7;
             }
-        }
+        }  // namespace SECOND
         namespace MIN{
             constexpr uint64_t to_ns(const double min) noexcept
             {
@@ -255,7 +256,7 @@ namespace babel::TIME{
                 return min / 525600.0;
             }
 
-        }
+        }  // namespace MIN
         namespace HOUR{
             constexpr uint64_t to_ns(const double hour) noexcept
             {
@@ -306,7 +307,7 @@ namespace babel::TIME{
             {
                 return hour / 876000.0;
             }
-        }
+        }  // namespace HOUR
         namespace DAY{
             constexpr double to_sec(const double day) noexcept
             {
@@ -347,10 +348,8 @@ namespace babel::TIME{
             {
                 return day / 36500.0;
             }
+        }  // namespace DAY
+    }  // namespace CONVERT
+}  // namespace babel::TIME
 
-
-        }
-    }
-}
-
-#endif
+#endif  // BABLIB_TIME_HPP_

@@ -1,5 +1,6 @@
-#ifndef A_LIST
-#define A_LIST
+// Copyright [2021] <Wojtek>"
+#ifndef BABLIB_CONTAINER_LIST_HPP_
+#define BABLIB_CONTAINER_LIST_HPP_
 
 #include <string>
 #include <type_traits>
@@ -488,6 +489,6 @@ namespace babel::CONTAINER {
             return iterator(nullptr);
         }
     };
-}
+}  // namespace babel::CONTAINER
 
-#endif
+#endif  // BABLIB_CONTAINER_LIST_HPP_

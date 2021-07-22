@@ -1,5 +1,6 @@
-#ifndef babel_ITERATOR_READ
-#define babel_ITERATOR_READ
+// Copyright [2021] <Wojtek>"
+#ifndef BABLIB_ITERATORS_READ_HPP_
+#define BABLIB_ITERATORS_READ_HPP_
 
 #include "../must_have.hpp"
 
@@ -142,9 +143,8 @@ namespace babel::ITERATOR{
         {
             _if->close();
         }
-
     };
-}
+}  // namespace babel::ITERATOR
 
 std::ostream &operator<<(std::ostream &Of, const babel::ITERATOR::reader &Reader) noexcept
 {
@@ -152,4 +152,4 @@ std::ostream &operator<<(std::ostream &Of, const babel::ITERATOR::reader &Reader
     return Of;
 }
 
-#endif
+#endif  // BABLIB_ITERATORS_READ_HPP_

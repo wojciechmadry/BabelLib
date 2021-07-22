@@ -1,5 +1,6 @@
-#ifndef babel_ITERATOR_WRITE
-#define babel_ITERATOR_WRITE
+// Copyright [2021] <Wojtek>"
+#ifndef BABLIB_ITERATORS_WRITE_HPP_
+#define BABLIB_ITERATORS_WRITE_HPP_
 
 #include "../must_have.hpp"
 
@@ -48,7 +49,6 @@ namespace babel::ITERATOR{
         };
 
     public:
-
         writer() = default;
 
         writer(const writer &) = default;
@@ -104,6 +104,6 @@ namespace babel::ITERATOR{
             return back_inserter_iterator(_of, AutoNewLine);
         }
     };
-}
+}  // namespace babel::ITERATOR
 
-#endif
+#endif  // BABLIB_ITERATORS_WRITE_HPP_

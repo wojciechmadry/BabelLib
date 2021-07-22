@@ -1,12 +1,12 @@
-#ifndef BABEL_TEXT_HPP
-#define BABEL_TEXT_HPP
+// Copyright [2021] <Wojtek>"
+#ifndef BABLIB_TEXT_HPP_
+#define BABLIB_TEXT_HPP_
 
 #include "file_system.hpp"
 
 namespace babel::TEXT{
     class text
     {
-
         std::string _str;
         std::array<std::vector<char *>, 256> _lett;
 
@@ -26,7 +26,6 @@ namespace babel::TEXT{
         }
 
     public:
-
         text() noexcept = default;
 
         /**
@@ -146,7 +145,7 @@ namespace babel::TEXT{
             return _str;
         }
     };
-}
+}  // namespace babel::TEXT
 
 
-#endif
+#endif  // BABLIB_TEXT_HPP_

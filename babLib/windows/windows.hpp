@@ -1,5 +1,6 @@
-#if !defined(BABEL_WINDOWS) & defined(_WIN32)
-#define BABEL_WINDOWS
+// Copyright [2021] <Wojtek>"
+#if !defined(BABLIB_WINDOWS_WINDOWS_HPP_) & defined(_WIN32)
+#define BABLIB_WINDOWS_WINDOWS_HPP_
 
 #include "../must_have.hpp"
 
@@ -12,7 +13,7 @@ namespace babel::WINDOWS::CONVERSION {
         {
             std::wstring ws;
         public:
-            explicit LCPWSTR_HOLDER() = delete;
+            LCPWSTR_HOLDER() = delete;
             explicit LCPWSTR_HOLDER(const std::string &str) noexcept: ws(str.begin(), str.end())
             {}
 
@@ -42,7 +43,7 @@ namespace babel::WINDOWS::CONVERSION {
         return LCPWSTR_HOLDER(to_conv);
     }
 
-}
+}  // namespace babel::WINDOWS::CONVERSION
 
 namespace babel::WINDOWS::DISPLAY
 {
@@ -78,5 +79,5 @@ namespace babel::WINDOWS::SYSTEM{
         }
         return Discs;
     }
-}
-#endif
+}  // namespace babel::WINDOWS::DISPLAY
+#endif  // BABLIB_WINDOWS_WINDOWS_HPP_

@@ -1,5 +1,6 @@
-#ifndef babel_OPT
-#define babel_OPT
+// Copyright [2021] <Wojtek>"
+#ifndef BABLIB_OPTIONAL_HPP_
+#define BABLIB_OPTIONAL_HPP_
 
 #include "must_have.hpp"
 
@@ -141,6 +142,6 @@ namespace babel::OPT{
             return std::get<T>(_storage);
         }
     };
-}
+}  // namespace babel::OPT
 
-#endif
+#endif  // BABLIB_OPTIONAL_HPP_

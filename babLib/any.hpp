@@ -1,5 +1,6 @@
-#ifndef BABEL_ANY
-#define BABEL_ANY
+// Copyright [2021] <Wojtek>"
+#ifndef BABLIB_ANY_HPP_
+#define BABLIB_ANY_HPP_
 
 #include "must_have.hpp"
 
@@ -38,7 +39,6 @@ namespace babel::ANY{
 
         class any
         {
-
             template< typename T, typename Any >
             requires babel::CONCEPTS::IS_SAME<Any, VoidAny::any> ||
                      babel::CONCEPTS::IS_SAME<Any, PolAny::any>
@@ -149,7 +149,7 @@ namespace babel::ANY{
             return any(std::forward<T>(object));
         }
 
-    }
+    }  // namespace VoidAny"
 
     /**
 *  @brief
@@ -196,7 +196,6 @@ namespace babel::ANY{
                 {
                     return std::make_unique<_data<T>>(data);
                 }
-
             };
 
             std::unique_ptr<__base__any> storage;
@@ -350,7 +349,7 @@ namespace babel::ANY{
         {
             return any(std::forward<T>(data));
         }
-    }
+    }  // namespace PolAny
 
     template< typename T, typename Any >
     requires babel::CONCEPTS::IS_SAME<Any, VoidAny::any> ||
@@ -400,6 +399,6 @@ namespace babel::ANY{
         if constexpr ( babel::CONCEPTS::IS_SAME<Any, PolAny::any> )
             any.reset();
     }
-}
+}  // namespace babel::ANY
 
-#endif
+#endif  // BABLIB_ANY_HPP_

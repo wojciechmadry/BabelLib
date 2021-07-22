@@ -1,12 +1,13 @@
-#ifndef BABEL_ALGO
-#define BABEL_ALGO
+// Copyright [2021] <Wojtek>"
+#ifndef BABLIB_ALGORITHM_ALGORITHM_HPP_
+#define BABLIB_ALGORITHM_ALGORITHM_HPP_
 
 #include "math.hpp"
 #include "cast.hpp"
 #include "vector.hpp"
 #include "string.hpp"
 
-//CRYPT
+// CRYPT
 #include "crypt/sha/sha512.hpp"
 #include "crypt/sha/sha512t.hpp"
 #include "crypt/sha/sha384.hpp"
@@ -18,4 +19,4 @@ namespace babel::ALGO{
 }
 
 
-#endif
+#endif  // BABLIB_ALGORITHM_ALGORITHM_HPP_

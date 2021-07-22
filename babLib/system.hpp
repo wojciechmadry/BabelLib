@@ -1,5 +1,6 @@
-#ifndef BABEL_SYSTEM
-#define BABEL_SYSTEM
+// Copyright [2021] <Wojtek>"
+#ifndef BABLIB_SYSTEM_HPP_
+#define BABLIB_SYSTEM_HPP_
 
 #include "must_have.hpp"
 
@@ -23,7 +24,7 @@ namespace babel::SYSTEM{
             GetSystemInfo(&SysInfo);
             return SysInfo.dwNumberOfProcessors;
 #endif
-#ifdef linux //TODO Need check if this works
+#ifdef linux
             return sysconf(_SC_NPROCESSORS_ONLN);
 #endif
         }
@@ -56,10 +57,10 @@ namespace babel::SYSTEM{
     Args &&... args
     ) noexcept{
     std::thread TemporaryThread(function, std::forward<Args>(args)...);
-    return TemporaryThread;
+    return
+    TemporaryThread;
 }
 
 
-}
-
-#endif
+}  // namespace babel::SYSTEM
+#endif  // BABLIB_SYSTEM_HPP_

@@ -1,5 +1,6 @@
-#ifndef babel_all_container
-#define babel_all_container
+// Copyright [2021] <Wojtek>"
+#ifndef BABLIB_CONTAINER_CONTAINER_HPP_
+#define BABLIB_CONTAINER_CONTAINER_HPP_
 
 #include <vector>
 #include <list>
@@ -8,4 +9,4 @@
 #include "dynamic_array.hpp"
 #include "list.hpp"
 
-#endif
+#endif  // BABLIB_CONTAINER_CONTAINER_HPP_

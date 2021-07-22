@@ -1,10 +1,11 @@
-#ifndef BABEL_SHA_512
-#define BABEL_SHA_512
+// Copyright [2021] <Wojtek>"
+#ifndef BABLIB_ALGORITHM_CRYPT_SHA_SHA512_HPP_
+#define BABLIB_ALGORITHM_CRYPT_SHA_SHA512_HPP_
 
 #include "../../../must_have.hpp"
 
 namespace babel::ALGO::CRYPT{
-    std::string sha512(const std::string &HASH,   std::array<babel::CONCEPTS::type_of_number<8, false>::type, 8> H = {
+    std::string sha512(const std::string &HASH, std::array<babel::CONCEPTS::type_of_number<8, false>::type, 8> H = {
             0x6a09e667f3bcc908, 0xbb67ae8584caa73b, 0x3c6ef372fe94f82b, 0xa54ff53a5f1d36f1,
             0x510e527fade682d1, 0x9b05688c2b3e6c1f, 0x1f83d9abfb41bd6b, 0x5be0cd19137e2179
     }) noexcept
@@ -16,7 +17,7 @@ namespace babel::ALGO::CRYPT{
 
         static_assert(sizeof(WORD) == 8);
 
-       constexpr const auto& K = _BABEL_PRIVATE_DO_NOT_USE::_PRIVATE_BABEL::PRIME_SHA_ARRAY_64;
+        constexpr const auto &K = _BABEL_PRIVATE_DO_NOT_USE::_PRIVATE_BABEL::PRIME_SHA_ARRAY_64;
 
 
         auto len = HASH.size() << 3;
@@ -88,11 +89,11 @@ namespace babel::ALGO::CRYPT{
         res.reserve(128);
         for ( i = 0 ; i < H.size() ; ++i )
         {
-            res +=  babel::ALGO::CAST::to_hex(H[i]);
+            res += babel::ALGO::CAST::to_hex(H[i]);
         }
 
         return res;
     }
-}
-#endif
+}  // namespace babel::ALGO::CRYPT
+#endif  // BABLIB_ALGORITHM_CRYPT_SHA_SHA512_HPP_
 

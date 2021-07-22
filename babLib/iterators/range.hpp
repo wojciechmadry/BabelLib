@@ -1,16 +1,16 @@
-#ifndef babel_ITERATOR_RANGE
-#define babel_ITERATOR_RANGE
+// Copyright [2021] <Wojtek>"
+#ifndef BABLIB_ITERATORS_RANGE_HPP_
+#define BABLIB_ITERATORS_RANGE_HPP_
 
 #include "../must_have.hpp"
 
 namespace babel::ITERATOR{
-    template<typename Type = int64_t, typename StepType = int64_t>
+    template< typename Type = int64_t, typename StepType = int64_t >
     class range
     {
         Type _start, _stop;
         StepType _step;
     public:
-
         class Iterator
         {
             Type _val;
@@ -18,6 +18,7 @@ namespace babel::ITERATOR{
         public:
             constexpr Iterator(const Type Val, const StepType Step) noexcept: _val(Val), _step(Step)
             { }
+
             constexpr ~Iterator() = default;
 
             [[nodiscard]] constexpr Type operator*() const noexcept
@@ -56,11 +57,11 @@ namespace babel::ITERATOR{
                     return _val > Other._val;
                 return _val < Other._val;
             }
-
         };
 
         constexpr range() noexcept: _start(0), _stop(0), _step(0)
         { }
+
         constexpr range(Type Start, Type Stop, StepType Step = 1)
         {
             if ( Start > Stop && Step == 1 )
@@ -118,6 +119,6 @@ namespace babel::ITERATOR{
             return Iterator(_stop, _step);
         }
     };
-}
+}  // namespace babel::ITERATOR
 
-#endif
+#endif  // BABLIB_ITERATORS_RANGE_HPP_

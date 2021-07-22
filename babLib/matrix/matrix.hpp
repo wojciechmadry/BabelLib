@@ -1,5 +1,6 @@
-#ifndef babel_MATRIX
-#define babel_MATRIX
+// Copyright [2021] <Wojtek>"
+#ifndef BABLIB_MATRIX_MATRIX_HPP_
+#define BABLIB_MATRIX_MATRIX_HPP_
 
 #include "operator_on_matrix.hpp"
 
@@ -11,7 +12,7 @@ namespace babel::MATRIX{
     requires babel::CONCEPTS::IS_ARITHMETIC<T>
     class matrix
     {
-        using POSITION = long long int;
+        using POSITION = uint64_t;
         std::vector<std::vector<T>> mat;
     public:
         matrix() = default;
@@ -235,7 +236,6 @@ namespace babel::MATRIX{
 
         [[nodiscard]] std::string to_string() const noexcept
         {
-
             //Can be faster !
             std::string res;
             for ( auto rows_it : mat )
@@ -429,5 +429,5 @@ namespace babel::MATRIX{
 
 
 
-}
-#endif
+}  // namespace babel::MATRIX
+#endif  // BABLIB_MATRIX_MATRIX_HPP_

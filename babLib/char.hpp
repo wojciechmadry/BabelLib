@@ -1,5 +1,6 @@
-#ifndef BABEL_CHAR
-#define BABEL_CHAR
+// Copyright [2021] <Wojtek>"
+#ifndef BABLIB_CHAR_HPP_
+#define BABLIB_CHAR_HPP_
 
 #include "must_have.hpp"
 
@@ -49,7 +50,7 @@ namespace babel::CHAR{
 
         friend std::ostream &operator<<(std::ostream &os, const ASCII_CHAR &_asci);
 
-        //END OF FRIEND
+        // END OF FRIEND
         class IS_NOT_ALPHABETICAL : public std::exception
         {
         public:
@@ -75,7 +76,7 @@ namespace babel::CHAR{
         };
 
     public:
-        constexpr explicit ASCII_CHAR() noexcept: _member(0)
+        constexpr ASCII_CHAR() noexcept: _member(0)
         { }
 
         constexpr explicit ASCII_CHAR(char _char) noexcept: _member(_char)
@@ -264,7 +265,7 @@ namespace babel::CHAR{
     };
 
 
-//OPERATORS
+    // OPERATORS
     std::ostream &operator<<(std::ostream &os, const ASCII_CHAR &_asci)
     {
         return os << _asci._member;
@@ -367,7 +368,5 @@ namespace babel::CHAR{
     }
 
 
-}
-
-
-#endif
+}  // namespace babel::CHAR
+#endif  // BABLIB_CHAR_HPP_

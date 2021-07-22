@@ -13,6 +13,6 @@ target_include_directories(BabLib PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
 add_executable(BabelLibrary main.cpp)
 
 target_link_libraries(BabelLibrary PUBLIC BabLib)
-target_compile_options(BabelLibrary PRIVATE -O3)
-#target_compile_options(BabelLibrary PRIVATE -O3 -Wextra -Werror -W -Wshadow -Wdouble-promotion -Wformat=2 -Wundef -fno-common -Wconversion -pedantic -Wall)
+#target_compile_options(BabelLibrary PRIVATE -O3)
+target_compile_options(BabelLibrary PRIVATE -O3 -Wextra -Werror -W -Wshadow -Wdouble-promotion -Wformat=2 -Wundef -fno-common -Wconversion -pedantic -Wall)
 #set(CMAKE_CXX_FLAGS "-target i686-pc-windows-gnu")

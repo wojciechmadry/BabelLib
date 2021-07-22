@@ -1,12 +1,12 @@
-#ifndef BABEL_SHA_256
-#define BABEL_SHA_256
+// Copyright [2021] <Wojtek>"
+#ifndef BABLIB_ALGORITHM_CRYPT_SHA_SHA256_HPP_
+#define BABLIB_ALGORITHM_CRYPT_SHA_SHA256_HPP_
 
 #include "../../../must_have.hpp"
 
 namespace babel::ALGO::CRYPT{
     std::string sha256(const std::string &HASH) noexcept
     {
-
         using WORD = babel::CONCEPTS::type_of_number<4, false>::type;
 
         static_assert(sizeof(WORD) == 4);
@@ -14,7 +14,7 @@ namespace babel::ALGO::CRYPT{
         constexpr const WORD CHUNK_LENGTH = 512;
         constexpr const WORD ROUNDS = 64;
 
-        constexpr const auto& K = _BABEL_PRIVATE_DO_NOT_USE::_PRIVATE_BABEL::PRIME_SHA_ARRAY_32;
+        constexpr const auto &K = _BABEL_PRIVATE_DO_NOT_USE::_PRIVATE_BABEL::PRIME_SHA_ARRAY_32;
 
         std::array<WORD, 8> H = {
                 0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a,
@@ -91,10 +91,10 @@ namespace babel::ALGO::CRYPT{
         res.reserve(64);
         for ( i = 0 ; i < H.size() ; ++i )
         {
-            res +=  babel::ALGO::CAST::to_hex(H[i]);
+            res += babel::ALGO::CAST::to_hex(H[i]);
         }
 
         return res;
     }
-}
-#endif
+} // namespace babel::ALGO::CRYPT
+#endif  // BABLIB_ALGORITHM_CRYPT_SHA_SHA256_HPP_

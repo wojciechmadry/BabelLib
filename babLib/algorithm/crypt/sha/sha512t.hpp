@@ -1,10 +1,11 @@
-#ifndef BABEL_SHA_512_t
-#define BABEL_SHA_512_t
+// Copyright [2021] <Wojtek>"
+#ifndef BABLIB_ALGORITHM_CRYPT_SHA_SHA512T_HPP_
+#define BABLIB_ALGORITHM_CRYPT_SHA_SHA512T_HPP_
 
 #include "../../../must_have.hpp"
 
 namespace babel::ALGO::CRYPT{
-    template<std::size_t T>
+    template< std::size_t T >
     std::string sha512t(const std::string &HASH) noexcept
     {
         using WORD = babel::CONCEPTS::type_of_number<8, false>::type;
@@ -15,21 +16,21 @@ namespace babel::ALGO::CRYPT{
         static_assert(sizeof(WORD) == 8);
         static_assert(T != 384 && T < 512 && T != 0);
 
-        constexpr const auto& K = _BABEL_PRIVATE_DO_NOT_USE::_PRIVATE_BABEL::PRIME_SHA_ARRAY_64;
+        constexpr const auto &K = _BABEL_PRIVATE_DO_NOT_USE::_PRIVATE_BABEL::PRIME_SHA_ARRAY_64;
 
         std::array<WORD, 8> H = {
                 0x6a09e667f3bcc908, 0xbb67ae8584caa73b, 0x3c6ef372fe94f82b, 0xa54ff53a5f1d36f1,
                 0x510e527fade682d1, 0x9b05688c2b3e6c1f, 0x1f83d9abfb41bd6b, 0x5be0cd19137e2179
         };
         std::for_each(H.begin(), H.end(),
-                      [](auto& Date) {
-            Date ^= 0xa5a5a5a5a5a5a5a5;
-        });
+                      [](auto &Date) {
+                          Date ^= 0xa5a5a5a5a5a5a5a5;
+                      });
 
         // IV Generate function
         auto NewH = sha512(std::string("SHA-512/") + std::to_string(T), H);
         auto Hiter = std::begin(H);
-        for(std::size_t i = 0 ; i < NewH.size() ; i += 16, ++Hiter)
+        for ( std::size_t i = 0 ; i < NewH.size() ; i += 16, ++Hiter )
             *Hiter = std::stoull(NewH.substr(i, 16), nullptr, 16);
 
 
@@ -102,22 +103,22 @@ namespace babel::ALGO::CRYPT{
         BITS.reserve(T);
         for ( i = 0 ; i < H.size() ; ++i )
         {
-            std::bitset<sizeof(WORD)*8> bits (H[i]);
+            std::bitset<sizeof(WORD) * 8> bits(H[i]);
             BITS += bits.to_string();
-            if (BITS.size() >= T)
+            if ( BITS.size() >= T )
                 break;
         }
-        if(BITS.size() > T)
+        if ( BITS.size() > T )
         {
             BITS.erase(T, BITS.size() - T);
         }
 
         // Convert to HEX
-        if (BITS.size() % 4 == 0)
+        if ( BITS.size() % 4 == 0 )
         {
             std::string HEX;
             HEX.reserve(BITS.size() >> 2);
-            for(i = 0 ; i < BITS.size() ; i += 4)
+            for ( i = 0 ; i < BITS.size() ; i += 4 )
             {
                 auto b0 = static_cast<WORD>(BITS[i] - '0') << 3;
                 auto b1 = static_cast<WORD>(BITS[i + 1] - '0') << 2;
@@ -133,6 +134,6 @@ namespace babel::ALGO::CRYPT{
         }
         return BITS;
     }
-}
-#endif
+}  // namespace babel::ALGO::CRYPT
+#endif  // BABLIB_ALGORITHM_CRYPT_SHA_SHA512T_HPP_
 

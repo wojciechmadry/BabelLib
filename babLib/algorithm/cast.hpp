@@ -1,5 +1,5 @@
-#ifndef babel_ALGO_CAST
-#define babel_ALGO_CAST
+#ifndef BABLIB_ALGORITHM_CAST_HPP_
+#define BABLIB_ALGORITHM_CAST_HPP_
 
 #include "../must_have.hpp"
 
@@ -138,8 +138,8 @@ namespace babel::ALGO::CAST{
         else if constexpr (
                 ( std::is_pointer_v<T> && ( std::is_base_of_v<std::remove_pointer_t<DECAY_T>, DECAY_U> ||
                                             std::is_base_of_v<std::remove_pointer_t<DECAY_T>, std::remove_pointer_t<DECAY_U> > ) )
-                ||(std::is_pointer_v<T> && ( std::is_base_of_v<std::remove_pointer_t<DECAY_U>, DECAY_T> ||
-                                         std::is_base_of_v<std::remove_pointer_t<DECAY_U>, std::remove_pointer_t<DECAY_T> > )) )
+                || ( std::is_pointer_v<T> && ( std::is_base_of_v<std::remove_pointer_t<DECAY_U>, DECAY_T> ||
+                                               std::is_base_of_v<std::remove_pointer_t<DECAY_U>, std::remove_pointer_t<DECAY_T> > ) ) )
         {
             if constexpr( std::is_pointer_v<DECAY_U> )
             {
@@ -189,7 +189,6 @@ namespace babel::ALGO::CAST{
         {
             return static_cast<T>(std::forward<U>(data));
         }
-
     }
 
 
@@ -233,8 +232,8 @@ namespace babel::ALGO::CAST{
     template< typename T >
     [[nodiscard]] std::string to_bits(const T number) noexcept
     {
-        return std::bitset<sizeof(T) << 3>(static_cast<unsigned long long>(number)).to_string();
+        return std::bitset<sizeof(T) << 3>(static_cast<uint64_t>(number)).to_string();
     }
-}
+}  // namespace babel::ALGO::CAST
 
-#endif
+#endif  // BABLIB_ALGORITHM_CAST_HPP_

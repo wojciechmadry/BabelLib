@@ -1,5 +1,6 @@
-#ifndef BABEL_TYPDEF
-#define BABEL_TYPDEF
+// Copyright [2021] <Wojtek>"
+#ifndef BABLIB_TYPDEF_HPP_
+#define BABLIB_TYPDEF_HPP_
 
 #ifndef i64
 #define i64 int64_t
@@ -49,4 +50,4 @@
 #define byte uint8_t
 #endif
 
-#endif
+#endif  // BABLIB_TYPDEF_HPP_

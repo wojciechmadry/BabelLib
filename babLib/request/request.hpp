@@ -1,5 +1,6 @@
-#ifndef babel_REQUEST
-#define babel_REQUEST
+// Copyright [2021] <Wojtek>"
+#ifndef BABLIB_REQUEST_REQUEST_HPP_
+#define BABLIB_REQUEST_REQUEST_HPP_
 
 #include "../must_have.hpp"
 
@@ -40,13 +41,15 @@ namespace babel::REQ{
         void send_req(Func function_to_call, T *return_to = nullptr, Args &&... args) noexcept
         {
             if ( return_to == nullptr )
-                send_req(function_to_call, nullptr, std::forward<Args>(args)...);
+            { send_req(function_to_call, nullptr, std::forward<Args>(args)...); }
             else
+            {
                 _que.emplace(
                         [function_to_call, return_to, &args...]() mutable -> void {
                             *return_to = ( function_to_call )(std::forward<Args>(args)...);
                         }
                 );
+            }
         }
 
         template< typename Func, typename ... Args >
@@ -99,7 +102,7 @@ namespace babel::REQ{
 
         void clear() noexcept
         {
-            _que = {};
+            _que = { };
         }
 
         [[nodiscard]] bool has_request() const noexcept
@@ -145,6 +148,6 @@ namespace babel::REQ{
                 _que.pop();
         }
     };
-}
+}  // namespace babel::REQ
 
-#endif
+#endif  // BABLIB_REQUEST_REQUEST_HPP_

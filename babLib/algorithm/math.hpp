@@ -1,5 +1,6 @@
-#ifndef babel_ALGO_MATH
-#define babel_ALGO_MATH
+// Copyright [2021] <Wojtek>"
+#ifndef BABLIB_ALGORITHM_MATH_HPP_
+#define BABLIB_ALGORITHM_MATH_HPP_
 
 #include "../variadic.hpp"
 
@@ -84,7 +85,7 @@ namespace babel::ALGO::MATH{
                     return ( func(x - 2.0 * h) - 4.0 * func(x - h) + 3.0 * func(x) ) / ( 2.0 * h );
                 };
             }
-        }
+        }  // namespace FIRST
         namespace SECOND{
             /**
 *  @brief  Calculate second derivative in three point
@@ -114,8 +115,8 @@ namespace babel::ALGO::MATH{
                              func(x - 2.0 * h) ) / ( 12.0 * std::pow(h, 2.0) );
                 };
             }
-        }
-    }
+        }  // namespace SECOND
+    }  // namespace DERIVATIVE
 
     namespace CONSTANT{
 
@@ -155,7 +156,7 @@ namespace babel::ALGO::MATH{
         template< typename Type >
         constexpr Type golden_ratio = static_cast<Type>(1.61803398874989484820);
 
-    }
+    }  // namespace CONSTANT
 
 
     /**
@@ -214,7 +215,7 @@ namespace babel::ALGO::MATH{
 */
     template< typename T, typename ... Args >
     requires ( !babel::CONCEPTS::IS_CONTAINER<T> )
-    [[nodiscard]] constexpr T max(T value1, T value2, T value3,  Args... arg) noexcept
+    [[nodiscard]] constexpr T max(T value1, T value2, T value3, Args... arg) noexcept
     {
         if ( value1 < value2 )
             value1 = value2;
@@ -256,7 +257,7 @@ namespace babel::ALGO::MATH{
 *  @return Return the lowest number
 */
     template< typename T, typename ... Args >
-    [[nodiscard]] constexpr T min(T value1, T value2, T value3,  Args... arg) noexcept
+    [[nodiscard]] constexpr T min(T value1, T value2, T value3, Args... arg) noexcept
     {
         if ( value1 > value2 )
             value1 = value2;
@@ -721,9 +722,9 @@ namespace babel::ALGO::MATH{
 
     class random_generator
     {
-        inline static std::mt19937 gen {  static_cast<unsigned int>(std::chrono::system_clock::now().time_since_epoch().count())}; //NOLINT
+        inline static std::mt19937 gen {
+                static_cast<unsigned int>(std::chrono::system_clock::now().time_since_epoch().count())}; //NOLINT
     public:
-
         random_generator() = default;
 
         ~random_generator() = default;
@@ -756,7 +757,7 @@ namespace babel::ALGO::MATH{
     };
 
 
-}
+}  // namespace babel::ALGO::MATH"
 
 
-#endif
+#endif  // BABLIB_ALGORITHM_MATH_HPP_

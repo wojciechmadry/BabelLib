@@ -1,5 +1,6 @@
-#ifndef BABEL_MUST_HAVE
-#define BABEL_MUST_HAVE
+// Copyright [2021] <Wojtek>"
+#ifndef BABLIB_MUST_HAVE_HPP_
+#define BABLIB_MUST_HAVE_HPP_
 
 #include <string>
 #include <chrono>
@@ -11,16 +12,16 @@
 
 #include "typdef.hpp"
 
-//THREAD
+// THREAD
 #include <thread>
 #include <mutex>
 #include <condition_variable>
 
-//FILE OPERATION
+// FILE OPERATION
 #include <fstream>
 #include <filesystem>
 
-//EXCEPTION, ASSERTS
+// EXCEPTION, ASSERTS
 #include <cassert>
 #include <stdexcept>
 
@@ -30,21 +31,22 @@
 #include <complex>
 #include <numbers>
 #include <cmath>
-#include <random>
 
 // CONTAINER
 #include "container/container.hpp"
 
 
 #ifdef _WIN32
-    #include <windows.h>
-#elif linux //TODO Need check if it works
-    #include <unistd.h>
+#include <windows.h>
+#elif linux
+
+#include <unistd.h>
+
 #endif
 
 
 namespace babel{
-    static constexpr const char *VERSION = "1.26";
+    static constexpr const char *VERSION = "1.27";
     static constexpr const bool COMPILER_IS_64B = ( sizeof(void *) == 8 ); //NOLINT
     static constexpr const bool COMPILER_IS_32B = ( sizeof(void *) == 4 ); //NOLINT
 }
@@ -154,14 +156,12 @@ namespace _BABEL_PRIVATE_DO_NOT_USE //NOLINT
             requires ( !std::is_same_v<std::decay_t<ToPush>, bool> )
             void push(ToPush DATA) noexcept
             {
-
                 if constexpr( sizeof(ToPush) > sizeof(INT) )
                 {
                     for ( std::int64_t i = sizeof(ToPush) * 8 - sizeof(INT) * 8 ; i >= 0 ; i -= sizeof(INT) * 8 )
                     {
                         push(static_cast<INT>(DATA >> i));
                     }
-
                 } else
                 {
                     auto fulled = nob % MAX_BIT;
@@ -184,8 +184,6 @@ namespace _BABEL_PRIVATE_DO_NOT_USE //NOLINT
                         }
                     }
                 }
-
-
             }
 
             [[nodiscard]] auto number_of_bits() const noexcept
@@ -211,6 +209,6 @@ namespace _BABEL_PRIVATE_DO_NOT_USE //NOLINT
             }
         }
     };
-}
-#endif
+}  // namespace _BABEL_PRIVATE_DO_NOT_USE
+#endif  // BABLIB_MUST_HAVE_HPP_
 

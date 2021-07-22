@@ -5,10 +5,11 @@
 
 int main()
 {
-    //std::cout << "Compiler is 64bit ? : " << babel::COMPILER_IS_64B << '\n';
-    //std::cout << "BABEL VERSION : " << babel::VERSION << '\n';
-    //auto T = babel::TIME::measure_time(1, TESTING::START_ALL_TEST, 1);
-    //std::cout << "Done\nTime : " << T << " seconds\n";
+    std::cout << "Compiler is 64bit ? : " << babel::COMPILER_IS_64B << '\n';
+    std::cout << "BABEL VERSION : " << babel::VERSION << '\n';
+    auto T = babel::TIME::measure_time(1, TESTING::START_ALL_TEST, 1);
+    std::cout << "Done\nTime : " << T << " seconds\n";
+    /*
     babel::TIME::timer t;
     std::vector<std::string> ves;
     for(std::size_t i = 1 ; i <= 1000 ; ++i)
@@ -32,5 +33,6 @@ int main()
         ++my_hash;
     }
     std::cout << "C++ hash do : " << my_hash << " hash per minute\n";
+     */
     return 0;
 }

@@ -1,5 +1,6 @@
-#ifndef babel_ITERATOR_GENERATOR
-#define babel_ITERATOR_GENERATOR
+// Copyright [2021] <Wojtek>"
+#ifndef BABLIB_ITERATORS_GENERATOR_HPP_
+#define BABLIB_ITERATORS_GENERATOR_HPP_
 
 #include "../must_have.hpp"
 
@@ -73,7 +74,6 @@ namespace babel::ITERATOR{
             {
                 return _times != other._times;
             }
-
         };
 
     public:
@@ -109,7 +109,7 @@ namespace babel::ITERATOR{
         }
     };
 
-}
+}  // namespace babel::ITERATOR
 
 
-#endif
+#endif  // BABLIB_ITERATORS_GENERATOR_HPP_

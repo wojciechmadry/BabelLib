@@ -1,5 +1,6 @@
-#ifndef babel_ITERATOR_ENUMERATE
-#define babel_ITERATOR_ENUMERATE
+// Copyright [2021] <Wojtek>"
+#ifndef BABLIB_ITERATORS_ENUMERATE_HPP_
+#define BABLIB_ITERATORS_ENUMERATE_HPP_
 
 #include "../must_have.hpp"
 
@@ -197,6 +198,6 @@ namespace babel::ITERATOR{
             return enumerate<Iterator, Increment>(std::end(_cont.get()));
         }
     };
-}
+}  // namespace babel::ITERATOR"
 
-#endif
+#endif  // BABLIB_ITERATORS_ENUMERATE_HPP_

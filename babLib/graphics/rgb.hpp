@@ -1,12 +1,12 @@
-#ifndef BABEL_GRAPHICS_RGB
-#define BABEL_GRAPHICS_RGB
+// Copyright [2021] <Wojtek>"
+#ifndef BABLIB_GRAPHICS_RGB_HPP_
+#define BABLIB_GRAPHICS_RGB_HPP_
 
 #include "../algorithm/algorithm.hpp"
 
 namespace babel::GRAPHICS{
     class rgb
     {
-        using byte = uint8_t;
         std::array<byte, 3> _RGB; //NOLINT
     public:
         constexpr explicit rgb(const byte R = 0, const byte G = 0, const byte B = 0) noexcept: _RGB({R, G, B})
@@ -76,6 +76,6 @@ namespace babel::GRAPHICS{
         }
     };
 
-}
+}  // namespace babel::GRAPHICS
 
-#endif
+#endif  // BABLIB_GRAPHICS_RGB_HPP_

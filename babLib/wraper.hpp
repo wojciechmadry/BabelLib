@@ -1,5 +1,6 @@
-#ifndef BABEL_WRAPER
-#define BABEL_WRAPER
+// Copyright [2021] <Wojtek>"
+#ifndef BABLIB_WRAPER_HPP_
+#define BABLIB_WRAPER_HPP_
 
 #include "must_have.hpp"
 
@@ -148,7 +149,6 @@ namespace babel::WRAPER{
             _data = std::forward<U>(data);
             return *this;
         }
-
     };
-}
-#endif
+}  // namespace babel::WRAPER
+#endif  // BABLIB_WRAPER_HPP_

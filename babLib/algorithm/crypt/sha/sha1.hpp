@@ -4,7 +4,7 @@
 
 #include "../../../must_have.hpp"
 
-namespace babel::ALGO::CRYPT {
+namespace babel::ALGO::CRYPT{
     std::string sha1(const std::string &HASH) noexcept
     {
         using WORD = babel::CONCEPTS::type_of_number<4, false>::type;
@@ -38,9 +38,7 @@ namespace babel::ALGO::CRYPT {
 
         std::array<WORD, ROUNDS> w {0};
         std::size_t i;
-        for ( auto iterator = std::begin(MSG)
-                ; iterator < std::end(MSG)
-                ; iterator += 16 )
+        for ( auto iterator = std::begin(MSG) ; iterator < std::end(MSG) ; iterator += 16 )
         {
             std::copy(iterator, iterator + 16, w.begin());
 
@@ -62,7 +60,7 @@ namespace babel::ALGO::CRYPT {
             {
                 if ( i <= 19 )
                 {
-                    f = (b & c) | ((~b) & d);
+                    f = ( b & c ) | ( ( ~b ) & d );
                     k = 0x5A827999;
                 } else if ( i <= 39 )
                 {
@@ -70,7 +68,7 @@ namespace babel::ALGO::CRYPT {
                     k = 0x6ED9EBA1;
                 } else if ( i <= 59 )
                 {
-                    f = (b & c) | (b & d) | (c & d);
+                    f = ( b & c ) | ( b & d ) | ( c & d );
                     k = 0x8F1BBCDC;
                 } else
                 {
@@ -96,11 +94,11 @@ namespace babel::ALGO::CRYPT {
         res.reserve(40);
         for ( i = 0 ; i < H.size() ; ++i )
         {
-            res +=  babel::ALGO::CAST::to_hex(H[i]);
+            res += babel::ALGO::CAST::to_hex(H[i]);
         }
 
         return res;
     }
-}
+}  // namespace babel::ALGO::CRYPT
 
-#endif // BABLIB_ALGORITHM_CRYPT_SHA_SHA1_HPP_
+#endif  // BABLIB_ALGORITHM_CRYPT_SHA_SHA1_HPP_

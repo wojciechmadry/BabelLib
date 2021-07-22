@@ -1,5 +1,6 @@
-#ifndef A_D_ARRAY
-#define A_D_ARRAY
+// Copyright [2021] <Wojtek>"
+#ifndef BABLIB_CONTAINER_DYNAMIC_ARRAY_HPP_
+#define BABLIB_CONTAINER_DYNAMIC_ARRAY_HPP_
 
 #include <type_traits>
 #include <string>
@@ -20,11 +21,11 @@ namespace babel::CONTAINER{
         void __reallocate() //NOLINT
         {
             _max_size *= GROW;
-            if (_max_size == 0)
+            if ( _max_size == 0 )
                 _max_size = GROW * GROW;
 
             T *temp = new T[_max_size];
-            std::transform(_array, _array + _size, temp, std::move<T&>);
+            std::transform(_array, _array + _size, temp, std::move<T &>);
             delete[] _array;
             _array = temp;
         }
@@ -104,12 +105,12 @@ namespace babel::CONTAINER{
             });
         }
 
-        dynamic_array(dynamic_array &&other) noexcept 
+        dynamic_array(dynamic_array &&other) noexcept
         {
             *this = std::move(other);
         }
-        
-        dynamic_array(const dynamic_array &other) noexcept 
+
+        dynamic_array(const dynamic_array &other) noexcept
         {
             *this = other;
         }
@@ -151,14 +152,12 @@ namespace babel::CONTAINER{
                 });
             } else
             {
-                std::transform(other._array, other._array + _size, _array, [](const T& data)
-                {
+                std::transform(other._array, other._array + _size, _array, [](const T &data) {
                     return data;
                 });
                 std::size_t Size = other.size() - _size;
-                std::for_each(other._array + _size, other._array + Size, [this](const T& data)
-                {
-                   this->template push_back(data);
+                std::for_each(other._array + _size, other._array + Size, [this](const T &data) {
+                    this->template push_back(data);
                 });
             }
             return *this;
@@ -261,6 +260,6 @@ namespace babel::CONTAINER{
             return iterator(_array - 1);
         }
     };
-}
+}  // namespace babel::CONTAINER"
 
-#endif
+#endif  // BABLIB_CONTAINER_DYNAMIC_ARRAY_HPP_

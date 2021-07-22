@@ -1,16 +1,13 @@
-#ifndef BABEL_GRAPHICS_CMYK
-#define BABEL_GRAPHICS_CMYK
+// Copyright [2021] <Wojtek>"
+#ifndef BABLIB_GRAPHICS_CMYK_HPP_
+#define BABLIB_GRAPHICS_CMYK_HPP_
 
 #include "../algorithm/algorithm.hpp"
 
 namespace babel::GRAPHICS{
-
-
-
     //------------------CMYK---------------
     class cmyk
     {
-        using byte = uint8_t;
         std::array<byte, 4> _CMYK; //NOLINT
 
         [[nodiscard]] static constexpr byte _max(const byte Value) noexcept
@@ -110,6 +107,6 @@ namespace babel::GRAPHICS{
     };
 
 
-}
+}  // namespace babel::GRAPHICS
 
-#endif
+#endif  // BABLIB_GRAPHICS_CMYK_HPP_
