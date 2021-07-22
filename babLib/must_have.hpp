@@ -1,13 +1,20 @@
 #ifndef BABEL_MUST_HAVE
 #define BABEL_MUST_HAVE
 
+#include <string>
 #include <chrono>
+#include <algorithm>
 #include <functional>
 #include <utility>
 #include <variant>
 #include "concepts/concepts.hpp"
-#include <thread>
+
 #include "typdef.hpp"
+
+//THREAD
+#include <thread>
+#include <mutex>
+#include <condition_variable>
 
 //FILE OPERATION
 #include <fstream>
@@ -26,11 +33,7 @@
 #include <random>
 
 // CONTAINER
-#include <list>
-#include <queue>
-#include <bitset>
-#include "container/list.hpp"
-#include "container/dynamic_array.hpp"
+#include "container/container.hpp"
 
 
 #ifdef _WIN32
@@ -41,7 +44,7 @@
 
 
 namespace babel{
-    static constexpr const char *VERSION = "1.25";
+    static constexpr const char *VERSION = "1.26";
     static constexpr const bool COMPILER_IS_64B = ( sizeof(void *) == 8 ); //NOLINT
     static constexpr const bool COMPILER_IS_32B = ( sizeof(void *) == 4 ); //NOLINT
 }

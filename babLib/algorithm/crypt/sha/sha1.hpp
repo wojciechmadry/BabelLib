@@ -1,9 +1,10 @@
-#ifndef BABEL_SHA_1
-#define BABEL_SHA_1
+// Copyright [2021] <Wojtek>"
+#ifndef BABLIB_ALGORITHM_CRYPT_SHA_SHA1_HPP_
+#define BABLIB_ALGORITHM_CRYPT_SHA_SHA1_HPP_
 
 #include "../../../must_have.hpp"
 
-namespace babel::ALGO::CRYPT{
+namespace babel::ALGO::CRYPT {
     std::string sha1(const std::string &HASH) noexcept
     {
         using WORD = babel::CONCEPTS::type_of_number<4, false>::type;
@@ -26,7 +27,9 @@ namespace babel::ALGO::CRYPT{
 
         for ( auto c : HASH )
             holder.push<int8_t>(c);
+
         holder.push<bool>(true);
+
         while ( holder.number_of_bits() % CHUNK_LENGTH != 448 )
             holder.push<bool>(false);
         holder.push<uint64_t>(len);
@@ -35,13 +38,16 @@ namespace babel::ALGO::CRYPT{
 
         std::array<WORD, ROUNDS> w {0};
         std::size_t i;
-        for ( auto iterator = std::begin(MSG) ; iterator < std::end(MSG) ; iterator += 16 )
+        for ( auto iterator = std::begin(MSG)
+                ; iterator < std::end(MSG)
+                ; iterator += 16 )
         {
             std::copy(iterator, iterator + 16, w.begin());
 
             for ( i = 16 ; i < ROUNDS ; ++i )
             {
-                w[i] = std::rotl(w[i - 3] ^ w[i - 8] ^ w[i - 14] ^ w[i - 16], 1);
+                w[i] = std::rotl(
+                        w[i - 3] ^ w[i - 8] ^ w[i - 14] ^ w[i - 16], 1);
             }
 
             auto a = H[0];
@@ -56,7 +62,7 @@ namespace babel::ALGO::CRYPT{
             {
                 if ( i <= 19 )
                 {
-                    f = ( b & c ) | ( ( ~b ) & d );
+                    f = (b & c) | ((~b) & d);
                     k = 0x5A827999;
                 } else if ( i <= 39 )
                 {
@@ -64,14 +70,13 @@ namespace babel::ALGO::CRYPT{
                     k = 0x6ED9EBA1;
                 } else if ( i <= 59 )
                 {
-                    f = ( b & c ) | ( b & d ) | ( c & d );
+                    f = (b & c) | (b & d) | (c & d);
                     k = 0x8F1BBCDC;
                 } else
                 {
                     f = b ^ c ^ d;
                     k = 0xCA62C1D6;
                 }
-
                 auto temp = std::rotl(a, 5) + f + e + k + w[i];
                 e = d;
                 d = c;
@@ -98,4 +103,4 @@ namespace babel::ALGO::CRYPT{
     }
 }
 
-#endif
+#endif // BABLIB_ALGORITHM_CRYPT_SHA_SHA1_HPP_
