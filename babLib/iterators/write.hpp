@@ -7,19 +7,19 @@
 namespace babel::ITERATOR{
     class writer
     {
-        std::ofstream *_of {nullptr};
+        std::ofstream *m_of {nullptr};
 
         class back_inserter_iterator
         {
-            std::ofstream *_of {nullptr};
-            bool _new_line {false};
+            std::ofstream *m_of {nullptr};
+            bool m_new_line {false};
         public:
             back_inserter_iterator() = default;
 
-            back_inserter_iterator(std::ofstream &OfStream, bool NewLine) noexcept: _of(&OfStream), _new_line(NewLine)
+            back_inserter_iterator(std::ofstream &OfStream, bool NewLine) noexcept: m_of(&OfStream), m_new_line(NewLine)
             { }
 
-            back_inserter_iterator(std::ofstream *OfStream, bool NewLine) noexcept: _of(OfStream), _new_line(NewLine)
+            back_inserter_iterator(std::ofstream *OfStream, bool NewLine) noexcept: m_of(OfStream), m_new_line(NewLine)
             { }
 
             ~back_inserter_iterator() = default;
@@ -41,9 +41,9 @@ namespace babel::ITERATOR{
 
             back_inserter_iterator &operator=(const auto &ToInsert) noexcept
             {
-                ( *_of ) << ToInsert;
-                if ( _new_line )
-                    ( *_of ) << '\n';
+                ( *m_of ) << ToInsert;
+                if ( m_new_line )
+                    ( *m_of ) << '\n';
                 return *this;
             }
         };
@@ -55,10 +55,10 @@ namespace babel::ITERATOR{
 
         writer(writer &&) = default;
 
-        explicit writer(std::ofstream &OfStream) noexcept: _of(&OfStream)
+        explicit writer(std::ofstream &OfStream) noexcept: m_of(&OfStream)
         { }
 
-        explicit writer(std::ofstream *OfStream) noexcept: _of(OfStream)
+        explicit writer(std::ofstream *OfStream) noexcept: m_of(OfStream)
         { }
 
         ~writer() = default;
@@ -69,24 +69,24 @@ namespace babel::ITERATOR{
 
         writer &operator=(std::ofstream &OfStream) noexcept
         {
-            _of = &OfStream;
+            m_of = &OfStream;
             return *this;
         }
 
         writer &operator=(std::ofstream *OfStream) noexcept
         {
-            _of = OfStream;
+            m_of = OfStream;
             return *this;
         }
 
         void write(const auto &line) noexcept
         {
-            ( *_of ) << line;
+            ( *m_of ) << line;
         }
 
         void writeln(const auto &line) noexcept
         {
-            ( *_of ) << line << "\n";
+            ( *m_of ) << line << "\n";
         }
 
         void push_back(const auto &line) noexcept
@@ -96,12 +96,12 @@ namespace babel::ITERATOR{
 
         void close() noexcept
         {
-            _of->close();
+            m_of->close();
         }
 
         back_inserter_iterator back_inserter(const bool AutoNewLine) noexcept
         {
-            return back_inserter_iterator(_of, AutoNewLine);
+            return back_inserter_iterator(m_of, AutoNewLine);
         }
     };
 }  // namespace babel::ITERATOR

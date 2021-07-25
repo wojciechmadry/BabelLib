@@ -11,32 +11,32 @@ namespace babel::WINDOWS::CONVERSION {
     {
         class LCPWSTR_HOLDER
         {
-            std::wstring ws;
+            std::wstring m_ws;
         public:
             LCPWSTR_HOLDER() = delete;
-            explicit LCPWSTR_HOLDER(const std::string &str) noexcept: ws(str.begin(), str.end())
+            explicit LCPWSTR_HOLDER(const std::string &str) noexcept: m_ws(str.begin(), str.end())
             {}
 
             ~LCPWSTR_HOLDER() = default;
 
             [[nodiscard]] LPCWSTR get_LPCWSTR() noexcept
             {
-                return ws.c_str();
+                return m_ws.c_str();
             }
 
             [[nodiscard]] LPCWSTR get_LPCWSTR() const noexcept
             {
-                return ws.c_str();
+                return m_ws.c_str();
             }
 
             [[nodiscard]] std::wstring &get_wstring() noexcept
             {
-                return ws;
+                return m_ws;
             }
 
             [[nodiscard]] const std::wstring &get_wstring() const noexcept
             {
-                return ws;
+                return m_ws;
             }
         };
 

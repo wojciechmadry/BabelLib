@@ -8,6 +8,7 @@ namespace babel::TIME{
 
     class timer
     {
+        std::chrono::high_resolution_clock::time_point m_time;
     public:
         timer() noexcept
         {
@@ -20,7 +21,7 @@ namespace babel::TIME{
 */
         void start() noexcept
         {
-            time = std::chrono::high_resolution_clock::now();
+            m_time = std::chrono::high_resolution_clock::now();
         }
 
         /**
@@ -28,7 +29,7 @@ namespace babel::TIME{
 */
         [[nodiscard]]long double get_time() const noexcept
         {
-            return std::chrono::duration<long double>(std::chrono::high_resolution_clock::now() - ( time )).count();
+            return std::chrono::duration<long double>(std::chrono::high_resolution_clock::now() - ( m_time )).count();
         }
 
 
@@ -38,7 +39,7 @@ namespace babel::TIME{
         [[nodiscard]]auto get_time_ns() const noexcept
         {
             return std::chrono::duration_cast<std::chrono::nanoseconds>(
-                    std::chrono::high_resolution_clock::now() - ( time )).count();
+                    std::chrono::high_resolution_clock::now() - ( m_time )).count();
         }
 
         /**
@@ -47,7 +48,7 @@ namespace babel::TIME{
         [[nodiscard]]auto get_time_mili() const noexcept
         {
             return std::chrono::duration_cast<std::chrono::milliseconds>(
-                    std::chrono::high_resolution_clock::now() - ( time )).count();
+                    std::chrono::high_resolution_clock::now() - ( m_time )).count();
         }
 
         /**
@@ -56,11 +57,8 @@ namespace babel::TIME{
         [[nodiscard]]auto get_time_micro() const noexcept
         {
             return std::chrono::duration_cast<std::chrono::microseconds>(
-                    std::chrono::high_resolution_clock::now() - ( time )).count();
+                    std::chrono::high_resolution_clock::now() - ( m_time )).count();
         }
-
-    private:
-        std::chrono::high_resolution_clock::time_point time;
     };
 
 

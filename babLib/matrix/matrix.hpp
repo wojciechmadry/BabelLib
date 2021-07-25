@@ -58,7 +58,7 @@ namespace babel::MATRIX{
 
         T &at(POSITION first)
         {
-            if ( mat.size() == 0 || mat[0].size() <= first )
+            if ( mat.empty() || mat[0].size() <= first )
                 throw std::out_of_range("Matrix out ouf range.");
             return mat[0][first];
         }
@@ -72,7 +72,7 @@ namespace babel::MATRIX{
 
         const T &at(POSITION first) const
         {
-            if ( mat.size() == 0 || mat[0].size() <= first )
+            if ( mat.empty() || mat[0].size() <= first )
                 throw std::out_of_range("Matrix out ouf range.");
             return mat[0][first];
         }
@@ -86,14 +86,14 @@ namespace babel::MATRIX{
 
         T &operator()(POSITION first)
         {
-            if ( mat.size() == 0 || mat[0].size() <= first )
+            if ( mat.empty() || mat[0].size() <= first )
                 throw std::out_of_range("Matrix out ouf range.");
             return mat[0][first];
         }
 
         const T &operator()(POSITION first) const
         {
-            if ( mat.size() == 0 || mat[0].size() <= first )
+            if ( mat.empty() || mat[0].size() <= first )
                 throw std::out_of_range("Matrix out ouf range.");
             return mat[0][first];
         }
