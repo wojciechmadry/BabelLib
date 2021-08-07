@@ -1,73 +1,15 @@
 // Copyright [2021] <Wojtek>"
-#ifndef BABLIB_MUST_HAVE_HPP_
-#define BABLIB_MUST_HAVE_HPP_
+#ifndef BABLIB_ALGORITHM_CRYPT_SHA_ARRAY_HPP_
+#define BABLIB_ALGORITHM_CRYPT_SHA_ARRAY_HPP_
 
-#include <string>
-#include <chrono>
-#include <algorithm>
-#include <functional>
-#include <utility>
-#include <variant>
-#include "concepts/concepts.hpp"
-
-#include "typdef.hpp"
-
-// THREAD
-#include <thread>
-#include <mutex>
-#include <condition_variable>
-
-// FILE OPERATION
-#include <fstream>
-#include <filesystem>
-
-// EXCEPTION, ASSERTS
-#include <cassert>
-#include <stdexcept>
-
-// MATH - NUMBER
-#include <random>
-#include <numeric>
-#include <complex>
-#include <numbers>
-#include <cmath>
-
-// CONTAINER
-#include "container/container.hpp"
-
-
-#ifdef _WIN32
-#include <windows.h>
-#elif linux
-
-#include <unistd.h>
-
-#endif
-
-
-namespace babel{
-    static constexpr const char *VERSION = "1.27";
-    static constexpr const bool COMPILER_IS_64B = ( sizeof(void *) == 8 ); //NOLINT
-    static constexpr const bool COMPILER_IS_32B = ( sizeof(void *) == 4 ); //NOLINT
-}
-
+#include <array>
+#include <vector>
+#include <type_traits>
+#include <cstdint>
 namespace _BABEL_PRIVATE_DO_NOT_USE //NOLINT
 {
-
-
     class _PRIVATE_BABEL //NOLINT
     {
-        static constexpr void babel_mult(uint64_t F[2][2], uint64_t M[2][2]) noexcept
-        {
-            uint64_t x = F[0][0] * M[0][0] + F[0][1] * M[1][0];
-            uint64_t y = F[0][0] * M[0][1] + F[0][1] * M[1][1];
-            uint64_t z = F[1][0] * M[0][0] + F[1][1] * M[1][0];
-            uint64_t w = F[1][0] * M[0][1] + F[1][1] * M[1][1];
-            F[0][0] = x;
-            F[0][1] = y;
-            F[1][0] = z;
-            F[1][1] = w;
-        }
 
     public:
         static const constexpr std::array<std::uint64_t, 80> PRIME_SHA_ARRAY_64 = {
@@ -115,7 +57,7 @@ namespace _BABEL_PRIVATE_DO_NOT_USE //NOLINT
         template< typename INT, std::size_t MAX_BIT = sizeof(INT) * 8 >
         class INT_HOLDER
         {
-            std::vector<INT> _holder;
+            std::vector <INT> _holder;
             std::size_t nob = 0;
             INT data = 0;
 
@@ -139,7 +81,7 @@ namespace _BABEL_PRIVATE_DO_NOT_USE //NOLINT
             }
 
         public:
-            [[nodiscard]] std::vector<INT> &&get_vec() noexcept
+            [[nodiscard]] std::vector <INT> &&get_vec() noexcept
             {
                 return std::move(_holder);
             }
@@ -153,7 +95,7 @@ namespace _BABEL_PRIVATE_DO_NOT_USE //NOLINT
             }
 
             template< typename ToPush >
-            requires ( !std::is_same_v<std::decay_t<ToPush>, bool> )
+            requires ( !std::is_same_v < std::decay_t < ToPush > , bool > )
             void push(ToPush DATA) noexcept
             {
                 if constexpr( sizeof(ToPush) > sizeof(INT) )
@@ -192,23 +134,7 @@ namespace _BABEL_PRIVATE_DO_NOT_USE //NOLINT
             }
         };
 
-        static constexpr void babel_pow(uint64_t F[2][2], unsigned n) noexcept
-        {
-            if ( n < 2 )
-                return;
-            babel_pow(F, n >> 1u);
-            babel_mult(F, F);
-            if ( n % 2 != 0 )
-            {
-                uint64_t x = F[0][0] + F[0][1];
-                uint64_t z = F[1][0] + F[1][1];
-                F[0][1] = F[0][0];
-                F[0][0] = x;
-                F[1][1] = F[1][0];
-                F[1][0] = z;
-            }
-        }
-    };
-}  // namespace _BABEL_PRIVATE_DO_NOT_USE
-#endif  // BABLIB_MUST_HAVE_HPP_
 
+    };
+}
+#endif  // BABLIB_ALGORITHM_CRYPT_SHA_ARRAY_HPP_
