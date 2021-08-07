@@ -2,7 +2,9 @@
 #ifndef BABLIB_REQUEST_REQUEST_HPP_
 #define BABLIB_REQUEST_REQUEST_HPP_
 
-#include "../must_have.hpp"
+#include <functional>
+#include <queue>
+#include <stdexcept>
 
 namespace babel::REQ{
     class request

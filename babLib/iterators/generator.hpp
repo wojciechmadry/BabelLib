@@ -2,7 +2,8 @@
 #ifndef BABLIB_ITERATORS_GENERATOR_HPP_
 #define BABLIB_ITERATORS_GENERATOR_HPP_
 
-#include "../must_have.hpp"
+#include <cstdint>
+#include <utility>
 
 namespace babel::ITERATOR{
 

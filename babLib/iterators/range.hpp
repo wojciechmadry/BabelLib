@@ -2,7 +2,8 @@
 #ifndef BABLIB_ITERATORS_RANGE_HPP_
 #define BABLIB_ITERATORS_RANGE_HPP_
 
-#include "../must_have.hpp"
+#include <cstdint>
+#include <stdexcept>
 
 namespace babel::ITERATOR{
     template< typename Type = int64_t, typename StepType = int64_t >

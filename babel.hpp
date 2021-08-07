@@ -17,7 +17,11 @@
 #include "babLib/tokens/tokenization.hpp"
 #include "babLib/system.hpp"
 #include "babLib/iterators/iterator.hpp"
+#include "babLib/container/container.hpp"
 
 namespace babel{
+    static constexpr const char *VERSION = "1.27";
+    static constexpr const bool COMPILER_IS_64B = ( sizeof(void *) == 8 ); //NOLINT
+    static constexpr const bool COMPILER_IS_32B = ( sizeof(void *) == 4 ); //NOLINT
 }  // namespace babel
 #endif  // BABEL_HPP_

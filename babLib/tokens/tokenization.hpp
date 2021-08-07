@@ -3,6 +3,9 @@
 #define BABLIB_TOKENS_TOKENIZATION_HPP_
 
 #include "token.hpp"
+#include <condition_variable>
+#include <mutex>
+#include <vector>
 
 namespace babel::TOKEN{
 

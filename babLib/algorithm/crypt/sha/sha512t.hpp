@@ -2,7 +2,12 @@
 #ifndef BABLIB_ALGORITHM_CRYPT_SHA_SHA512T_HPP_
 #define BABLIB_ALGORITHM_CRYPT_SHA_SHA512T_HPP_
 
-#include "../../../must_have.hpp"
+#include "sha_array.hpp"
+#include <string>
+#include "../../../concepts/concepts.hpp"
+#include <bit>
+#include "../../cast.hpp"
+#include "sha512.hpp"
 
 namespace babel::ALGO::CRYPT{
     template< std::size_t T >

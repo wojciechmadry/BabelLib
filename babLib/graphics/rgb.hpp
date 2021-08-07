@@ -7,6 +7,9 @@
 namespace babel::GRAPHICS{
     class rgb
     {
+    public:
+        using byte = uint8_t;
+    private:
         std::array<byte, 3> m_RGB; //NOLINT
     public:
         constexpr explicit rgb(const byte R = 0, const byte G = 0, const byte B = 0) noexcept: m_RGB({R, G, B})

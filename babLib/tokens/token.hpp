@@ -2,8 +2,6 @@
 #ifndef BABLIB_TOKENS_TOKEN_HPP_
 #define BABLIB_TOKENS_TOKEN_HPP_
 
-#include "../must_have.hpp"
-
 namespace babel::TOKEN
 {
     class token

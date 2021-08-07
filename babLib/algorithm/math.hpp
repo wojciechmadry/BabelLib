@@ -3,6 +3,13 @@
 #define BABLIB_ALGORITHM_MATH_HPP_
 
 #include "../variadic.hpp"
+#include "../concepts/concepts.hpp"
+
+#include <functional>
+#include <cmath>
+#include <complex>
+#include <random>
+#include <chrono>
 
 namespace babel::ALGO::MATH{
     namespace DERIVATIVE{
@@ -395,13 +402,39 @@ namespace babel::ALGO::MATH{
    *  @param   n Fibonacci number
    *  @return Fibonacci N
    */
-    [[nodiscard]] constexpr uint64_t fib(unsigned n) noexcept
+    [[nodiscard]] uint64_t fib(unsigned n) noexcept
     {
         uint64_t F[2][2] = {{1, 1},
                             {1, 0}};
         if ( n == 0 )
             return 0;
-        _BABEL_PRIVATE_DO_NOT_USE::_PRIVATE_BABEL::babel_pow(F, n - 1);
+        constexpr auto babel_mult = [](uint64_t a_F[2][2], uint64_t a_M[2][2]) {
+            uint64_t x = a_F[0][0] * a_M[0][0] + a_F[0][1] * a_M[1][0];
+            uint64_t y = a_F[0][0] * a_M[0][1] + a_F[0][1] * a_M[1][1];
+            uint64_t z = a_F[1][0] * a_M[0][0] + a_F[1][1] * a_M[1][0];
+            uint64_t w = a_F[1][0] * a_M[0][1] + a_F[1][1] * a_M[1][1];
+            a_F[0][0] = x;
+            a_F[0][1] = y;
+            a_F[1][0] = z;
+            a_F[1][1] = w;
+        };
+        std::function<void(uint64_t a_F[2][2], unsigned a_n)> babel_pow;
+        babel_pow = [&babel_pow, &babel_mult](uint64_t a_F[2][2], unsigned a_n) {
+            if ( a_n < 2 )
+                return;
+            babel_pow(a_F, a_n >> 1u);
+            babel_mult(a_F, a_F);
+            if ( a_n % 2 != 0 )
+            {
+                uint64_t x = a_F[0][0] + a_F[0][1];
+                uint64_t z = a_F[1][0] + a_F[1][1];
+                a_F[0][1] = a_F[0][0];
+                a_F[0][0] = x;
+                a_F[1][1] = a_F[1][0];
+                a_F[1][0] = z;
+            }
+        };
+        babel_pow(F, n - 1);
         return F[0][0];
     }
 

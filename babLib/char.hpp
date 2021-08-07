@@ -2,7 +2,7 @@
 #ifndef BABLIB_CHAR_HPP_
 #define BABLIB_CHAR_HPP_
 
-#include "must_have.hpp"
+#include <fstream>
 
 namespace babel::CHAR{
     class ASCII_CHAR

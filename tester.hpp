@@ -7,6 +7,7 @@
 
 #include "babel.hpp"
 #include <cassert>
+#include <list>
 
 namespace TESTING{
 
@@ -66,6 +67,10 @@ namespace TESTING{
         p2 += static_cast<long double>(0.2);
         p3 += 5;
         p4 += 5;
+        (void) p1;
+        (void) p2;
+        (void) p3;
+        (void) p4;
         t.start();
     }
 
@@ -85,14 +90,6 @@ namespace TESTING{
         assert(p3.has_value() && p3.value() == 150);
         p3.swap(p2);
         assert(p2.value() == 150 && p3.value() == 25);
-    }
-
-    void MUST_HAVE_HPP() //DONE
-    {
-        uint64_t F[2][2] = {{3, 4},
-                            {5, 8}};
-        _BABEL_PRIVATE_DO_NOT_USE::_PRIVATE_BABEL::babel_pow(F, 10);
-
     }
 
     void MATH_HPP() // DONE
@@ -1237,7 +1234,6 @@ namespace TESTING{
             VARIADIC_HPP();
             TIME_HPP();
             OPTIONAL_HPP();
-            MUST_HAVE_HPP();
             MATH_HPP();
             if ( babel::COMPILER_IS_64B ) //NOLINT //TODO on 32 bit clang compiler, cant see files
             {

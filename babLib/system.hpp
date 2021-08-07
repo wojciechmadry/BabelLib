@@ -2,7 +2,9 @@
 #ifndef BABLIB_SYSTEM_HPP_
 #define BABLIB_SYSTEM_HPP_
 
-#include "must_have.hpp"
+#include <sstream>
+#include <thread>
+#include "concepts/concepts.hpp"
 
 namespace babel::SYSTEM{
 
@@ -14,7 +16,7 @@ namespace babel::SYSTEM{
 */
     [[nodiscard]] auto number_of_threads() noexcept
     {
-        if constexpr( babel::COMPILER_IS_64B )
+        if constexpr( sizeof(void*) == 8 )
         {
             return std::thread::hardware_concurrency();
         } else

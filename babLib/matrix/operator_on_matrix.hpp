@@ -2,7 +2,10 @@
 #ifndef BABLIB_MATRIX_OPERATOR_ON_MATRIX_HPP_
 #define BABLIB_MATRIX_OPERATOR_ON_MATRIX_HPP_
 
-#include "../must_have.hpp"
+#include "../concepts/concepts.hpp"
+#include <cstdint>
+#include <numeric>
+#include <vector>
 
 namespace babel::MATRIX{
     template< typename T = double >

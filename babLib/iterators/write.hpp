@@ -2,7 +2,7 @@
 #ifndef BABLIB_ITERATORS_WRITE_HPP_
 #define BABLIB_ITERATORS_WRITE_HPP_
 
-#include "../must_have.hpp"
+#include <fstream>
 
 namespace babel::ITERATOR{
     class writer

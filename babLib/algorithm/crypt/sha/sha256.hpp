@@ -2,7 +2,11 @@
 #ifndef BABLIB_ALGORITHM_CRYPT_SHA_SHA256_HPP_
 #define BABLIB_ALGORITHM_CRYPT_SHA_SHA256_HPP_
 
-#include "../../../must_have.hpp"
+#include "sha_array.hpp"
+#include <string>
+#include "../../../concepts/concepts.hpp"
+#include <bit>
+#include "../../cast.hpp"
 
 namespace babel::ALGO::CRYPT{
     std::string sha256(const std::string &HASH) noexcept

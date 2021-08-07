@@ -1,7 +1,10 @@
 #ifndef BABLIB_ALGORITHM_CAST_HPP_
 #define BABLIB_ALGORITHM_CAST_HPP_
 
-#include "../must_have.hpp"
+#include <bitset>
+#include <string>
+#include <stdexcept>
+#include "../concepts/concepts.hpp"
 
 namespace babel::ALGO::CAST{
 

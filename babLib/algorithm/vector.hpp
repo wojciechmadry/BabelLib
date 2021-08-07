@@ -2,7 +2,12 @@
 #ifndef BABLIB_ALGORITHM_VECTOR_HPP_
 #define BABLIB_ALGORITHM_VECTOR_HPP_
 
-#include "../must_have.hpp"
+#include <vector>
+#include <algorithm>
+#include "../concepts/concepts.hpp"
+#include <numeric>
+#include <cmath>
+#include "math.hpp"
 
 namespace babel::ALGO::VECTOR{
     /**

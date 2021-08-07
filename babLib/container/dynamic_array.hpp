@@ -5,6 +5,7 @@
 #include <type_traits>
 #include <string>
 #include <initializer_list>
+#include <stdexcept>
 
 namespace babel::CONTAINER{
     template< typename T, size_t GROW = 2 >

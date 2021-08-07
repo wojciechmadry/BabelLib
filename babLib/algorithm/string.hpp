@@ -2,7 +2,7 @@
 #ifndef BABLIB_ALGORITHM_STRING_HPP_
 #define BABLIB_ALGORITHM_STRING_HPP_
 
-#include "../must_have.hpp"
+#include <string>
 
 namespace babel::ALGO::STRING{
     /**
