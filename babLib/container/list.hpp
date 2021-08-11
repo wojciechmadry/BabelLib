@@ -200,7 +200,6 @@ namespace babel::CONTAINER {
             return m_size;
         }
 
-        //  a)
         template<typename U = T, typename = is_s_c<U, T> >
         void push_back(std::initializer_list<U> &&init) noexcept
         {
@@ -230,9 +229,6 @@ namespace babel::CONTAINER {
             ++m_size;
         }
 
-        // end a)
-        // b)
-
         template<typename U = T, typename = is_s_c<U, T> >
         void push_front(U &&data) noexcept
         {
@@ -254,8 +250,6 @@ namespace babel::CONTAINER {
             ++m_size;
         }
 
-        // end b)
-        // c)
         void pop_back() noexcept
         {
             if (m_size > 2)
@@ -277,8 +271,6 @@ namespace babel::CONTAINER {
             --m_size;
         }
 
-        // end c)
-        // d)
         void pop_front() noexcept
         {
             if (m_size > 2)
@@ -301,8 +293,6 @@ namespace babel::CONTAINER {
             --m_size;
         }
 
-        // end d)
-        // e) && f)
         T &operator[](size_t index)
         {
             if (index >= m_size)
@@ -343,8 +333,6 @@ namespace babel::CONTAINER {
             return temp->data;
         }
 
-        // end e) && f)
-        // g)
         template<typename Cmp, typename = typename std::enable_if<
                 !std::is_same<T, Cmp>::value && !std::is_convertible<T, Cmp>::value>::type>
         T *find(const Cmp &comparator) noexcept
@@ -389,8 +377,6 @@ namespace babel::CONTAINER {
             return nullptr;
         }
 
-        // end g)
-        // h)
         template<typename Cmp, typename = typename std::enable_if<
                 !std::is_same<T, Cmp>::value && !std::is_convertible<T, Cmp>::value>::type>
         bool remove(const Cmp &comparator) noexcept
@@ -409,9 +395,6 @@ namespace babel::CONTAINER {
             return __remove(temp);
         }
 
-        // end h)
-        // i)
-
         template<typename Cmp, typename U = T, typename = is_s_c<U, T>>
         void push_in_order(U &&data, const Cmp &comparator) noexcept
         {
@@ -421,8 +404,6 @@ namespace babel::CONTAINER {
             __insert_in_order(std::forward<U>(data), temp);
         }
 
-        // end i)
-        // j)
         void clear() noexcept
         {
             if (m_size == 1)
@@ -443,8 +424,6 @@ namespace babel::CONTAINER {
             m_tail = nullptr;
         }
 
-        // end j)
-        // k)
         [[nodiscard]] std::string to_string(bool to_string_conv = false) const
         {
             auto p_to_s = [](void const *pointer) -> std::string {
@@ -467,7 +446,6 @@ namespace babel::CONTAINER {
             }
             return res;
         }
-        // end k)
 
         iterator begin()
         {

@@ -11,7 +11,7 @@ namespace babel::GRAPHICS{
     public:
         using byte = uint8_t;
     private:
-        std::array<byte, 4> m_CMYK; //NOLINT
+        std::array<byte, 4> m_CMYK;
 
         [[nodiscard]] static constexpr byte _max(const byte Value) noexcept
         {

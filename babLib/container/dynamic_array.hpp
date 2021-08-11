@@ -164,7 +164,6 @@ namespace babel::CONTAINER{
             return *this;
         }
 
-        // a)
         template< typename U = T, typename = is_s_c<U, T>>
         void push_back(U &&data) noexcept
         {
@@ -180,8 +179,6 @@ namespace babel::CONTAINER{
             });
         }
 
-        // end a)
-        // b) && c)
         T &operator[](const size_t index)
         {
             if ( index >= m_size )
@@ -196,8 +193,6 @@ namespace babel::CONTAINER{
             return m_array[index];
         }
 
-        // end b) && c)
-        // d)
         void clear() noexcept
         {
             delete[] m_array;
@@ -206,17 +201,12 @@ namespace babel::CONTAINER{
             m_array = new T[m_max_size];
         }
 
-        // end d)
-        // e)
         [[nodiscard]] std::string to_string() const noexcept
         {
             return "Size : " + std::to_string(m_size)
                    + "\nMax Size : " + std::to_string(m_max_size)
                    + "\nMemory usage : " + std::to_string(sizeof(dynamic_array<T>) + m_max_size * sizeof(T)) + "\n";
         }
-
-        // end e)
-
 
         template< typename ... Args >
         void emplace_back(Args &&... args) noexcept

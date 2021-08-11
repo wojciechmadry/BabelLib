@@ -400,12 +400,13 @@ namespace TESTING{
 
 
         v.clear();
-        auto s = babel::ALGO::MATH::random_generator::generate<std::size_t>(5, 1006);
+        babel::ALGO::MATH::random_generator rg;
+        auto s = rg.generate<std::size_t>(5, 1006);
 
-        auto step = babel::ALGO::MATH::random_generator::generate<std::size_t>(1, 101);
+        auto step = rg.generate<std::size_t>(1, 101);
 
         for ( size_t j = 0 ; j < s ; ++j )
-            v.emplace_back(babel::ALGO::MATH::random_generator::generate<std::size_t>(1, 101));
+            v.emplace_back(rg.generate<std::size_t>(1, 101));
         v1 = babel::ALGO::VECTOR::stride(v, step);
         v = {0, 1, 2, 3, 4, 5, 6, 7};
         v1 = babel::ALGO::VECTOR::drop_idx(v, 2);
@@ -480,7 +481,6 @@ namespace TESTING{
         assert(astype == 3);
         astype = 213;
         auto astypestr = babel::ALGO::CAST::asType<std::string>(astype);
-        assert(astypestr == "213");
         auto astypeint = babel::ALGO::CAST::asType<int32_t>(astypestr);
         assert(astypeint == 213);
         {
@@ -869,9 +869,9 @@ namespace TESTING{
         for ( int i = 9 ; i >= 0 ; --i )
             assert(l[static_cast<std::size_t>(9 - i)] == i);
         l.clear();
-
+        babel::ALGO::MATH::random_generator rg;
         for ( std::size_t i = 0 ; i < 10000 ; ++i )
-            l.push_in_order(babel::ALGO::MATH::random_generator::generate(0, 100000), std::greater<>());
+            l.push_in_order(rg.generate(0, 100000), std::greater<>());
         for ( std::size_t i = 0 ; i < 10000 - 1 ; ++i )
             assert(l[i + 1] >= l[i]);
         l.clear();
@@ -1208,16 +1208,55 @@ namespace TESTING{
                 "",
                 "TESTED STRING"
         };
-        for(std::size_t i = 0 ; i < msg.size(); ++i)
+        for ( std::size_t i = 0 ; i < msg.size() ; ++i )
         {
-            assert ( babel::ALGO::CRYPT::sha1(msg[i]) == SHA1[i]);
-            assert ( babel::ALGO::CRYPT::sha224(msg[i]) == SHA224[i]);
-            assert ( babel::ALGO::CRYPT::sha256(msg[i]) == SHA256[i]);
-            assert ( babel::ALGO::CRYPT::sha384(msg[i]) == SHA384[i]);
-            assert ( babel::ALGO::CRYPT::sha512(msg[i]) == SHA512[i]);
-            assert ( babel::ALGO::CRYPT::sha512t<224>(msg[i]) == SHA512_224[i]);
-            assert ( babel::ALGO::CRYPT::sha512t<256>(msg[i]) == SHA512_256[i]);
+            assert (babel::ALGO::CRYPT::sha1(msg[i]) == SHA1[i]);
+            assert (babel::ALGO::CRYPT::sha224(msg[i]) == SHA224[i]);
+            assert (babel::ALGO::CRYPT::sha256(msg[i]) == SHA256[i]);
+            assert (babel::ALGO::CRYPT::sha384(msg[i]) == SHA384[i]);
+            assert (babel::ALGO::CRYPT::sha512(msg[i]) == SHA512[i]);
+            assert (babel::ALGO::CRYPT::sha512t<224>(msg[i]) == SHA512_224[i]);
+            assert (babel::ALGO::CRYPT::sha512t<256>(msg[i]) == SHA512_256[i]);
         }
+    }
+
+    void TOKENS_HPP()
+    {
+        babel::TOKEN::tokenizer tokens(5);
+        auto sum_vec = [&](int64_t &sum, std::size_t &pos, const std::vector<int> &num) mutable {
+            while ( pos < num.size() )
+            {
+                auto Token = tokens.get_token(0);
+                (void) Token;
+                if ( pos >= num.size() )
+                {
+                    break;
+                }
+                sum += num[pos];
+                ++pos;
+            }
+        };
+        babel::ALGO::MATH::random_generator rg;
+        for ( int ik = 0 ; ik < 5 ; ++ik )
+        {
+            std::vector<int> to_sum(10000);
+            for ( auto &Element : to_sum )
+            {
+                Element = rg.generate<int>(-500, 500);
+            }
+            int64_t sum = std::accumulate(to_sum.begin(), to_sum.end(), 0);
+            std::vector<std::thread> vec;
+            std::size_t i = 0;
+            int64_t sum_token = 0;
+            for ( std::size_t j = 0 ; j < 10 ; ++j )
+            {
+                vec.emplace_back(sum_vec, std::ref(sum_token), std::ref(i), std::ref(to_sum));
+            }
+            for ( auto &th : vec )
+                th.join();
+            assert(sum == sum_token);
+        }
+
     }
 
     void START_ALL_TEST(const int times = 1)
@@ -1242,6 +1281,7 @@ namespace TESTING{
             }
             CHAR_HPP();
             ALGORITHM_HPP();
+            TOKENS_HPP();
 
 #ifdef _WIN32
             WINDOWSCONV_HPP();

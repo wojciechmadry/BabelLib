@@ -101,7 +101,7 @@ namespace babel::ITERATOR{
 
         back_inserter_iterator back_inserter(const bool AutoNewLine) noexcept
         {
-            return back_inserter_iterator(m_of, AutoNewLine);
+            return {m_of, AutoNewLine};
         }
     };
 }  // namespace babel::ITERATOR

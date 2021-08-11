@@ -50,7 +50,7 @@ namespace babel::TOKEN{
             public:
                 AccessToken() = delete;
                 AccessToken(AccessToken&) = delete;
-                AccessToken(AccessToken&& Token) noexcept
+                AccessToken(AccessToken&& Token) noexcept : m_cv(), m_mutex()
                 {
                     *this = std::move(Token);
                 }

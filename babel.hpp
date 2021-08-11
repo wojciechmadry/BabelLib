@@ -9,19 +9,18 @@
 #include "babLib/optional.hpp"
 #include "babLib/time.hpp"
 #include "babLib/text.hpp"
-#include "babLib/windows/windows.hpp"
 #include "babLib/wraper.hpp"
 #include "babLib/matrix/matrix.hpp"
 #include "babLib/request/request.hpp"
 #include "babLib/graphics/graphics.hpp"
 #include "babLib/tokens/tokenization.hpp"
-#include "babLib/system.hpp"
+#include "babLib/system/system.hpp"
 #include "babLib/iterators/iterator.hpp"
 #include "babLib/container/container.hpp"
 
 namespace babel{
-    static constexpr const char *VERSION = "1.27";
-    static constexpr const bool COMPILER_IS_64B = ( sizeof(void *) == 8 ); //NOLINT
-    static constexpr const bool COMPILER_IS_32B = ( sizeof(void *) == 4 ); //NOLINT
+    constexpr const char *VERSION = "1.3";
+    constexpr const bool COMPILER_IS_64B = ( sizeof(void *) == 8 ); //NOLINT
+    constexpr const bool COMPILER_IS_32B = ( sizeof(void *) == 4 ); //NOLINT
 }  // namespace babel
 #endif  // BABEL_HPP_
