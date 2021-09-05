@@ -43,13 +43,10 @@ namespace TESTING{
     void VARIADIC_HPP() // DONE
     {
 
-        babel::VARIADIC::holder<int> p(3, 4, 12, 5);
+        babel::VARIADIC::holder<int, int, int, int> p(3, 4, 12, 5);
         assert(p[0] == 3 && p[3] == 5);
-        babel::VARIADIC::holder<int> p1(p);
+        babel::VARIADIC::holder p1(p);
         assert(p1[0] == 3 && p1[3] == 5);
-        p1.get().clear();
-        p = p1;
-        assert(p.get().empty());
         babel::VARIADIC::holder<int> p3(15);
         assert(p3[0] == 15);
         assert(p3->at(0) == 15);

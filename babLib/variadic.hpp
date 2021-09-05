@@ -2,21 +2,25 @@
 #ifndef BABLIB_VARIADIC_HPP_
 #define BABLIB_VARIADIC_HPP_
 
-#include <vector>
+#include <array>
+#include <any>
 #include "concepts/concepts.hpp"
 
 namespace babel::VARIADIC{
-    template< typename Type, typename Container = std::vector<Type> >
+    template< typename Type, typename ... Hold>
     requires(babel::CONCEPTS::IS_NOT_ANY_VOID<Type>)
     class holder
     {
-        Container m_hold;
+        static constexpr std::size_t m_size = 1u + sizeof...(Hold);
+        std::array<std::any, m_size> m_hold;
+        typename std::array<std::any, m_size>::iterator m_iterator = std::begin(m_hold);
 
         template< typename U = Type >
         requires(std::is_same_v<std::decay_t<U>, std::decay_t<Type>>)
         constexpr void _put(U &&_a1) noexcept
         {
-            m_hold.emplace_back(std::forward<U>(_a1));
+            *m_iterator = std::forward<U>(_a1);
+            ++m_iterator;
         }
 
         template< typename U = Type, typename ... Args >
@@ -28,17 +32,13 @@ namespace babel::VARIADIC{
         }
 
     public:
+        using Container = std::decay_t<decltype(m_hold)>;
+
         constexpr holder() = default;
 
         constexpr holder(const holder &other) noexcept
         {
             m_hold = other.m_hold;
-        }
-
-
-        constexpr holder(holder &&other) noexcept
-        {
-            m_hold = std::move(other.m_hold);
         }
 
         template< typename T = Type >
@@ -48,8 +48,8 @@ namespace babel::VARIADIC{
             _put(std::forward<T>(arg));
         }
 
-        template< typename T = Type, typename ... Hold >
-        requires ( !std::is_same_v<std::decay_t<T>, std::decay_t<holder>> )
+        template< typename T = Type>
+        requires ( !std::is_same_v<std::decay_t<Type>, std::decay_t<holder>> && m_size > 1 )
         constexpr explicit holder(T &&arg, Hold &&... args) noexcept
         {
             _put(std::forward<T>(arg));
@@ -62,28 +62,22 @@ namespace babel::VARIADIC{
             return *this;
         }
 
-        constexpr holder &operator=(holder &&other) noexcept
-        {
-            m_hold = std::move(other.m_hold);
-            return *this;
-        }
-
-        constexpr Type &operator[](const size_t index)
+        [[nodiscard]] constexpr Type &operator[](const std::size_t index)
         {
             return m_hold[index];
         }
 
-        constexpr const Type &operator[](const size_t index) const
+        [[nodiscard]] constexpr const Type &operator[](const std::size_t index) const
         {
             return m_hold[index];
         }
 
-        constexpr auto operator->()
+        [[nodiscard]] constexpr auto operator->()
         {
             return &m_hold;
         }
 
-        constexpr auto operator->() const
+        [[nodiscard]] constexpr auto operator->() const
         {
             return &m_hold;
         }
@@ -92,7 +86,7 @@ namespace babel::VARIADIC{
          *  @brief  Return vector of storage parameter
          *  @return Return vector&
          */
-        constexpr Container &get() noexcept
+        [[nodiscard]] constexpr Container &get() noexcept
         {
             return m_hold;
         }
@@ -101,7 +95,7 @@ namespace babel::VARIADIC{
          *  @brief  Return vector of storage parameter
          *  @return Return const vector&
          */
-        constexpr const Container &get() const noexcept
+        [[nodiscard]] constexpr const Container &get() const noexcept
         {
             return m_hold;
         }
