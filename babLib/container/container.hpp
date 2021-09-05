@@ -4,5 +4,6 @@
 
 #include "dynamic_array.hpp"
 #include "list.hpp"
+#include "ring_buffer.hpp"
 
 #endif  // BABLIB_CONTAINER_CONTAINER_HPP_
