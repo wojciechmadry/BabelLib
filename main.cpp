@@ -17,14 +17,14 @@ int main()
     std::cout << "Done\nTime : " << T << " seconds\n";
 
     float test_f = 3.14f;
-    babel::CONTAINER::RingBuffer<float, 20> rb;
-    //  auto p = rb.read_data();
+    babel::CONTAINER::RingBuffer<float, 2> rb;
+     // auto p = rb.read_data();
     rb.write_data(test_f);
     rb.write_data(12.4f);
+    auto f1 = static_cast<double>(rb.read_data().data);
     rb.write_data(300.0);
-    auto f1 = static_cast<double>(rb.read_data());
-    auto f2 = static_cast<double>(rb.read_data());
-    auto f3 = static_cast<double>(rb.read_data());
+    auto f2 = static_cast<double>(rb.read_data().data);
+    auto f3 = static_cast<double>(rb.read_data().data);
     printf("%f/%f/%f", f1, f2, f3);
     return 0;
 }
