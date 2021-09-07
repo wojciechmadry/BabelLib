@@ -211,33 +211,6 @@ namespace babel::ALGO::MATH{
         return value1 > value2 ? value1 : value2;
     }
 
-    /**
-*  @brief  Compare more than two number (its the worst method)
-     *  \Example_1 max(-3, 5,12 ,5 , 3) -> 12
-     *  \Example_2 max(7, 20,4, 8) -> 20
-*  @param  value1 First number
-*  @param  value2 Second number
-*  @param  arg    all other number
-*  @return Return the largest number
-*/
-    template< typename T, typename ... Args >
-    requires ( !babel::CONCEPTS::IS_CONTAINER<T> )
-    [[nodiscard]] inline constexpr T max(T value1, T value2, T value3, Args... arg) noexcept
-    {
-        if ( value1 < value2 )
-            value1 = value2;
-        if ( value1 < value3 )
-            value1 = value3;
-        babel::VARIADIC::holder<T> _hold(arg...);
-        const auto &vec = _hold.get();
-        std::for_each(vec.begin(), vec.end(),
-                      [&value1](const T &Data) mutable {
-                          if ( Data > value1 )
-                              value1 = Data;
-                      }
-        );
-        return value1;
-    }
 
     /**
     *  @brief  Compare two number
@@ -252,33 +225,6 @@ namespace babel::ALGO::MATH{
     [[nodiscard]] constexpr inline auto min(const T value1, const T2 value2) noexcept
     {
         return value1 < value2 ? value1 : value2;
-    }
-
-    /**
-*  @brief  Compare more than two number (its the worst method)
-      *  \Example_1 min(-3, 5,12 ,5 , 3) -> -3
-     *  \Example_2 min(7, 20,4, 8) -> 4
-*  @param  value1 First number
-*  @param  value2 Second number
-*  @param  arg    all other number
-*  @return Return the lowest number
-*/
-    template< typename T, typename ... Args >
-    [[nodiscard]] inline constexpr T min(T value1, T value2, T value3, Args... arg) noexcept
-    {
-        if ( value1 > value2 )
-            value1 = value2;
-        if ( value1 > value3 )
-            value1 = value3;
-        babel::VARIADIC::holder<T> _hold(arg...);
-        const auto &vec = _hold.get();
-        std::for_each(vec.begin(), vec.end(),
-                      [&value1](const T &Data) mutable {
-                          if ( Data < value1 )
-                              value1 = Data;
-                      }
-        );
-        return value1;
     }
 
     /**

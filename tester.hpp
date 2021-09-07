@@ -43,13 +43,18 @@ namespace TESTING{
     void VARIADIC_HPP() // DONE
     {
 
-        babel::VARIADIC::holder<int, int, int, int> p(3, 4, 12, 5);
-        assert(p[0] == 3 && p[3] == 5);
+        babel::VARIADIC::holder<int, int, int, int, int> p(3, 4, 12, 5, 14);
+        assert(p.get<0>() == 3 && p.get<3>() == 5);
         babel::VARIADIC::holder p1(p);
-        assert(p1[0] == 3 && p1[3] == 5);
+        assert(p1.get<0>() == 3 && p1.get<3>() == 5);
         babel::VARIADIC::holder<int> p3(15);
-        assert(p3[0] == 15);
-        assert(p3->at(0) == 15);
+        assert(p3.get<0>() == 15);
+        babel::VARIADIC::holder<int, std::string, float, double> dd(3, std::string("TestString"), 12.f, 5.25);
+        assert(dd.get<0>() == 3);
+        assert(dd.get<1>() == "TestString");
+        assert(dd.get<2>() >= 11.99f && dd.get<2>() <= 12.1f);
+        assert(dd.get<3>() >= 5.249 && dd.get<3>() <= 5.2501);
+
     }
 
     void TIME_HPP() // DONE
@@ -133,10 +138,8 @@ namespace TESTING{
         assert(babel::ALGO::MATH::abs(-5) == 5 && babel::ALGO::MATH::abs(5) == 5);
 
         assert(babel::ALGO::MATH::max(15, 5) == 15 && babel::ALGO::MATH::max(5, 15) == 15);
-        assert(babel::ALGO::MATH::max(0, 13, 2, 5, 2, 20) == 20);
 
         assert(babel::ALGO::MATH::min(15, 5) == 5 && babel::ALGO::MATH::min(5, 15) == 5);
-        assert(babel::ALGO::MATH::min(0, 13, 2, 5, 2, 20, -1) == -1);
 
         std::vector<int> cont = {3, 5, 2, -1, 5, 8};
 
