@@ -8,32 +8,22 @@
 
 namespace babel::VARIADIC{
 
-    template< typename Type, typename ... Hold>
-    class holder
+    template<std::size_t BaseCounter, typename T>
+    class _holderleaf
+    {
+    public:
+        T value;
+    };
+    template<std::size_t BaseCounter, typename... Hold>
+    class _holder;
+
+    template<std::size_t BaseCounter>
+    class _holder<BaseCounter>{};
+
+    template<std::size_t BaseCounter, typename Type, typename ... Hold>
+    class _holder<BaseCounter, Type, Hold...>: public _holderleaf<BaseCounter, Type>, public _holder<BaseCounter + 1, Hold...>
     {
         static constexpr std::size_t m_size = 1u + sizeof...(Hold);
-        // TODO remove std::any i dont have idea now (i dont want to use std::tuple)
-        std::array<std::any, m_size> m_hold;
-
-        template<std::size_t I, typename U>
-        constexpr void _put(U &&_a1) noexcept
-        {
-            m_hold[I] = std::forward<U>(_a1);
-        }
-
-        template<std::size_t I, typename U, typename ... Args >
-        constexpr void _put(U &&_a1, Args &&...args) noexcept
-        {
-            _put<I + 1>(std::forward<U>(_a1));
-            if constexpr (sizeof...(Args) == 1)
-            {
-                _put<I + 2>(std::forward<Args>(args)...);
-            }
-            else
-            {
-                _put<I + 1>(std::forward<Args>(args)...);
-            }
-        }
 
         template <std::size_t I, typename T, typename ...Ts>
         struct nth_element_impl {
@@ -47,67 +37,54 @@ namespace babel::VARIADIC{
         struct nth_element_impl<0, T, Ts...> {
             using type = T;
         };
-    public:
-        using Container = std::decay_t<decltype(m_hold)>;
 
-        constexpr holder() = default;
 
-        constexpr holder(const holder &other) noexcept
+        template<std::size_t I, typename T>
+        constexpr void put(T&& arg1) noexcept
         {
-            m_hold = other.m_hold;
+            get<I>() = std::forward<T>(arg1);
         }
 
-        template< typename T = Type >
-        requires ( !std::is_same_v<std::decay_t<T>, std::decay_t<holder>> )
-        constexpr explicit holder(T &&arg) noexcept //NOLINT
+        template<std::size_t I, typename T, typename ... HOLD>
+        constexpr void put(T&& arg1, HOLD&&... Holders) noexcept
         {
-            _put<0>(std::forward<T>(arg));
+            put<I>(std::forward<T>(arg1));
+            put<I+1>(std::forward<HOLD>(Holders)...);
+        }
+    public:
+        constexpr _holder() = default;
+
+        template< typename T = Type >
+        requires ( !std::is_same_v<std::decay_t<T>, std::decay_t<_holder>> )
+        constexpr explicit _holder(T &&arg) noexcept //NOLINT
+        {
+            put<0>(std::forward<T>(arg));
         }
 
         template< typename T = Type>
-        requires ( !std::is_same_v<std::decay_t<Type>, std::decay_t<holder>> && m_size > 1 )
-        constexpr explicit holder(T &&arg, Hold &&... args) noexcept
+        requires ( !std::is_same_v<std::decay_t<Type>, std::decay_t<_holder>> && m_size > 1 )
+        constexpr explicit _holder(T &&arg, Hold &&... args) noexcept
         {
-            _put<0>(std::forward<T>(arg));
-            _put<0>(std::forward<Hold>(args)...);
-        }
-
-        constexpr holder &operator=(const holder &other) noexcept
-        {
-            m_hold = other.m_hold;
-            return *this;
+            put<0>(std::forward<T>(arg));
+            put<1>(std::forward<Hold>(args)...);
         }
 
         template<std::size_t I>
-        [[nodiscard]] constexpr auto &get() noexcept
+        [[nodiscard]] constexpr auto& get() noexcept
         {
-            return std::any_cast<nth_element<I, Type, Hold...>&>(m_hold[I]);
+            return this->_holderleaf<I, typename nth_element_impl<I, Type, Hold...>::type>::value;
         }
 
         template<std::size_t I>
-        [[nodiscard]] constexpr auto &get() const noexcept
+        [[nodiscard]] constexpr auto& get() const noexcept
         {
-            return std::any_cast<const nth_element<I, Type, Hold...>&>(m_hold[I]);
+            return this->_holderleaf<I, typename nth_element_impl<I, Type, Hold...>::type>::value;
         }
 
-        /**
-         *  @brief  Return vector of storage parameter
-         *  @return Return vector&
-         */
-        [[nodiscard]] constexpr Container &get() noexcept
-        {
-            return m_hold;
-        }
-
-        /**
-         *  @brief  Return vector of storage parameter
-         *  @return Return const vector&
-         */
-        [[nodiscard]] constexpr const Container &get() const noexcept
-        {
-            return m_hold;
-        }
     };
+
+    template<typename... Items>
+    using holder = _holder<0, Items...>;
 }  // namespace babel::VARIADIC
 
 #endif  // BABLIB_VARIADIC_HPP_
