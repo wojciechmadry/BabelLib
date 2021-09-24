@@ -4,7 +4,8 @@
 
 #include "babLib/algorithm/algorithm.hpp"
 #include "babLib/any.hpp"
-#include "babLib/char.hpp"
+#include "babLib/char/char.hpp"
+#include "babLib/char/const_char.hpp"
 #include "babLib/file_system.hpp"
 #include "babLib/optional.hpp"
 #include "babLib/time.hpp"
