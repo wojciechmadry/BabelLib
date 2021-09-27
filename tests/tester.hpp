@@ -5,7 +5,8 @@
 #ifndef CLIONPROJECT_TESTER_HPP
 #define CLIONPROJECT_TESTER_HPP
 
-#include "babel.hpp"
+#include "../babel.hpp"
+#include "char/const_char/const_char.hpp"
 #include <cassert>
 #include <list>
 
@@ -1283,7 +1284,7 @@ namespace TESTING{
             CHAR_HPP();
             ALGORITHM_HPP();
             TOKENS_HPP();
-
+            CONST_CHAR_HPP();
 #ifdef _WIN32
             WINDOWSCONV_HPP();
 #endif

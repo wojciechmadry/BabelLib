@@ -2,6 +2,10 @@
 #ifndef BABLIB_CONST_CHAR_HPP_
 #define BABLIB_CONST_CHAR_HPP_
 
+#include <vector>
+#include <algorithm>
+#include <string>
+
 namespace babel::CHAR{
 
     class const_char
@@ -33,7 +37,7 @@ namespace babel::CHAR{
         }
 
         template< typename T >
-        [[nodiscard]] constexpr T number(char a_Char) const noexcept
+        [[nodiscard]] static constexpr T number(char a_Char) noexcept
         {
             T result = 0;
             if ( a_Char >= '0' && a_Char <= '9' )
@@ -41,7 +45,7 @@ namespace babel::CHAR{
                 result = static_cast<T>(a_Char - '0');
             } else if ( a_Char = to_upp(a_Char); a_Char >= 'A' && a_Char <= 'F' )
             {
-                result = static_cast<T>(a_Char - 'A') + 10;
+                result = static_cast<T>(a_Char - 'A' + 10);
             }
             return result;
         }
@@ -80,7 +84,158 @@ namespace babel::CHAR{
             return false;
         }
 
+        enum class iterator_type
+        {
+            forward,
+            reverse
+        };
+
+        template< iterator_type ITER >
+        class cc_iterator
+        {
+            const char *m_iter;
+        public:
+
+            constexpr cc_iterator() noexcept = delete;
+
+            explicit constexpr cc_iterator(const char *a_Start) noexcept: m_iter(a_Start)
+            {
+
+            }
+
+            constexpr cc_iterator &operator++() noexcept
+            {
+                if constexpr( ITER == iterator_type::forward )
+                {
+                    ++m_iter;
+                } else if constexpr ( ITER == iterator_type::reverse )
+                {
+                    --m_iter;
+                }
+                return *this;
+            }
+
+            constexpr cc_iterator operator++(int) & noexcept
+            {
+                const char *result_iter = m_iter;
+                if constexpr( ITER == iterator_type::forward )
+                {
+                    ++m_iter;
+                } else if constexpr ( ITER == iterator_type::reverse )
+                {
+                    --m_iter;
+                }
+                return cc_iterator {result_iter};
+            }
+
+            constexpr cc_iterator &operator--() noexcept
+            {
+                if constexpr( ITER == iterator_type::forward )
+                {
+                    --m_iter;
+                } else if constexpr ( ITER == iterator_type::reverse )
+                {
+                    ++m_iter;
+                }
+                return *this;
+            }
+
+            constexpr cc_iterator operator+(int a_Add) const noexcept
+            {
+                if constexpr( ITER == iterator_type::forward )
+                {
+                    return cc_iterator {m_iter + a_Add};
+                } else if constexpr ( ITER == iterator_type::reverse )
+                {
+                    return cc_iterator {m_iter - a_Add};
+                }
+                return cc_iterator {m_iter + a_Add};
+            }
+
+            constexpr cc_iterator operator-(int a_Add) const noexcept
+            {
+                if constexpr( ITER == iterator_type::forward )
+                {
+                    return cc_iterator {m_iter - a_Add};
+                } else if constexpr ( ITER == iterator_type::reverse )
+                {
+                    return cc_iterator {m_iter + a_Add};
+                }
+                return cc_iterator {m_iter - a_Add};
+            }
+
+            constexpr cc_iterator &operator+=(int a_Add) noexcept
+            {
+                if constexpr( ITER == iterator_type::forward )
+                {
+                    m_iter = m_iter + a_Add;
+                } else if constexpr ( ITER == iterator_type::reverse )
+                {
+                    m_iter = m_iter - a_Add;
+                }
+                return *this;
+            }
+
+            constexpr cc_iterator &operator-=(int a_Add) noexcept
+            {
+                if constexpr( ITER == iterator_type::forward )
+                {
+                    m_iter = m_iter - a_Add;
+                } else if constexpr ( ITER == iterator_type::reverse )
+                {
+                    m_iter = m_iter + a_Add;
+                }
+                return *this;
+            }
+
+
+            constexpr cc_iterator operator--(int) & noexcept
+            {
+                const char *result_iter = m_iter;
+                if constexpr( ITER == iterator_type::forward )
+                {
+                    --m_iter;
+                } else if constexpr ( ITER == iterator_type::reverse )
+                {
+                    ++m_iter;
+                }
+                return cc_iterator {result_iter};
+            }
+
+            constexpr bool operator==(const cc_iterator &a_Other) const noexcept
+            {
+                return a_Other.m_iter == m_iter;
+            }
+
+
+            constexpr bool operator!=(const cc_iterator &a_Other) const noexcept
+            {
+                return a_Other.m_iter != m_iter;
+            }
+
+            constexpr char operator*() const noexcept
+            {
+                if ( m_iter == nullptr )
+                {
+                    return '\0';
+                }
+
+                if constexpr ( ITER == iterator_type::reverse )
+                {
+                    return *( m_iter - 1 );
+                }
+
+
+                return *m_iter;
+            }
+
+            constexpr ~cc_iterator() = default;
+        };
+
     public:
+
+        using iterator = cc_iterator<iterator_type::forward>;
+        using reverse_iterator = cc_iterator<iterator_type::reverse>;
 
         constexpr const_char() noexcept
                 : m_data(nullptr), m_size(0u)
@@ -168,7 +323,7 @@ namespace babel::CHAR{
 
         [[nodiscard]] auto to_vector() const noexcept
         {
-            std::vector<char> result(m_size + 1);
+            std::vector<char> result(m_size + 1u);
             std::copy(m_data, m_data + m_size, std::begin(result));
             result[m_size] = '\0';
             return result;
@@ -252,16 +407,18 @@ namespace babel::CHAR{
             return contains(a_Data.data(), a_Data.size());
         }
 
-        [[nodiscard]] constexpr int64_t to_int64(const int64_t a_base = 10) const
+        template< typename INTEGER >
+        requires(std::is_integral_v<INTEGER>)
+        [[nodiscard]] constexpr INTEGER to_integer(const INTEGER a_base = 10) const
         {
             if ( a_base != 2 && a_base != 8 && a_base != 10 && a_base != 16 )
             {
-                throw std::invalid_argument("to_int64: Bad base {2, 8, 10, 16}");
+                throw std::invalid_argument("to_integer: Bad base {2, 8, 10, 16}");
             }
 
             if ( m_size == 0 )
             {
-                throw std::invalid_argument("to_int64");
+                throw std::invalid_argument("to_integer");
             }
 
             const char *start_range = m_data;
@@ -272,26 +429,37 @@ namespace babel::CHAR{
                 ++start_range;
             }
 
-            if ( a_base == 16 )
+            bool was_minus = false;
+
+            if constexpr ( std::is_unsigned_v<INTEGER> )
+            {
+                if ( result_is_minus )
+                {
+                    was_minus = true;
+                }
+                result_is_minus = false;
+            }
+
+            if ( a_base == 16 || a_base == 2 )
             {
                 if ( *start_range != '\0' && *( start_range + 1 ) != '\0' )
                 {
                     char X_char = to_upp(*( start_range + 1 ));
-                    if ( *start_range == '0' && X_char == 'X' )
+                    if ( *start_range == '0' && ( X_char == 'X' || X_char == 'B' ) )
                     {
                         start_range += 2;
                     }
                 }
             }
 
-            std::size_t acces_range = 0u;
+            std::size_t access_range = 0u;
             const char *search_ptr = start_range;
             while ( *search_ptr != '\0' )
             {
                 if ( *search_ptr >= '0' && *search_ptr <= '9' )
                 {
                     ++search_ptr;
-                    ++acces_range;
+                    ++access_range;
                 } else if ( char Upper = to_upp(*search_ptr); Upper >= 'A' && Upper <= 'F' )
                 {
                     if ( a_base != 16 )
@@ -299,42 +467,66 @@ namespace babel::CHAR{
                         break;
                     }
                     ++search_ptr;
-                    ++acces_range;
+                    ++access_range;
                 } else
                 {
                     break;
                 }
             }
-            if ( acces_range == 0u )
+            if ( access_range == 0u )
             {
-                throw std::invalid_argument("to_int64");
+                throw std::invalid_argument("to_integer");
             }
 
-            int64_t result = 0;
+            INTEGER result = 0;
 
-            if ( result_is_minus )
+            if ( result_is_minus || was_minus )
             {
-                std::for_each(start_range, start_range + acces_range,
+                std::for_each(start_range, start_range + access_range,
                               [&](char a_Char) {
-                                  result = result * a_base - number<int64_t>(a_Char);
+                                  result = static_cast<INTEGER>(result * a_base - number<INTEGER>(a_Char));
                               });
             } else
             {
-                std::for_each(start_range, start_range + acces_range,
+                std::for_each(start_range, start_range + access_range,
                               [&](char a_Char) {
-                                  result = result * a_base + number<int64_t>(a_Char);
+                                  result = static_cast<INTEGER>(result * a_base + number<INTEGER>(a_Char));
                               });
             }
 
             if ( result < 0 && !result_is_minus )
             {
-                throw std::out_of_range("to_int64");
+                throw std::out_of_range("to_integer");
             }
             if ( result > 0 && result_is_minus )
             {
-                throw std::out_of_range("to_int64");
+                throw std::out_of_range("to_integer");
             }
             return result;
+        }
+
+        [[nodiscard]] constexpr auto begin() const noexcept
+        {
+            return iterator {m_data};
+        }
+
+        [[nodiscard]] constexpr auto end() const noexcept
+        {
+            return iterator {m_data + m_size};
+        }
+
+        [[nodiscard]] constexpr auto rbegin() const noexcept
+        {
+            if ( m_data != nullptr )
+            {
+                return reverse_iterator {m_data + m_size};
+            }
+            return reverse_iterator {m_data};
+        }
+
+        [[nodiscard]] constexpr auto rend() const noexcept
+        {
+            return reverse_iterator {m_data};
         }
     };
 
