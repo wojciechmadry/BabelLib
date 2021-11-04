@@ -1,6 +1,6 @@
 #ifndef TESTS_CONST_CHAR_HPP
 #define TESTS_CONST_CHAR_HPP
-#include "../../../babel.hpp"
+#include "babel.hpp"
 
 
 

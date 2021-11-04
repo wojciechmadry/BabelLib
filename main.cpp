@@ -1,6 +1,6 @@
 #include <iostream>
 #include "babel.hpp"
-#include "tester.hpp"
+#include "tests/tester.hpp"
 #include <cassert>
 
 

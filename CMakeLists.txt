@@ -3,6 +3,8 @@ project(BabelLibrary)
 
 set(CMAKE_CXX_STANDARD 20)
 
+include_directories(.)
+
 add_library(
         BabLib STATIC
         babel.hpp)
