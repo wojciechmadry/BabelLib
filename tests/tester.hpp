@@ -30,12 +30,14 @@
 #include "iterators/write_read/write_read.hpp"
 #include "algorithm/crypt/sha/sha.hpp"
 #include "tokens/tokens.hpp"
+#include "container/ringbuffer/ringbuffer.hpp"
 
 namespace TESTING{
 
     void START_ALL_TEST(const int times = 1)
     {
         auto start_test = []() {
+            RINGBUFFER_HPP();
             SHA_HASH_TEST();
             RANGES_ITERATOR();
             ENUMERATE_ITERATOR();
