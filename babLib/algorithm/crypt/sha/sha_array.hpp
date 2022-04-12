@@ -7,11 +7,11 @@
 #include <type_traits>
 #include <cstdint>
 
-namespace _BABEL_PRIVATE_DO_NOT_USE //NOLINT
+namespace BABEL_PRIVATE_DO_NOT_USE //NOLINT
 {
-    namespace _PRIVATE_BABEL //NOLINT
+    namespace PRIVATE_BABEL //NOLINT
     {
-        const constexpr std::array<std::uint64_t, 80> PRIME_SHA_ARRAY_64 = {
+        static constexpr std::array<std::uint64_t, 80> PRIME_SHA_ARRAY_64 = {
                 0x428a2f98d728ae22, 0x7137449123ef65cd, 0xb5c0fbcfec4d3b2f, 0xe9b5dba58189dbbc,
                 0x3956c25bf348b538, 0x59f111f1b605d019, 0x923f82a4af194f9b, 0xab1c5ed5da6d8118,
                 0xd807aa98a3030242, 0x12835b0145706fbe, 0x243185be4ee4b28c, 0x550c7dc3d5ffb4e2,
@@ -34,7 +34,7 @@ namespace _BABEL_PRIVATE_DO_NOT_USE //NOLINT
                 0x4cc5d4becb3e42b6, 0x597f299cfc657e2a, 0x5fcb6fab3ad6faec, 0x6c44198c4a475817
         };
 
-        const constexpr std::array<std::uint32_t, 80> PRIME_SHA_ARRAY_32 = {
+        static constexpr std::array<std::uint32_t, 80> PRIME_SHA_ARRAY_32 = {
                 0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5,
                 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
                 0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3,
@@ -56,33 +56,33 @@ namespace _BABEL_PRIVATE_DO_NOT_USE //NOLINT
         template< typename INT, std::size_t MAX_BIT = sizeof(INT) * 8 >
         class INT_HOLDER
         {
-            std::vector<INT> _holder;
-            std::size_t nob = 0;
-            INT data = 0;
+            std::vector<INT> m_holder;
+            std::size_t m_nob = 0;
+            INT m_data = 0;
 
             void push_data() noexcept
             {
-                _holder.emplace_back(data);
-                data = 0;
+                m_holder.emplace_back(m_data);
+                m_data = 0;
             }
 
             void check_data_full() noexcept
             {
-                if ( nob % MAX_BIT == 0 )
+                if ( m_nob % MAX_BIT == 0 )
                     push_data();
             }
 
-            void push_bit(const bool _bit) noexcept
+            void push_bit(const bool a_bit) noexcept
             {
-                data |= ( static_cast<INT>(_bit) << ( ( sizeof(INT) * 8 - 1 ) - ( nob % MAX_BIT ) ) );
-                ++nob;
+                m_data |= ( static_cast<INT>(a_bit) << ( ( sizeof(INT) * 8 - 1 ) - ( m_nob % MAX_BIT ) ) );
+                ++m_nob;
                 check_data_full();
             }
 
         public:
             [[nodiscard]] std::vector<INT> &&get_vec() noexcept
             {
-                return std::move(_holder);
+                return std::move(m_holder);
             }
 
             template< typename ToPush >
@@ -105,7 +105,7 @@ namespace _BABEL_PRIVATE_DO_NOT_USE //NOLINT
                     }
                 } else
                 {
-                    auto fulled = nob % MAX_BIT;
+                    auto fulled = m_nob % MAX_BIT;
                     auto space = MAX_BIT - fulled;
 
                     if ( space >= sizeof(ToPush) * 8 )
@@ -113,8 +113,8 @@ namespace _BABEL_PRIVATE_DO_NOT_USE //NOLINT
                         auto CASTED_DATA = static_cast<INT>(DATA);
                         auto SHIFT = MAX_BIT - sizeof(ToPush) * 8 - fulled;
                         CASTED_DATA = CASTED_DATA << SHIFT;
-                        data |= CASTED_DATA;
-                        nob += sizeof(ToPush) * 8;
+                        m_data |= CASTED_DATA;
+                        m_nob += sizeof(ToPush) * 8;
                         check_data_full();
                         return;
                     } else
@@ -129,7 +129,7 @@ namespace _BABEL_PRIVATE_DO_NOT_USE //NOLINT
 
             [[nodiscard]] auto number_of_bits() const noexcept
             {
-                return nob;
+                return m_nob;
             }
         };
 

@@ -19,7 +19,7 @@ namespace babel::CONTAINER{
         T *m_array = nullptr;
         size_t m_size = 0, m_max_size = 0;
 
-        void __reallocate() //NOLINT
+        void reallocate()
         {
             m_max_size *= GROW;
             if ( m_max_size == 0 )
@@ -34,9 +34,9 @@ namespace babel::CONTAINER{
     public:
         class iterator
         {
-            T *_pos;
+            T *m_pos;
 
-            explicit iterator(T *position) : _pos(position)
+            explicit iterator(T *position) : m_pos(position)
             { }
 
             friend class dynamic_array;
@@ -44,44 +44,44 @@ namespace babel::CONTAINER{
         public:
             T &operator*()
             {
-                return *_pos;
+                return *m_pos;
             }
 
             const T &operator*() const
             {
-                return *_pos;
+                return *m_pos;
             }
 
             iterator operator++(int) //NOLINT
             {
-                return iterator(_pos++);
+                return iterator(m_pos++);
             }
 
             iterator operator--(int) //NOLINT
             {
-                return iterator(_pos--);
+                return iterator(m_pos--);
             }
 
             iterator &operator++()
             {
-                ++_pos;
+                ++m_pos;
                 return *this;
             }
 
             iterator &operator--()
             {
-                --_pos;
+                --m_pos;
                 return *this;
             }
 
             bool operator!=(const iterator &other) const
             {
-                return _pos != other._pos;
+                return m_pos != other.m_pos;
             }
 
             bool operator==(const iterator &other) const
             {
-                return _pos == other._pos;
+                return m_pos == other.m_pos;
             }
         };
 
@@ -168,7 +168,7 @@ namespace babel::CONTAINER{
         void push_back(U &&data) noexcept
         {
             if ( m_size >= m_max_size )
-                __reallocate();
+                this->reallocate();
             m_array[m_size++] = std::forward<U>(data);
         }
 
@@ -212,7 +212,7 @@ namespace babel::CONTAINER{
         void emplace_back(Args &&... args) noexcept
         {
             if ( m_size >= m_max_size )
-                __reallocate();
+                this->reallocate();
             m_array[m_size++] = T(std::forward<Args>(args)...);
         }
 

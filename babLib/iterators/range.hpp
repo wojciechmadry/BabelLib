@@ -40,9 +40,9 @@ namespace babel::ITERATOR{
 
             constexpr const Iterator operator++(int) noexcept //NOLINT
             {
-                auto _ret = *this;
+                auto ret = *this;
                 m_val = static_cast<Type>(m_val + m_step);
-                return _ret;
+                return ret;
             }
 
             constexpr bool operator==(const Iterator &Other) const noexcept

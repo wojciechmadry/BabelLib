@@ -544,14 +544,14 @@ namespace babel::ALGO::MATH{
     {
         if ( number <= 2 )
             return {number};
-        std::vector<T> _res;
+        std::vector<T> res;
         for ( T i = 2 ; i <= number ; ++i )
             while ( number % i == 0 )
             {
-                _res.emplace_back(i);
+                res.emplace_back(i);
                 number /= i;
             }
-        return _res;
+        return res;
     }
 
     /**
@@ -602,14 +602,14 @@ namespace babel::ALGO::MATH{
     [[nodiscard]] inline std::vector<T> find_x(const T a, const T b, const T c) noexcept
     {
         std::vector<T> zeros;
-        auto _delta = delta(a, b, c);
-        if ( _delta > 0 )
+        auto delt = delta(a, b, c);
+        if ( delt > 0 )
         {
-            auto sq_delta = std::sqrt(_delta);
+            auto sq_delta = std::sqrt(delt);
             auto two_a = 2.0 * a;
             zeros.emplace_back(( sq_delta - b ) / two_a);
             zeros.emplace_back(( -sq_delta - b ) / two_a);
-        } else if ( _delta == 0 )
+        } else if ( delt == 0 )
             zeros.emplace_back(( -b ) / ( 2.0 * a ));
         return zeros;
     }

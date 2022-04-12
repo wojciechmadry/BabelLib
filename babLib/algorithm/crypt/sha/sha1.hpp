@@ -29,7 +29,7 @@ namespace babel::ALGO::CRYPT{
 
         auto len = HASH.size() << 3;
 
-        _BABEL_PRIVATE_DO_NOT_USE::_PRIVATE_BABEL::INT_HOLDER<WORD> holder;
+        BABEL_PRIVATE_DO_NOT_USE::PRIVATE_BABEL::INT_HOLDER<WORD> holder;
 
         for ( auto c : HASH )
             holder.push<int8_t>(c);

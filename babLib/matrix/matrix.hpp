@@ -187,9 +187,9 @@ namespace babel::MATRIX{
                 for ( size_t i = 0 ; i < col - 1 ; ++i )
                     for ( size_t j = i + 1 ; j < col ; ++j )
                     {
-                        T _temp = mat[i][j];
+                        T temp = mat[i][j];
                         mat[i][j] = mat[j][i];
-                        mat[j][i] = _temp;
+                        mat[j][i] = temp;
                     }
             } else
             {
@@ -217,15 +217,15 @@ namespace babel::MATRIX{
                 case 1:
                 {
                     // Iterative algorithm
-                    T _sum;
+                    T sum;
                     auto sec_cols = Matrix.cols();
                     for ( size_t i = 0 ; i < row ; ++i )
                         for ( size_t j = 0 ; j < sec_cols ; ++j )
                         {
-                            _sum = 0;
+                            sum = 0;
                             for ( size_t k = 0 ; k < col ; ++k )
-                                _sum += mat[i][k] * Matrix.mat[k][j];
-                            new_matrix.mat[i][j] = _sum;
+                                sum += mat[i][k] * Matrix.mat[k][j];
+                            new_matrix.mat[i][j] = sum;
                         }
                     break;
                 }

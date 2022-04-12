@@ -9,7 +9,7 @@
 namespace babel::REQ{
     class request
     {
-        void _get() noexcept
+        void get() noexcept
         {
             m_que.front()();
             m_que.pop();
@@ -73,33 +73,33 @@ namespace babel::REQ{
             if ( m_que.size() < n )
                 throw std::out_of_range("Size of que is less than n");
             while ( n-- > 0 )
-                _get();
+                this->get();
         }
 
         void call_n_if_possible(size_t n) noexcept
         {
             auto max_range = std::min(n, m_que.size());
             while ( max_range-- > 0 )
-                _get();
+                this->get();
         }
 
         void call_if_possible() noexcept
         {
             if ( !m_que.empty() )
-                _get();
+                this->get();
         }
 
         void call()
         {
             if ( m_que.empty() )
                 throw std::out_of_range("Que is empty");
-            _get();
+            this->get();
         }
 
         void call_all() noexcept
         {
             while ( !m_que.empty() )
-                _get();
+                this->get();
         }
 
         void clear() noexcept

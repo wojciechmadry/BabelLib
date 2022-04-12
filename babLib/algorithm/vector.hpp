@@ -295,11 +295,11 @@ namespace babel::ALGO::VECTOR{
             return cont;
         Container res;
         auto back_inserter = std::back_inserter(res);
-        auto _get = [](const auto &data) { return data; };
+        auto get_val = [](const auto &data) { return data; };
         std::transform(std::begin(cont), std::begin(cont) + static_cast<babel::CONCEPTS::IteratorAddType>(index),
-                       back_inserter, _get);
+                       back_inserter, get_val);
         std::transform(std::begin(cont) + static_cast<babel::CONCEPTS::IteratorAddType>(index) + 1, std::end(cont),
-                       back_inserter, _get);
+                       back_inserter, get_val);
         return res;
     }
 
@@ -467,21 +467,21 @@ namespace babel::ALGO::VECTOR{
             return {start};
         if ( ( start > end && step > 0 ) || ( start < end && step < 0 ) )
             return { };
-        std::vector<int64_t> _res;
+        std::vector<int64_t> res;
         if ( start < end )
         {
             for ( ; start < end ; start += step )
             {
-                _res.emplace_back(start);
+                res.emplace_back(start);
             }
         } else
         {
             for ( ; start > end ; start += step )
             {
-                _res.emplace_back(start);
+                res.emplace_back(start);
             }
         }
-        return _res;
+        return res;
     }
 
     /**
@@ -501,21 +501,21 @@ namespace babel::ALGO::VECTOR{
             return {start};
         if ( ( start > end && step > 0 ) || ( start < end && step < 0 ) )
             return { };
-        std::vector<int64_t> _res;
+        std::vector<int64_t> res;
         if ( start < end )
         {
             for ( ; start < end ; start += step )
             {
-                _res.emplace_back(start);
+                res.emplace_back(start);
             }
         } else
         {
             for ( ; start > end ; start += step )
             {
-                _res.emplace_back(start);
+                res.emplace_back(start);
             }
         }
-        return _res;
+        return res;
     }
 
     /**

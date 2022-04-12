@@ -37,7 +37,7 @@ namespace TESTING{
     void START_ALL_TEST(const int times = 1)
     {
         auto start_test = []() {
-            RINGBUFFER_HPP();
+           RINGBUFFER_HPP();
             SHA_HASH_TEST();
             RANGES_ITERATOR();
             ENUMERATE_ITERATOR();
@@ -62,10 +62,10 @@ namespace TESTING{
 #ifdef _WIN32
             WINDOWSCONV_HPP();
 #endif
-            REQUEST_HPP();
+           // REQUEST_HPP();
 
-            ANY_HPP_VOID_ANY();
-            ANY_HPP_POLY_ANY();
+            //ANY_HPP_VOID_ANY();
+            //ANY_HPP_POLY_ANY();
         };
         if ( times <= 0 )
         {

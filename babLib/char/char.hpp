@@ -79,7 +79,7 @@ namespace babel::CHAR{
         constexpr ASCII_CHAR() noexcept: m_member(0)
         { }
 
-        constexpr explicit ASCII_CHAR(char _char) noexcept: m_member(_char)
+        constexpr explicit ASCII_CHAR(char a_char) noexcept: m_member(a_char)
         { }
 
         constexpr ASCII_CHAR(const ASCII_CHAR &other) noexcept: m_member(other.m_member) //NOLINT
@@ -91,9 +91,9 @@ namespace babel::CHAR{
             return *this;
         }
 
-        constexpr ASCII_CHAR &operator=(char _char) noexcept
+        constexpr ASCII_CHAR &operator=(char a_char) noexcept
         {
-            m_member = _char;
+            m_member = a_char;
             return *this;
         }
 
@@ -266,14 +266,14 @@ namespace babel::CHAR{
 
 
     // OPERATORS
-    inline std::ostream &operator<<(std::ostream &os, const ASCII_CHAR &_asci)
+    inline std::ostream &operator<<(std::ostream &os, const ASCII_CHAR &a_asci)
     {
-        return os << _asci.m_member;
+        return os << a_asci.m_member;
     }
 
-    inline std::istream &operator>>(std::istream &is, ASCII_CHAR &_asci)
+    inline std::istream &operator>>(std::istream &is, ASCII_CHAR &a_asci)
     {
-        is >> _asci.m_member;
+        is >> a_asci.m_member;
         return is;
     }
 

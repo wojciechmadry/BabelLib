@@ -15,23 +15,23 @@ namespace babel::ITERATOR{
         class iterator
         {
             Type *m_gen {nullptr};
-            int64_t _times {0};
+            int64_t m_times {0};
 
         public:
-            constexpr iterator(const Type &Sequence, const int64_t Times) noexcept: m_gen(&Sequence), _times(Times)
+            constexpr iterator(const Type &Sequence, const int64_t Times) noexcept: m_gen(&Sequence), m_times(Times)
             { }
 
-            constexpr iterator(Type *Sequence, const int64_t Times) noexcept: m_gen(Sequence), _times(Times)
+            constexpr iterator(Type *Sequence, const int64_t Times) noexcept: m_gen(Sequence), m_times(Times)
             { }
 
             [[nodiscard]] constexpr int64_t &times() noexcept
             {
-                return _times;
+                return m_times;
             }
 
             [[nodiscard]] constexpr int64_t times() const noexcept
             {
-                return _times;
+                return m_times;
             }
 
             constexpr const Type &operator*() const noexcept
@@ -42,38 +42,38 @@ namespace babel::ITERATOR{
 
             constexpr iterator &operator++()
             {
-                --_times;
+                --m_times;
                 return *this;
             }
 
             constexpr const iterator operator++(int) //NOLINT
             {
-                iterator other(m_gen, _times);
-                --_times;
+                iterator other(m_gen, m_times);
+                --m_times;
                 return other;
             }
 
             constexpr iterator &operator--()
             {
-                ++_times;
+                ++m_times;
                 return *this;
             }
 
             constexpr const iterator operator--(int) //NOLINT
             {
-                iterator other(m_gen, _times);
-                ++_times;
+                iterator other(m_gen, m_times);
+                ++m_times;
                 return other;
             }
 
             constexpr bool operator==(const iterator &other) const noexcept
             {
-                return _times == other._times;
+                return m_times == other.m_times;
             }
 
             constexpr bool operator!=(const iterator &other) const noexcept
             {
-                return _times != other._times;
+                return m_times != other.m_times;
             }
         };
 

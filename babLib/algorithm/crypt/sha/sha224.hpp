@@ -18,7 +18,7 @@ namespace babel::ALGO::CRYPT{
 
         static_assert(sizeof(WORD) == 4);
 
-        constexpr const auto &K = _BABEL_PRIVATE_DO_NOT_USE::_PRIVATE_BABEL::PRIME_SHA_ARRAY_32;
+        constexpr const auto &K = BABEL_PRIVATE_DO_NOT_USE::PRIVATE_BABEL::PRIME_SHA_ARRAY_32;
 
         std::array<WORD, 8> H = {
                 0xc1059ed8, 0x367cd507, 0x3070dd17, 0xf70e5939,
@@ -27,7 +27,7 @@ namespace babel::ALGO::CRYPT{
 
 
         auto len = HASH.size() << 3;
-        _BABEL_PRIVATE_DO_NOT_USE::_PRIVATE_BABEL::INT_HOLDER<WORD> holder;
+        BABEL_PRIVATE_DO_NOT_USE::PRIVATE_BABEL::INT_HOLDER<WORD> holder;
         for ( auto c : HASH )
             holder.push<int8_t>(c);
         holder.push<bool>(true);

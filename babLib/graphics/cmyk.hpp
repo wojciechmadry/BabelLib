@@ -13,37 +13,29 @@ namespace babel::GRAPHICS{
     private:
         std::array<byte, 4> m_CMYK;
 
-        [[nodiscard]] static constexpr byte _max(const byte Value) noexcept
+        [[nodiscard]] static constexpr byte max(const byte Value) noexcept
         {
             return Value > 100 ? static_cast<byte>(100) : Value;
         }
 
-        constexpr void _check_and_fix() noexcept
+        constexpr void check_and_fix() noexcept
         {
-            m_CMYK[0] = _max(m_CMYK[0]);
-            m_CMYK[1] = _max(m_CMYK[1]);
-            m_CMYK[2] = _max(m_CMYK[2]);
-            m_CMYK[3] = _max(m_CMYK[3]);
+            m_CMYK[0] = this->max(m_CMYK[0]);
+            m_CMYK[1] = this->max(m_CMYK[1]);
+            m_CMYK[2] = this->max(m_CMYK[2]);
+            m_CMYK[3] = this->max(m_CMYK[3]);
         }
 
-        constexpr void _set(const byte C, const byte M, const byte Y, const byte K) noexcept
+        constexpr void set_at(const byte index, const byte Value) noexcept
         {
-            m_CMYK[0] = _max(C);
-            m_CMYK[1] = _max(M);
-            m_CMYK[2] = _max(Y);
-            m_CMYK[3] = _max(K);
-        }
-
-        constexpr void _set_at(const byte index, const byte Value) noexcept
-        {
-            m_CMYK[index] = _max(Value);
+            m_CMYK[index] = this->max(Value);
         }
 
     public:
         constexpr explicit cmyk(const byte C = 0, const byte M = 0, const byte Y = 0, //NOLINT
                                 const byte K = 0) noexcept //NOLINT
         {
-            _set(C, M, Y, K);
+            set(C, M, Y, K);
         }
 
         constexpr cmyk(const cmyk &other) noexcept = default;
@@ -84,28 +76,32 @@ namespace babel::GRAPHICS{
 
         constexpr void set(const byte C, const byte M, const byte Y, const byte K) noexcept
         {
-            _set(C, M, Y, K);
+            m_CMYK[0] = this->max(C);
+            m_CMYK[1] = this->max(M);
+            m_CMYK[2] = this->max(Y);
+            m_CMYK[3] = this->max(K);
         }
+
 
         constexpr void set_C(const byte C) noexcept
         {
-            _set_at(0, C);
+            set_at(0, C);
         }
 
         constexpr void set_M(const byte M) noexcept
         {
-            _set_at(1, M);
+            set_at(1, M);
         }
 
 
         constexpr void set_Y(const byte Y) noexcept
         {
-            _set_at(2, Y);
+            set_at(2, Y);
         }
 
         constexpr void set_K(const byte K) noexcept
         {
-            _set_at(3, K);
+            set_at(3, K);
         }
     };
 

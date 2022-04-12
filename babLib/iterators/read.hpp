@@ -20,7 +20,7 @@ namespace babel::ITERATOR{
         public:
             Iterator() = default;
 
-            Iterator(std::ifstream *If, const bool _end) : m_end_line(_end), m_if(If)
+            Iterator(std::ifstream *If, const bool a_end) : m_end_line(a_end), m_if(If)
             { }
 
             ~Iterator() = default;

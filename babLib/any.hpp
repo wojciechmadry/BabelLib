@@ -121,14 +121,14 @@ namespace babel::ANY{
 
             any &operator=(const any &) = delete;
 
-            any &operator=(any &&_any) //NOLINT
+            any &operator=(any &&other) //NOLINT
             {
-                if ( _any.m_data == m_data )
+                if ( other.m_data == m_data )
                     return *this;
                 if ( m_data )
                     throw std::invalid_argument("Memory leak. Destroy void any first.");
-                m_data = _any.m_data;
-                _any.m_data = nullptr;
+                m_data = other.m_data;
+                other.m_data = nullptr;
                 return *this;
             }
 
@@ -176,36 +176,36 @@ namespace babel::ANY{
                      babel::CONCEPTS::IS_SAME<Any, PolAny::any>
             friend T &babel::ANY::cast_any(Any &any); //NOLINT
 
-            struct __base__any //NOLINT
+            struct base__any
             {
-                virtual ~__base__any() = default;
+                virtual ~base__any() = default;
 
-                [[nodiscard]]  virtual std::unique_ptr<__base__any> duplicate() const noexcept = 0;
+                [[nodiscard]]  virtual std::unique_ptr<base__any> duplicate() const noexcept = 0;
             };
 
             template< typename T >
-            struct _data : public __base__any
+            struct data_any : public base__any
             {
                 T m_data;
 
                 template< typename U = T >
-                requires babel::CONCEPTS::IS_NOT_SAME<U, _data> && babel::CONCEPTS::IS_NOT_SAME<U, __base__any>
-                explicit _data(U &&__data) noexcept: m_data(std::forward<U>(__data)) //NOLINT
+                requires babel::CONCEPTS::IS_NOT_SAME<U, data_any> && babel::CONCEPTS::IS_NOT_SAME<U, base__any>
+                explicit data_any(U &&data) noexcept: m_data(std::forward<U>(data)) //NOLINT
                 { }
 
-                [[nodiscard]] std::unique_ptr<__base__any> duplicate() const noexcept override
+                [[nodiscard]] std::unique_ptr<base__any> duplicate() const noexcept override
                 {
-                    return std::make_unique<_data<T>>(m_data);
+                    return std::make_unique<data_any<T>>(m_data);
                 }
             };
 
-            std::unique_ptr<__base__any> m_storage;
+            std::unique_ptr<base__any> m_storage;
         public:
             any() = default;
 
             template< typename T, typename U = typename std::decay_t<T>>
             requires babel::CONCEPTS::IS_NOT_SAME<T, any>
-            explicit any(T &&object) noexcept : m_storage(std::make_unique<_data<U>>(std::forward<T>(object))) //NOLINT
+            explicit any(T &&object) noexcept : m_storage(std::make_unique<data_any<U>>(std::forward<T>(object))) //NOLINT
             { }
 
             any(const any &other) noexcept: m_storage(other.m_storage->duplicate())
@@ -230,7 +230,7 @@ namespace babel::ANY{
             template< typename T >
             [[nodiscard]] T &cast()
             {
-                if ( auto st = dynamic_cast<_data<T> *>(m_storage.get()) )
+                if ( auto st = dynamic_cast<data_any<T> *>(m_storage.get()) )
                     return st->m_data;
                 else
                     throw std::bad_cast();
@@ -243,7 +243,7 @@ namespace babel::ANY{
             template< typename T >
             [[nodiscard]] const T &cast() const
             {
-                if ( auto st = dynamic_cast<_data<T> *>(m_storage.get()) )
+                if ( auto st = dynamic_cast<data_any<T> *>(m_storage.get()) )
                     return st->m_data;
                 else
                     throw std::bad_cast();
@@ -256,7 +256,7 @@ namespace babel::ANY{
             template< typename T >
             [[nodiscard]] bool is() const noexcept
             {
-                return static_cast<bool>( dynamic_cast<_data<T> *>(m_storage.get()));
+                return static_cast<bool>( dynamic_cast<data_any<T> *>(m_storage.get()));
             }
 
             /**
@@ -293,7 +293,7 @@ namespace babel::ANY{
             requires babel::CONCEPTS::IS_NOT_SAME<T, any>
             any &operator=(T &&object) noexcept
             {
-                m_storage = std::make_unique<_data<U>>(std::forward<T>(object));
+                m_storage = std::make_unique<data_any<U>>(std::forward<T>(object));
                 return *this;
             }
 
@@ -336,7 +336,7 @@ namespace babel::ANY{
             template< typename T, typename ... Args, typename = typename std::enable_if<std::is_copy_constructible<T>::value>::type >
             void emplace(Args &&...args) noexcept
             {
-                m_storage = std::make_unique<_data<T>>(std::forward<Args>(args)...);
+                m_storage = std::make_unique<data_any<T>>(std::forward<Args>(args)...);
             }
 
             [[nodiscard]]const std::type_info &type() const noexcept
@@ -361,7 +361,7 @@ namespace babel::ANY{
             return *static_cast<T *>(any.m_data);
         if constexpr ( babel::CONCEPTS::IS_SAME<Any, PolAny::any> )
         {
-            if ( auto st = dynamic_cast<PolAny::any::_data<T> *>(any.m_storage.get()) )
+            if ( auto st = dynamic_cast<PolAny::any::data_any<T> *>(any.m_storage.get()) )
                 return st->m_data;
             else
                 throw std::bad_cast();
@@ -377,7 +377,7 @@ namespace babel::ANY{
             return *static_cast<T *>(any.m_data);
         if constexpr ( babel::CONCEPTS::IS_SAME<Any, PolAny::any> )
         {
-            if ( auto st = dynamic_cast<PolAny::any::_data<T> *>(any.m_storage.get()) )
+            if ( auto st = dynamic_cast<PolAny::any::data_any<T> *>(any.m_storage.get()) )
                 return st->m_data;
             else
                 throw std::bad_cast();

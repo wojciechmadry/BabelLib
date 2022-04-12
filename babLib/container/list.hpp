@@ -51,7 +51,7 @@ namespace babel::CONTAINER {
         }
 
         template<typename U = T, typename = is_s_c<U, T> >
-        void __insert_in_order(U &&data, node *ins) noexcept //NOLINT
+        void insert_in_order(U &&data, node *ins) noexcept
         {
             if (ins == m_head)
                 push_front(std::forward<U>(data));
@@ -401,7 +401,7 @@ namespace babel::CONTAINER {
             node *temp = m_head;
             while (temp && comparator(data, temp->data))
                 temp = temp->next;
-            __insert_in_order(std::forward<U>(data), temp);
+            insert_in_order(std::forward<U>(data), temp);
         }
 
         void clear() noexcept

@@ -43,13 +43,13 @@ namespace babel::FILE_SYS{
 */
     inline std::vector<std::string> scan_folder(const std::string &path) noexcept
     {
-        std::vector<std::string> _res;
+        std::vector<std::string> res;
         auto Directory = std::filesystem::directory_iterator(path);
-        std::transform(begin(Directory), end(Directory), std::back_inserter(_res),
+        std::transform(begin(Directory), end(Directory), std::back_inserter(res),
                        [](const auto &FILE_PATH) -> std::string {
                            return FILE_PATH.path().filename().string();
                        });
-        return _res;
+        return res;
     }
 
     /**
@@ -60,9 +60,9 @@ namespace babel::FILE_SYS{
 */
     inline std::string file_extension(const std::string &filename) noexcept
     {
-        auto _find_dot = filename.find('.');
-        if ( _find_dot != std::string::npos )
-            return filename.substr(_find_dot + 1, filename.size());
+        auto found_dot = filename.find('.');
+        if ( found_dot != std::string::npos )
+            return filename.substr(found_dot + 1, filename.size());
         else
             return "";
     }
@@ -74,9 +74,9 @@ namespace babel::FILE_SYS{
 */
     inline std::string file_without_extension(const std::string &filename) noexcept
     {
-        auto _find_dot = filename.find('.');
-        if ( _find_dot != std::string::npos )
-            return filename.substr(0, _find_dot);
+        auto found_dot = filename.find('.');
+        if ( found_dot != std::string::npos )
+            return filename.substr(0, found_dot);
         else
             return filename;
     }
@@ -102,16 +102,16 @@ namespace babel::FILE_SYS{
 */
     inline std::vector<std::string> load_txt_to_vector(const std::string &filename) noexcept
     {
-        std::vector<std::string> _out;
+        std::vector<std::string> out;
         std::ifstream file(filename, std::ios::in | std::ios::binary);
         if ( !( file.good() && file.is_open() ) )
             return { };
-        _out.emplace_back("");
-        while ( std::getline(file, _out[_out.size() - 1]) )
-            _out.emplace_back("");
-        _out.pop_back();
+        out.emplace_back("");
+        while ( std::getline(file, out[out.size() - 1]) )
+            out.emplace_back("");
+        out.pop_back();
         close_file(file);
-        return _out;
+        return out;
     }
 
     /**

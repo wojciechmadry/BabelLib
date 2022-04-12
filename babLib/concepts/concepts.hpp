@@ -164,7 +164,7 @@ namespace babel::CONCEPTS{
     {
         static_assert(bytes > 0 && bytes <= 8 && bytes != 3 && bytes != 5 && bytes != 6 && bytes != 7);
 
-        constexpr static auto _babel_type_of() noexcept
+        constexpr static auto babel_type_of() noexcept
         {
             if constexpr ( IsSigned )
             {
@@ -212,7 +212,7 @@ namespace babel::CONCEPTS{
         }
 
     public:
-        typedef decltype(_babel_type_of()) type;
+        typedef decltype(babel_type_of()) type;
     };
 
     using IteratorAddType = type_of_number<sizeof(void *)>::type;

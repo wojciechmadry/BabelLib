@@ -18,7 +18,7 @@ namespace babel::ALGO::CRYPT{
         constexpr const WORD CHUNK_LENGTH = 512;
         constexpr const WORD ROUNDS = 64;
 
-        constexpr const auto &K = _BABEL_PRIVATE_DO_NOT_USE::_PRIVATE_BABEL::PRIME_SHA_ARRAY_32;
+        constexpr const auto &K = BABEL_PRIVATE_DO_NOT_USE::PRIVATE_BABEL::PRIME_SHA_ARRAY_32;
 
         std::array<WORD, 8> H = {
                 0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a,
@@ -27,7 +27,7 @@ namespace babel::ALGO::CRYPT{
 
 
         auto len = HASH.size() << 3;
-        _BABEL_PRIVATE_DO_NOT_USE::_PRIVATE_BABEL::INT_HOLDER<WORD> holder;
+        BABEL_PRIVATE_DO_NOT_USE::PRIVATE_BABEL::INT_HOLDER<WORD> holder;
         for ( auto c : HASH )
             holder.push<int8_t>(c);
         holder.push<bool>(true);

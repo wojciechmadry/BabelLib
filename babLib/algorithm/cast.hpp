@@ -11,40 +11,40 @@ namespace babel::ALGO::CAST{
     /**
    *  @brief  Convert string to number (float, int, etc...)
     *  \EXAMPLE_1 string_to<float>("3.14") -> float(3.14)
-   *  @param  _string Number in string
+   *  @param  a_string Number in string
    *  @return Return string convert to number
    */
     template< typename T, typename U = std::decay_t<T>>
-    constexpr inline U string_to(const std::string &_string)
+    constexpr inline U string_to(const std::string &a_string)
     {
         if constexpr ( babel::CONCEPTS::IS_SAME<U, int> )
-            return std::stoi(_string);
+            return std::stoi(a_string);
         if constexpr ( babel::CONCEPTS::IS_SAME<U, long> )
-            return std::stol(_string);
+            return std::stol(a_string);
         if constexpr ( babel::CONCEPTS::IS_SAME<U, long long> )
-            return std::stoll(_string);
+            return std::stoll(a_string);
         if constexpr ( babel::CONCEPTS::IS_SAME<U, unsigned long long> )
-            return std::stoull(_string);
+            return std::stoull(a_string);
         if constexpr ( babel::CONCEPTS::IS_SAME<U, unsigned long> )
-            return std::stoul(_string);
+            return std::stoul(a_string);
         if constexpr ( babel::CONCEPTS::IS_SAME<U, float> )
-            return std::stof(_string);
+            return std::stof(a_string);
         if constexpr ( babel::CONCEPTS::IS_SAME<U, double> )
-            return std::stod(_string);
+            return std::stod(a_string);
         if constexpr ( babel::CONCEPTS::IS_SAME<U, long double> )
-            return std::stold(_string);
+            return std::stold(a_string);
         if constexpr ( babel::CONCEPTS::IS_SAME<U, unsigned int> )
-            return static_cast<unsigned int>(std::stoul(_string));
+            return static_cast<unsigned int>(std::stoul(a_string));
         if constexpr ( babel::CONCEPTS::IS_SAME<U, char> )
-            return static_cast<char>(std::stoi(_string));
+            return static_cast<char>(std::stoi(a_string));
         if constexpr ( babel::CONCEPTS::IS_SAME<U, unsigned char> )
-            return static_cast<unsigned char>(std::stoul(_string));
+            return static_cast<unsigned char>(std::stoul(a_string));
         if constexpr ( babel::CONCEPTS::IS_SAME<U, short> )
-            return static_cast<short>(std::stoi(_string));
+            return static_cast<short>(std::stoi(a_string));
         if constexpr ( babel::CONCEPTS::IS_SAME<U, unsigned short> )
-            return static_cast<unsigned short>(std::stoul(_string));
+            return static_cast<unsigned short>(std::stoul(a_string));
         if constexpr ( babel::CONCEPTS::IS_SAME<U, bool> )
-            return static_cast<bool>(std::stoul(_string));
+            return static_cast<bool>(std::stoul(a_string));
         throw std::out_of_range("No visible conversion.");
     }
 
@@ -203,7 +203,7 @@ namespace babel::ALGO::CAST{
     *  @return No return
     */
     template< typename T >
-    inline void swap(T &lhs, T &rhs) noexcept
+    inline constexpr void swap(T &lhs, T &rhs) noexcept
     {
         T temp = std::move(lhs);
         lhs = std::move(rhs);

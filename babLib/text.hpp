@@ -10,17 +10,9 @@ namespace babel::TEXT{
         std::string m_str;
         std::array<std::vector<char *>, 256> m_lett;
 
-        template< typename T >
-        void _set_text(T &&str) noexcept
-        {
-            _clear_vector();
-            m_str = std::forward<T>(str);
-            std::for_each(std::begin(m_str), std::end(m_str), [this](char &_char) mutable {
-                this->m_lett[static_cast<uint8_t>(_char)].emplace_back(&_char);
-            });
-        }
 
-        void _clear_vector() noexcept
+
+        void clear_vector() noexcept
         {
             std::for_each(std::begin(m_lett), std::end(m_lett), [](std::vector<char *> &Vec) { Vec.clear(); });
         }
@@ -37,9 +29,9 @@ namespace babel::TEXT{
         explicit text(const std::string &Str, const bool IsFilename = false) noexcept
         {
             if ( !IsFilename )
-                _set_text(Str);
+                set_text(Str);
             else
-                _set_text(babel::FILE_SYS::load_txt(Str));
+                set_text(babel::FILE_SYS::load_txt(Str));
         }
 
         /**
@@ -51,9 +43,9 @@ namespace babel::TEXT{
         explicit text(std::string &&Str, const bool IsFilename = false) noexcept
         {
             if ( !IsFilename )
-                _set_text(std::move(Str));
+                set_text(std::move(Str));
             else
-                _set_text(babel::FILE_SYS::load_txt(Str));
+                set_text(babel::FILE_SYS::load_txt(Str));
         }
 
         ~text() noexcept
@@ -67,20 +59,14 @@ namespace babel::TEXT{
 *  @param  const std::string& Str String to stored in class
 *  @return No return
 */
-        void set_text(const std::string &Str) noexcept
+        template< typename T >
+        void set_text(T &&str) noexcept
         {
-            _set_text(Str);
-        }
-
-
-        /**
-*  @brief  Move string Str to string stored in class
-*  @param  std::string&& Str String to stored in class
-*  @return No return
-*/
-        void set_text(std::string &&Str) noexcept
-        {
-            _set_text(std::move(Str));
+            clear_vector();
+            m_str = std::forward<T>(str);
+            std::for_each(std::begin(m_str), std::end(m_str), [this](char &_char) mutable {
+                this->m_lett[static_cast<uint8_t>(_char)].emplace_back(&_char);
+            });
         }
 
         /**
@@ -90,7 +76,7 @@ namespace babel::TEXT{
 */
         void load_from_file(const std::string &filename) noexcept
         {
-            _set_text(babel::FILE_SYS::load_txt(filename));
+            set_text(babel::FILE_SYS::load_txt(filename));
         }
 
         /**
@@ -110,7 +96,7 @@ namespace babel::TEXT{
 */
         void clear() noexcept
         {
-            _clear_vector();
+            clear_vector();
             m_str.clear();
         }
 

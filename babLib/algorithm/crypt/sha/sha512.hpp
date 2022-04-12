@@ -21,11 +21,11 @@ namespace babel::ALGO::CRYPT{
 
         static_assert(sizeof(WORD) == 8);
 
-        constexpr const auto &K = _BABEL_PRIVATE_DO_NOT_USE::_PRIVATE_BABEL::PRIME_SHA_ARRAY_64;
+        constexpr const auto &K = BABEL_PRIVATE_DO_NOT_USE::PRIVATE_BABEL::PRIME_SHA_ARRAY_64;
 
 
         auto len = HASH.size() << 3;
-        _BABEL_PRIVATE_DO_NOT_USE::_PRIVATE_BABEL::INT_HOLDER<WORD> holder;
+        BABEL_PRIVATE_DO_NOT_USE::PRIVATE_BABEL::INT_HOLDER<WORD> holder;
         for ( auto c : HASH )
             holder.push<int8_t>(c);
         holder.push<bool>(true);
