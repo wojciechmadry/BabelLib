@@ -37,7 +37,7 @@ List of namespaces `babel::`:
 * `OPT` - My implementation of `std::optional`
 * `REQ` - It is a `std::queue` of _lambda functions_, which are queued and called when you want to do it.
 * `TEXT` - Class to improvement searching in big `std::string`, but it takes a lot more memory.
-* `VARIADIC` - Has close `holder`, which store `variadic arguments` into `std::vector`.
+* `VARIADIC` - My implementation of `std::variant`.
 * `WINDOWS` - Available only in _Windows_, simple windows function (like resolution of screen, search available discs)
 * `WRAPER` - Class `wrap`, nothing special just wrap data `T`
 * `SYSTEM` - Simple system function like number of threads etc.
