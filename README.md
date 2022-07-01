@@ -46,7 +46,7 @@ List of namespaces `babel::`:
 Docs
 ---
 Every _(almost)_ function have description, and some example of use.
-![alt text](https://gitlab.com/woitys1999/babellib/-/raw/master/Screen/descr.PNG)
+![alt text](https://github.com/wojciechmadry/BabelLib/blob/master/Screen/descr.PNG)
 
 I'm working on put this description in one documents file.
 
