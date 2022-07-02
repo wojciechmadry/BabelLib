@@ -18,9 +18,9 @@ namespace babel::LINUX::DISPLAY{
     [[nodiscard]] inline std::pair<std::size_t, std::size_t> get_screen_resolution() noexcept
     {
         std::pair<std::size_t, std::size_t> Resolution = {1280, 720};
-        system("xdpyinfo | grep dimensions |  cut -d' ' -f7 > babel_temporary_file");
+        auto sys_res = system("xdpyinfo | grep dimensions |  cut -d' ' -f7 > babel_temporary_file");
         std::fstream res_file("babel_temporary_file", std::ios::in | std::ios::binary);
-        if ( res_file.good() && res_file.is_open() )
+        if ( sys_res == 0 && res_file.good() && res_file.is_open() )
         {
             std::string line;
             std::getline(res_file, line);
@@ -30,7 +30,11 @@ namespace babel::LINUX::DISPLAY{
                 return Resolution;
             Resolution.first = std::stoull(line.substr(0, find_x));
             Resolution.second = std::stoull(line.substr(find_x + 1));
-            system("rm babel_temporary_file");
+            sys_res = system("rm babel_temporary_file");
+            if ( sys_res != 0)
+            {
+                return {};
+            }
         }
         return Resolution;
     }
