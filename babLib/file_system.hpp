@@ -163,7 +163,7 @@ namespace babel::FILE_SYS{
 */
     [[nodiscard]] inline bool file_folder_exist(const std::string &name) noexcept
     {
-        return folder_exist(name) | file_exist(name);
+        return folder_exist(name) || file_exist(name);
     }
 }  // namespace babel::FILE_SYS
 

@@ -20,7 +20,7 @@
 #include "babLib/container/container.hpp"
 
 namespace babel{
-    constexpr const char *VERSION = "1.41";
+    constexpr const char *VERSION = "1.42";
     constexpr const bool COMPILER_IS_64B = ( sizeof(void *) == 8 ); //NOLINT
     constexpr const bool COMPILER_IS_32B = ( sizeof(void *) == 4 ); //NOLINT
 }  // namespace babel
