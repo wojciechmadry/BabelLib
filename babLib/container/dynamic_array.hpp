@@ -6,6 +6,8 @@
 #include <string>
 #include <initializer_list>
 #include <stdexcept>
+#include <algorithm>
+#include <iterator>
 
 namespace babel::CONTAINER{
     template< typename T, size_t GROW = 2 >
@@ -26,7 +28,9 @@ namespace babel::CONTAINER{
                 m_max_size = GROW * GROW;
 
             T *temp = new T[m_max_size];
-            std::transform(m_array, m_array + m_size, temp, std::move<T &>);
+            std::transform(std::make_move_iterator(m_array), std::make_move_iterator(m_array + m_size), temp, [](T&& val) {
+                return val;
+            });
             delete[] m_array;
             m_array = temp;
         }
