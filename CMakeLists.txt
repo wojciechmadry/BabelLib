@@ -21,8 +21,7 @@ target_link_libraries(BabelLibrary PRIVATE Threads::Threads)
 endif(UNIX)
 
 target_link_libraries(BabelLibrary PUBLIC BabLib)
-#target_compile_options(BabelLibrary PRIVATE -O3)
 target_compile_options(BabelLibrary PRIVATE -O3 -Wextra -Werror -W
         -Wshadow -Wdouble-promotion -Wformat=2 -Wundef -fno-common -Wconversion -pedantic -Wall
-        -Wno-unused-result -Wno-unused-variable -Wno-unused-but-set-variable
+        -Wno-unused-result -Wno-unused-variable
         -Wno-unused-parameter)

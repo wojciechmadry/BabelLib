@@ -13,6 +13,7 @@
 #ifdef linux
 
 #include "linux.hpp"
+#include <unistd.h>
 
 #endif  // linux
 

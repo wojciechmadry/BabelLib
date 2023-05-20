@@ -10,6 +10,7 @@
 #include <complex>
 #include <random>
 #include <chrono>
+#include <numbers>
 
 namespace babel::ALGO::MATH{
     namespace DERIVATIVE{
