@@ -51,8 +51,15 @@ namespace TESTING{
         assert(v1.size() == v.size() && v1 == v);
 
         v1 = babel::ALGO::VECTOR::repeat(v, 3);
-        for ( int j = 0 ; j < 3 ; ++j )
-            assert(std::vector<int>(v1.begin() + j * 8, v1.begin() + 8 * ( j + 1 )) == v);
+        for ( int j = 0 ; j < 3 ; ++j ){
+            const auto left = j * 8;
+            const auto right = (j + 1) * 8;
+            assert(static_cast<size_t>(left) <= v1.size());
+            assert(static_cast<size_t>(right) <= v1.size());
+            std::vector<int> v2(v1.begin() + left, v1.begin() + right);
+            assert(v2 == v);
+        }
+
         v1 = babel::ALGO::VECTOR::stride(v, 3);
         assert(v1.size() == 3 && v1[0] == 0 && v1[1] == 3 && v1[2] == 6);
         v.push_back(8);
