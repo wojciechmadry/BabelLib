@@ -137,7 +137,7 @@ namespace babel::CONTAINER {
         {
             std::for_each(init_list.begin(), init_list.end(), [this](const U& Data)
             {
-                this->template push_back(Data);
+                push_back(Data);
             });
         }
 
@@ -190,7 +190,7 @@ namespace babel::CONTAINER {
             clear();
             std::for_each(init_list.begin(), init_list.end(), [this](const U& Data)
             {
-                this->template push_back(Data);
+                push_back(Data);
             });
             return *this;
         }
@@ -205,7 +205,7 @@ namespace babel::CONTAINER {
         {
             std::for_each(init.begin(), init.end(), [this](const U& Data)
             {
-                this->template push_back(Data);
+                push_back(Data);
             });
         }
 
