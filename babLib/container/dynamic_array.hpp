@@ -96,7 +96,7 @@ namespace babel::CONTAINER{
             m_max_size = init.size() + GROW;
             m_array = new T[m_max_size];
             std::for_each(init.begin(), init.end(), [this](const T &Element) {
-                this->template push_back(Element);
+                push_back(Element);
             });
         }
 
@@ -162,7 +162,7 @@ namespace babel::CONTAINER{
                 });
                 std::size_t Size = other.size() - m_size;
                 std::for_each(other.m_array + m_size, other.m_array + Size, [this](const T &data) {
-                    this->template push_back(data);
+                    push_back(data);
                 });
             }
             return *this;
@@ -179,7 +179,7 @@ namespace babel::CONTAINER{
         void push_back(std::initializer_list<T> &&init) noexcept
         {
             std::for_each(init.begin(), init.end(), [this](const T &data) {
-                this->template push_back(data);
+                push_back(data);
             });
         }
 
